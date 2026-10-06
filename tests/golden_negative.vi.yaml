@@ -1,0 +1,139 @@
+# Câu KHÔNG được sinh ra lệnh nào.
+#
+# Vì sao cần tập này: 144 câu golden đều hỏi "câu này phải ra lệnh gì", nên chỉ đo
+# được ĐỘ PHỦ. Không có gì đo ĐỘ CHÍNH XÁC — tỉ lệ ra lệnh oan. Mà trong xe, ra
+# lệnh oan tệ hơn không hiểu nhiều: không hiểu thì người ta nói lại, ra lệnh oan
+# thì cửa kính tự hạ giữa đường.
+#
+# "Không ra lệnh" KHÔNG có nghĩa phải im: trả lời bằng lời, hỏi lại, hay chuyển
+# tầng trên đều được. Chỉ không được có lệnh nào trong plan.
+
+# ---------------------------------------------------------------- trùng với alias thiết bị
+# Nhóm nguy hiểm nhất: từ thường ngày trùng tên thiết bị/chế độ trong caps.
+- "giá vàng hôm nay bao nhiêu"
+- "vàng lên giá rồi"
+- "đèn đỏ phía trước kìa"
+- "vượt đèn đỏ là bị phạt đấy"
+- "áo màu cam đẹp không"
+- "mua cho anh quả cam"
+- "cái áo nâu kia bao nhiêu tiền"
+- "trời xanh mây trắng"
+- "hôm nay tắc đường kinh khủng"
+- "nóng kinh khủng luôn"
+- "sợ kinh"
+- "học morse có khó không"
+- "nhảy bài này hay đấy"
+- "con mèo nhà anh tên gì"
+- "chị ấy tên Hoà"
+- "quán cà phê có nhạc hay"
+- "gương mặt anh ấy quen quen"
+- "cốp xe người ta rộng thật"
+- "cái quạt ở nhà hỏng rồi"
+- "phanh gấp thế ai chịu được"
+
+# ---------------------------------------------------------------- nói với người trong xe
+- "em ăn cơm chưa"
+- "con ngồi yên cho bố lái"
+- "anh xuống đây nhé"
+- "để đấy anh làm cho"
+- "mai mấy giờ mình đi"
+- "cẩn thận cái xe kia"
+- "chị bảo gì cơ"
+- "thôi khỏi cảm ơn anh"
+- "đợi tí đã"
+- "ừ anh biết rồi"
+
+# ---------------------------------------------------------------- đọc biển báo, nhắc đường
+- "rẽ phải ở ngã tư kia"
+- "sắp tới cầu rồi"
+- "đường này cấm rẽ trái"
+- "biển báo ghi bốn mươi cây một giờ"
+- "phía trước có công an"
+- "đèn xanh rồi đi đi"
+- "đi chậm thôi có trẻ con"
+- "chỗ này hay ngập"
+
+# ---------------------------------------------------------------- tán gẫu, hỏi kiến thức
+- "hôm nay trời đẹp quá"
+- "kể chuyện cười đi"
+- "hát cho anh nghe"
+- "bạn tên gì"
+- "bạn bao nhiêu tuổi"
+- "một năm có bao nhiêu ngày"
+- "thủ đô nước Pháp là gì"
+- "xe điện có cần thay dầu không"
+- "cảm ơn nhé"
+- "chào buổi sáng"
+- "buồn ngủ quá"
+- "chán quá đi"
+- "bao giờ thì tới"
+- "còn bao xa nữa"
+
+# ---------------------------------------------------------------- cần dữ liệu ngoài
+- "thời tiết hôm nay thế nào"
+- "mai có mưa không"
+- "tỉ giá đô hôm nay bao nhiêu"
+- "giá xăng tăng chưa"
+- "kết quả bóng đá tối qua thế nào"
+- "tin tức hôm nay có gì"
+- "đường Nguyễn Trãi có tắc không"
+
+# ---------------------------------------------------------------- ngoài khả năng của xe
+- "bay lên trời đi"
+- "tự lái về nhà đi"
+# BỎ: "rửa xe giúp anh" nhập nhằng thật — có thể nhờ người rửa, mà cũng có thể
+# bảo xe bật chế độ rửa xe (caps có scene_mode wash). Không đưa câu nhập nhằng vào
+# tập âm, vì nó biến thước đo thành ý kiến cá nhân.
+- "đổ xăng đầy bình"
+- "sửa cái phanh này đi"
+- "gọi cho vợ anh"
+- "nhắc anh mai họp lúc chín giờ"
+- "đặt vé máy bay đi Đà Nẵng"
+- "chuyển khoản cho anh Nam hai triệu"
+
+# ---------------------------------------------------------------- ASR nghe nhầm / nhiễu
+- "ờ à"
+- "ừm"
+- "à không có gì"
+- "ơ"
+- "a lô a lô"
+- "xin chào ờ"
+- "cái gì cơ"
+- "hả"
+- "ờ thì là mà"
+- "à ừ"
+
+# ---------------------------------------------------------------- hỏi về chính agent
+- "bạn làm được gì"
+- "bạn điều khiển được những gì"
+- "xe này có những chức năng nào"
+- "bạn có hiểu tiếng Việt không"
+
+# ---------------------------------------------------------------- mất dấu, vẫn không phải lệnh
+- "gia vang hom nay bao nhieu"
+- "qua cam bao nhieu tien"
+- "hom nay troi dep qua"
+- "con ngoi yen cho bo lai"
+- "ban co hieu tieng viet khong"
+- "hoc morse co kho khong"
+- "cai ao nau kia bao nhieu tien"
+- "chi ay ten Hoa"
+
+# ---------------------------------------------------------------- vùng không suy ra duy nhất
+# M18. Chỉ nghe được VÙNG chứ không nghe ra thiết bị. "phía trước" thuộc cả fan,
+# defrost và fog_light; "phía sau" thì gần chục thiết bị. Trước đây thứ tự chèn
+# alias quyết định, nên "mở chỗ để đồ phía trước" (ý là cốp trước) ra thành bật
+# quạt — sai mà vẫn chạy luôn, kiểu tệ nhất. Phát hiện khi đối chiếu
+# stress_test_gpt_v2.jsonl.
+- "mở chỗ để đồ phía trước"
+- "bật phía sau"
+- "tắt phía trước đi"
+- "mo cho de do phia truoc"
+
+# ---------------------------------------------------------------- động từ yếu
+# M20. "để" là alias của set_level ("để 22 độ"), nhưng phần lớn thời gian nó là
+# liên từ mục đích hoặc nằm trong danh từ ghép. Trong 500 câu stress nó xuất hiện
+# 41 lần, không lần nào trước một con số.
+- "cái chỗ để đồ phía trước ấy, mở nó ra giùm tôi"
+- "để mình xem đã"
+- "để tôi nghĩ đã"

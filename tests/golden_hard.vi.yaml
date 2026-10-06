@@ -1,0 +1,84 @@
+# Case KHÓ — phần việc của tầng cloud. Edge grammar không làm được những câu này.
+# kind: dạng KẾT QUẢ mong đợi, không ép câu chữ (model diễn đạt mỗi lần một khác).
+#   commands  phải ra lệnh; device = thiết bị đúng
+#   ask       phải hỏi lại, không được đoán bừa
+#   reply     phải trả lời bằng lời, không lệnh
+#   refuse    phải từ chối, KHÔNG chạy lệnh nào — tại chỗ hay do cloud đều được
+#   route     phải chuyển cho agent khác
+#
+# Chạy:  AGENTCAR_LIVE=1 pytest tests/test_hard_live.py -v
+
+# path: cloud = câu này BẮT BUỘC phải lên tầng suy luận. Nếu tầng edge chộp được
+# thì gần như chắc chắn nó hiểu sai.
+
+# ---- suy ý định từ cảm giác / hoàn cảnh
+- { path: cloud, say: "nóng quá",               kind: commands, device: hvac,              need: infer }
+- { path: cloud, say: "lạnh quá",               kind: commands, device: hvac,              need: infer }
+- { path: cloud, say: "ngột ngạt quá",          kind: commands, device: [fan, window],     need: infer }
+- { path: cloud, say: "con ngủ rồi",            kind: commands, device: volume,            need: infer }
+- { path: cloud, say: "chói mắt quá",           kind: commands, device: screen_brightness, need: infer }
+- { path: cloud, say: "trời mưa to quá",        kind: commands, device: [window, defrost, sunroof], need: infer }
+- { path: cloud, say: "sắp tới hầm gửi xe rồi", kind: commands, device: mirror,            need: infer }
+- { say: "đi rửa xe đây",          kind: commands, device: scene_mode,        need: infer }
+
+# ---- nói tắt, cần ngữ cảnh lượt trước
+- { say: "tăng thêm nữa",      after: ["bật điều hòa"],                kind: commands, device: hvac,          need: context }
+- { say: "cái đó tắt đi",      after: ["bật đèn viền"],                kind: commands, device: ambient_light, need: context }
+- { say: "để lại như lúc nãy", after: ["âm lượng 30", "tắt tiếng"],    kind: commands, device: volume,        need: context }
+- { say: "ghế bên kia cũng vậy", after: ["bật sưởi ghế lái mức 2"],    kind: commands, device: seat_heating,  need: context }
+
+# ---- nhiều ý trong một câu
+- { say: "mở kính rồi bật nhạc lên",                        kind: commands, min_commands: 2, need: multi }
+- { say: "bật điều hoà 22 độ, sưởi ghế lái, và mở spotify", kind: commands, min_commands: 3, need: multi }
+
+# ---- thiếu thông tin: phải hỏi, không được đoán
+- { path: cloud, say: "chỉnh cái kia lên", kind: ask, need: ask }
+- { say: "bật đèn",           kind: ask, need: ask }
+
+# ---- ngoài phạm vi / chưa làm được: phải nói rõ
+- { say: "mở cửa sổ trời khi nào tới nhà", kind: refuse, need: reject }
+- { say: "5 phút nữa bật điều hòa",        kind: refuse, need: reject }
+- { path: cloud, say: "kể chuyện cười đi",              kind: reply, need: reject }
+
+# ---- thuộc NavAgent
+- { path: cloud, say: "dẫn đường về nhà",      kind: route, target: nav, need: nav }
+- { path: cloud, say: "đổ xăng ở đâu gần đây", kind: route, target: nav, need: nav }
+
+# ---- câu hỏi chung: trả lời được thì phải trả lời, không từ chối máy móc
+- { path: cloud, say: "thủ đô nước Pháp là gì",   kind: reply, need: knowledge }
+- { path: cloud, say: "một năm có bao nhiêu ngày", kind: reply, need: knowledge }
+- { path: cloud, say: "hôm nay thứ mấy",          kind: reply, need: knowledge }
+# ---- cần số liệu thời gian thực: phải nói rõ chưa biết, KHÔNG bịa
+- { path: cloud, say: "thời tiết hôm nay thế nào", kind: reply, need: live_data }
+- { path: cloud, say: "tỉ giá đô hôm nay bao nhiêu", kind: reply, need: live_data }
+
+# ---------------------------------------------------------------- CHƯA LÀM ĐƯỢC
+# tier5 needle · tier6 correction · tier8 intent blending — lấy từ bảng phân loại
+# của Audio2Tool. Lúc mới đối chiếu thì sai cả ba, ghi làm nợ kỹ thuật (known_gap →
+# xfail). Đã xử xong cả ba, nên không còn known_gap nào.
+
+# tier6 — tự sửa giữa câu (M15: chỉ xét phần SAU từ sửa ý)
+- { say: "bật điều hòa 24 độ à không 22 thôi", kind: commands, device: hvac, value: 22, need: correction }
+- { say: "mở cửa kính thôi đóng lại", kind: commands, device: window, action: close, need: correction }
+- { say: "bật đèn viền màu đỏ à không màu xanh dương", kind: commands, device: ambient_light, mode: amb_blue, need: correction }
+- { say: "bật sưởi ghế mức 3 à quên mức 1", kind: commands, device: seat_heating, value: 1, need: correction }
+
+# tier5 — lệnh lẫn trong câu dài (M12 đã xử: chọn thiết bị theo mệnh đề có động từ)
+- { say: "hôm nay tắc đường kinh khủng mà trời thì nóng nên bật điều hòa 22 độ đi", kind: commands, device: hvac, need: needle }
+- { say: "tôi đang đọc thẻ bảo hành mà chữ bé quá với lại trong xe tối nữa nên bật đèn trần lên giúp tôi", kind: commands, device: dome_light, need: needle }
+- { say: "nói chuyện với ông anh về cái quạt ở nhà hỏng mà nóng quá nên mở cửa kính ra đi", kind: commands, device: window, need: needle }
+
+# tier8 — trộn hai ý định (M13 gộp tham số, M14 mang động từ sang vế sau)
+- { say: "bật điều hòa với cả mở nhạc lên luôn", kind: commands, min_commands: 2, need: blending }
+- { say: "tắt đèn viền với cả đèn trần", kind: commands, min_commands: 2, need: blending }
+- { say: "bật sưởi ghế lái kèm sưởi vô lăng", kind: commands, min_commands: 2, need: blending }
+
+# ---------------------------------------------------------------- suy ý định: nhóm thêm sau
+# Bốn nhóm này thiếu, phát hiện khi đối chiếu tier4_implicit (Audio2Tool) và bảng
+# thiết bị của MAC-SLU — cả hai bộ đều có, ngữ liệu tự soạn thì không.
+- { path: cloud, say: "kính mờ hết rồi",                kind: commands, device: defrost,        need: infer }
+- { path: cloud, say: "mờ kính không thấy đường",       kind: commands, device: defrost,        need: infer }
+- { path: cloud, say: "lạnh tay quá",                   kind: commands, device: steering_wheel, need: infer }
+- { path: cloud, say: "ngồi bí lưng quá",               kind: commands, device: seat_cooling,   need: infer }
+- { path: cloud, say: "tối không thấy gì cả",           kind: commands, device: dome_light,     need: infer }
+- { path: cloud, say: "anh rơi cái điện thoại trong xe", kind: commands, device: dome_light,    need: infer }

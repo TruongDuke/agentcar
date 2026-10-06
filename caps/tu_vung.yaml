@@ -1,0 +1,106 @@
+# BẢN DỊCH giữa caps và ba bộ từ vựng bên ngoài.
+#
+# Vì sao có file này: dự án có bốn nguồn sự thật — UC của BA, test report của QC,
+# caps (đây), và model joint-nlu. Ba bản dịch trước đây nằm rải ba nơi và không
+# cái nào biết cái nào:
+#
+#     tools/qc_to_golden.py   QC -> caps      "value" nghĩa là gì
+#     agentcar/nlu.py         model -> caps   "set" nghĩa là gì
+#     agentcar/evaluate.py    agent -> bộ đo  "đã ra lệnh" nghĩa là gì
+#
+# Cả ba đều THẤT BẠI IM LẶNG: trả None, bỏ câu, bỏ trường — không ai kêu. Sáu lỗi
+# đo trong một ngày đều sinh ở đó, và mỗi lần đều phải rút lại con số đã báo.
+#
+# Quy tắc: mọi tên lạ phải nằm ở `map` hoặc ở `chua_co`. Không có đường thứ ba —
+# tests/test_tu_vung.py bắt đỏ nếu gặp tên không khai ở đâu cả.
+#
+# caps/vf9.yaml là NGUỒN SỰ THẬT. File này chỉ nói các bên gọi nó bằng tên gì.
+
+# QC là GỐC DỮ LIỆU tin nhất, không phải trọng tài — chỗ nào nó gán sai thì sửa,
+# và ghi vào `sua_lai` bên dưới. Khi QC và BA nói ngược nhau: nghe QC.
+# Chi tiết từng điểm mâu thuẫn xem khối `policy` trong caps/vf9.yaml.
+nguon_nghiem_thu: qc
+
+# Chỗ CỐ Ý lệch khỏi nhãn của QC. Ghi ra để sau này biết vì sao golden khác nguồn.
+sua_lai:
+  gioi_tu_dich:
+    so_cau: 537
+    qc_gan: "decrease step=98"
+    sua_thanh: "set_level value=98"
+    ly_do: >
+      "Hạ đèn viền xuống 98 mức" — đèn viền dải 1..100 nên giảm ĐI 98 nấc là về 1
+      từ mọi mức: cả loạt 80/85/90/95/98/100 ra cùng kết quả, con số người dùng
+      nói thành vô nghĩa. Tiếng Việt đọc là ĐẶT VỀ mức đó.
+      Chỉ sửa khi hội đủ ba điều: QC gán increase/decrease, có giới từ đích đứng
+      NGAY TRƯỚC con số và con số đó đúng bằng value, và value nằm trong dải thiết
+      bị. Thiếu một là không sửa — "Nâng đèn viền lên 8 mức" giữ nguyên increase
+      vì QC vốn không ghi số nào.
+
+  phu_dinh_mong_rong:
+    so_cau: 393
+    quyet_dinh: "KHÔNG gộp lại — để ở golden_qc_tranhchap.vi.yaml, không chấm"
+    ly_do: >
+      QC ghi [] cho 393 câu phủ định trong khi ghi có lệnh cho 684 câu cùng kiểu.
+      Chốt theo phe 684 (đảo lệnh), nên 393 câu này sai theo chính quyết định đó.
+      Nhưng dựng lại kỳ vọng cho chúng thì chỉ 26/393 làm được mà không phải đoán:
+      223 câu cần `item` (tên app/màn hình) mà suy ra được thì phải mượn lexicon
+      của chính hệ thống đang bị đo — vòng tròn; 84 câu sheet connection_control
+      không nói được wifi hay bluetooth; 60 câu không có động từ để đảo.
+      26 câu = 0,1% bộ đo, không đáng đổi lấy rủi ro golden tự suy từ hệ thống.
+
+qc:
+  # QC để LƯỢNG ĐIỀU CHỈNH vào ô `value`; caps tách riêng `step`.
+  value_la_buoc: [increase, decrease]
+
+  # Cùng nghĩa, khác tên.
+  action:
+    set_temp: set_level        # hvac
+    set_volume: set_level      # volume
+
+  # QC dùng mà caps CHƯA CÓ. Khai ra để thành backlog nhìn thấy được, thay vì
+  # lặng lẽ bỏ câu. Số câu đo ngày 30/09 trên 26.429 câu test.
+  chua_co:
+    mute: 163
+    connect: 322
+    disconnect: 283
+    off: 152
+    auto_off: 121
+    ionizer_off: 56
+    max_off: 49
+    sync_off: 48
+    msg_null: 41
+
+model:
+  # `set` là MỘT tên cho HAI việc. Chọn theo slot: có `mode` mà không có số thì
+  # là đặt chế độ, còn lại là đặt mức. Map cứng một chiều thì "đèn viền màu xanh
+  # dương" thành lệnh đặt mức thiếu giá trị, agent hỏi "mức bao nhiêu ạ?".
+  action:
+    set: [set_level, set_mode]
+
+  # Model biết mà caps CHƯA CÓ — khác `ngoai_caps` ở chỗ đây là thiết bị caps ĐÃ
+  # có, chỉ thiếu đúng hành động. Test hợp đồng bắt được hai cái này ngay lần chạy
+  # đầu: trước đó sang_raw() lặng lẽ trả None và không ai biết.
+  chua_co:
+    - volume.mute
+    - volume.unmute
+
+  # Miền model biết mà caps không có. Không dựng lệnh được — để tầng cloud lo.
+  ngoai_caps:
+    - nav
+    - call
+    - message
+    - media
+    - info
+    - vehicle_status
+    - dialog
+    - assist
+    - chitchat
+    - oos
+    - reject
+
+bo_do:
+  # Hai định nghĩa của "agent có làm gì không". Dùng nhầm là sai cả phép đo —
+  # đã dính: lấy `sent` để lọc câu "edge bó tay" thì 139/500 câu hỏi trạng thái
+  # bị tính nhầm là edge thất bại, trong khi edge đã trả lời xong.
+  commands: "mọi lệnh trong plan, kể cả query và lệnh bị chặn — đo PHÂN TÍCH ĐÚNG KHÔNG"
+  sent: "chỉ lệnh thật sự xuống xe — đo CÓ LÀM GÌ KHÔNG"

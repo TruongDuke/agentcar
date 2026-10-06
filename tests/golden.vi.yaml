@@ -1,0 +1,337 @@
+# Bộ câu chuẩn tiếng Việt. Chỉ kiểm các trường có mặt trong `expect`.
+# context: các câu nói trước, để kiểm phần kế thừa thiết bị.
+
+# ---------------------------------------------------------------- CLIMATE
+- { say: "bật điều hòa",                    expect: { verdict: OK, device: hvac, action: turn_on, value: 22 } }
+- { say: "tắt điều hoà",                    expect: { verdict: OK, device: hvac, action: turn_off } }
+- { say: "điều hòa 25 độ",                  expect: { verdict: OK, device: hvac, action: set_level, value: 25 } }
+- { say: "giảm điều hòa xuống hai mươi độ", expect: { verdict: OK, device: hvac, action: set_level, value: 20 } }
+- { say: "bật điều hòa hai hai độ",         expect: { verdict: OK, device: hvac, action: set_level, value: 22 } }
+- { say: "bật điều hoà hai mươi ba độ rưỡi",expect: { verdict: OK, device: hvac, action: set_level, value: 23.5 } }
+- { say: "cho mát hơn", context: ["bật điều hòa"], expect: { verdict: OK, device: hvac, action: decrease, step: 2 } }
+- { say: "giảm 2 độ",   context: ["bật điều hòa"], expect: { verdict: OK, device: hvac, action: decrease, step: 2 } }
+- { say: "bật điều hòa ghế sau",            expect: { verdict: OK, device: hvac, zone: rear } }
+- { say: "bật quạt gió mức 4",              expect: { verdict: OK, device: fan, action: set_level, value: 4 } }
+- { say: "lấy gió trong",                   expect: { verdict: OK, device: fan, action: set_mode, mode: recirc, mode_group: intake } }
+- { say: "thổi mặt",                        expect: { verdict: OK, device: fan, action: set_mode, mode: blow_face, mode_group: airflow } }
+- { say: "bật sấy kính",                    expect: { verdict: OK, device: defrost, action: turn_on } }
+
+# ---------------------------------------------------------------- CỬA / KÍNH / CỐP
+- { say: "mở cửa kính",                     expect: { verdict: OK, device: window, action: open, zone: all } }
+- { say: "hạ kính một nửa",                 expect: { verdict: OK, device: window, action: set_level, value: 60 } }
+- { say: "đóng cửa kính bên lái",           expect: { verdict: OK, device: window, action: close, zone: driver } }
+- { say: "mở cửa sổ trời",                  expect: { verdict: OK, device: sunroof, action: open } }
+- { say: "đóng rèm",                        expect: { verdict: OK, device: sunroof, action: close, zone: curtain } }
+- { say: "mở cốp",                          expect: { verdict: OK, device: trunk, action: open } }
+- { say: "mở nắp sạc",                      expect: { verdict: OK, device: charge_port, action: open } }
+- { say: "bật đá cốp",                      expect: { verdict: OK, device: foot_kick, action: turn_on } }
+
+# ---------------------------------------------------------------- GƯƠNG / ĐÈN
+- { say: "gập gương",                       expect: { verdict: OK, device: mirror, action: fold } }
+- { say: "bật đèn sương mù",                expect: { verdict: OK, device: fog_light, action: turn_on } }
+- { say: "đèn viền màu xanh dương",         expect: { verdict: OK, device: ambient_light, action: set_mode, mode: amb_blue, mode_group: color } }
+- { say: "đổi sang màu tím nhạt", context: ["bật đèn viền"], expect: { verdict: OK, device: ambient_light, mode: amb_light_purple } }
+- { say: "bật đèn trần",                    expect: { verdict: OK, device: dome_light, action: turn_on } }
+
+# ---------------------------------------------------------------- GHẾ
+- { say: "bật sưởi ghế lái mức 2",          expect: { verdict: OK, device: seat_heating, action: set_level, zone: driver, value: 2 } }
+- { say: "làm mát ghế phụ",                 expect: { verdict: OK, device: seat_cooling, action: turn_on, zone: passenger } }
+- { say: "massage ghế sau bên trái kiểu sóng", expect: { verdict: OK, device: seat_massage, action: set_mode, zone: rear_left, mode: msg_wave } }
+
+# ---------------------------------------------------------------- SCENE / MISC
+- { say: "bật chế độ cắm trại",             expect: { verdict: OK, device: scene_mode, action: camp } }
+- { say: "tắt chế độ thú cưng",             expect: { verdict: OK, device: scene_mode, action: turn_off, mode: pet } }
+- { say: "phanh tái sinh mức cao",          expect: { verdict: OK, device: regen_brake, action: set_mode, mode: regen_high } }
+- { say: "sưởi vô lăng",                    expect: { verdict: OK, device: steering_wheel, action: set_mode, mode: heating } }
+
+# ---------------------------------------------------------------- INFOTAINMENT
+- { say: "tăng âm lượng",                   expect: { verdict: OK, device: volume, action: increase, step: 2 } }
+- { say: "âm lượng 30",                     expect: { verdict: OK, device: volume, action: set_level, value: 30 } }
+- { say: "tắt tiếng",                       expect: { verdict: OK, device: volume, action: set_level, value: 0 } }
+- { say: "độ sáng màn hình 80 phần trăm",   expect: { verdict: OK, device: screen_brightness, action: set_level, value: 80 } }
+- { say: "bật wifi",                        expect: { verdict: OK, device: wifi, action: turn_on } }
+- { say: "tắt bluetooth",                   expect: { verdict: OK, device: bluetooth, action: turn_off } }
+- { say: "mở spotify",                      expect: { verdict: OK, device: app_control, action: open, item: spotify } }
+- { say: "mở ứng dụng youtube",             expect: { verdict: OK, device: app_control, action: open, item: youtube } }
+- { say: "mở màn hình cài đặt đèn",         expect: { verdict: OK, device: screen_control, action: open, item: light_settings } }
+
+# ---------------------------------------------------------------- TRUY VẤN
+- { say: "điều hòa đang bật không",         expect: { verdict: OK, device: hvac, action: query } }
+- { say: "cửa kính mở chưa",                expect: { verdict: OK, device: window, action: query } }
+
+# ---------------------------------------------------------------- AN TOÀN
+- { say: "mở cửa kính", state: { gear: D, speed_kmh: 40 }, expect: { verdict: CONFIRM, device: window, action: open } }
+- { say: "gập gương",   state: { speed_kmh: 50 },          expect: { verdict: DENY, device: mirror } }
+- { say: "mở cốp",      state: { gear: D },                expect: { verdict: DENY, device: trunk } }
+- { say: "mở nắp sạc",  state: { speed_kmh: 30 },          expect: { verdict: DENY, device: charge_port } }
+- { say: "bật chế độ cắm trại", state: { battery_pct: 20 },expect: { verdict: DENY, device: scene_mode } }
+- { say: "bật chế độ rửa xe",   state: { charging: true }, expect: { verdict: DENY, device: scene_mode } }
+- { say: "điều hòa đang bật không", state: { gear: D, speed_kmh: 60 }, expect: { verdict: OK, action: query } }
+
+# ---------------------------------------------------------------- NGOÀI PHẠM VI
+- { say: "mở cốp trước",                    expect: { verdict: OK, device: frunk, action: open } }
+- { say: "áp suất lốp bao nhiêu",           expect: { verdict: NOT_SUPPORT } }
+- { say: "tắt hiệu ứng đèn viền",           expect: { verdict: INVALID, code: VA_MODE_EXCLUDED } }
+# nav: caps đã chỉ rõ đích nên escalate KÈM target, không cần tầng suy luận
+- { say: "dẫn đường về nhà",                expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "hôm nay trời đẹp quá",            expect: { verdict: ESCALATE_UNKNOWN } }
+
+# ---------------------------------------------------------------- ĐA Ý ĐỊNH
+- say: "mở cửa kính rồi bật điều hòa hai hai độ"
+  expect:
+    verdict: OK
+    commands:
+      - { device: window, action: open }
+      - { device: hvac, action: set_level, value: 22 }
+
+# ---------------------------------------------------------------- loạt câu kiểm chéo
+# (soạn SAU khi matcher xong, không dùng để chỉnh matcher — dùng để đo thật)
+- { say: "bật máy lạnh lên 26 độ",          expect: { verdict: OK, device: hvac, action: set_level, value: 26 } }
+- { say: "quạt to lên",                     expect: { verdict: OK, device: fan, action: increase, step: 1 } }
+- { say: "kính sau bên phải xuống 40",      expect: { verdict: OK, device: window, action: set_level, zone: rear_right, value: 40 } }
+- { say: "đóng hết cửa kính",               expect: { verdict: OK, device: window, action: close, zone: all } }
+- { say: "bật massage ghế lái",             expect: { verdict: OK, device: seat_massage, action: turn_on, zone: driver } }
+- { say: "tăng sưởi ghế",                   expect: { verdict: OK, device: seat_heating, action: increase, step: 1 } }
+- { say: "làm ấm tay lái",                  expect: { verdict: OK, device: steering_wheel, action: set_mode, mode: heating } }
+- { say: "cho nhạc to lên",                 expect: { verdict: OK, device: volume, action: increase, zone: media } }
+- { say: "giảm âm lượng cuộc gọi",          expect: { verdict: OK, device: volume, action: decrease, zone: call } }
+- { say: "âm lượng trợ lý ảo mức 10",       expect: { verdict: OK, device: volume, action: set_level, zone: va, value: 10 } }
+- { say: "bật đèn viền nhấp nháy",          expect: { verdict: OK, device: ambient_light, mode: fx_blinking, mode_group: effect } }
+- { say: "đèn viền sáng 50 phần trăm",      expect: { verdict: OK, device: ambient_light, action: set_level, value: 50 } }
+- { say: "bật lấy gió ngoài",               expect: { verdict: OK, device: fan, action: set_mode, mode: fresh, mode_group: intake } }
+- { say: "sấy kính sau",                    expect: { verdict: OK, device: defrost, action: turn_on, zone: rear } }
+- { say: "tắt đèn sương mù trước",          expect: { verdict: OK, device: fog_light, action: turn_off, zone: front } }
+- { say: "gương gập vào",                   expect: { verdict: OK, device: mirror, action: fold } }
+- { say: "mở gương ra",                     expect: { verdict: OK, device: mirror, action: unfold } }
+- { say: "mở karaoke",                      expect: { verdict: OK, device: app_control, action: open, item: karaoke } }
+- { say: "xem thông tin xe",                expect: { verdict: OK, device: screen_control, action: open, item: about_settings } }
+- { say: "bật chế độ rửa xe đi",            expect: { verdict: OK, device: scene_mode, action: wash } }
+# Hai câu này CỐ Ý escalate: không nêu thiết bị, phải để tầng LLM suy ý định
+# Câu tả CẢM GIÁC: trước đây phải đẩy lên cloud suy luận (~900ms). Từ 29/09 tầng
+# [1b] (model NLU trên xe) trả lời được tại chỗ ~4ms, đúng chiều — xem
+# caps/reasoning.vi.yaml: "họ muốn thoát khỏi trạng thái đang có".
+- { say: "nóng quá",                        expect: { verdict: OK, device: hvac, action: decrease } }
+- { say: "lạnh quá",                        expect: { verdict: OK, device: hvac, action: increase } }
+
+# ---------------------------------------------------------------- khôi phục mức
+- { say: "bật tiếng lại", context: ["âm lượng 30", "tắt tiếng"], expect: { verdict: OK, device: volume, action: set_level, value: 30 } }
+- { say: "mở tiếng lại",  context: ["tắt tiếng"],                expect: { verdict: INVALID, code: VA_NO_PREVIOUS_VALUE } }
+
+# ---------------------------------------------------------------- câu hỏi trạng thái
+- { say: "điều hòa bao nhiêu độ", context: ["bật điều hòa"], expect: { verdict: OK, device: hvac, action: query, tts: "Điều hòa đang ở 22 độ ạ." } }
+- { say: "cửa kính mở chưa",      context: ["mở cửa kính"],  expect: { verdict: OK, tts: "Cửa kính đang mở ạ." } }
+- { say: "gương đang thế nào",    context: ["gập gương"],    expect: { verdict: OK, tts: "Gương đang gập ạ." } }
+- { say: "chế độ nào đang bật",   context: ["bật chế độ cắm trại"], expect: { verdict: OK, tts: "Đang bật chế độ cắm trại ạ." } }
+- { say: "đang mở app gì",        context: ["mở spotify"],   expect: { verdict: OK, tts: "Đang mở spotify ạ." } }
+- { say: "âm lượng bao nhiêu",                               expect: { verdict: OK, tts: "Em chưa biết trạng thái âm lượng ạ." } }
+
+# ---------------------------------------------------------------- hỏi vs giục
+# Cùng chữ "nào/gì", khác vai trò. Nhận nhầm là biến câu hỏi thành lệnh.
+- { say: "sưởi ghế đang mức mấy", context: ["bật sưởi ghế mức 2"], expect: { verdict: OK, device: seat_heating, action: query, tts: "Sưởi ghế đang ở mức 2 ạ." } }
+- { say: "điều hòa mấy độ rồi",   context: ["bật điều hòa"],       expect: { verdict: OK, action: query, tts: "Điều hòa đang ở 22 độ ạ." } }
+- { say: "đèn viền sao rồi",      context: ["bật đèn viền"],       expect: { verdict: OK, action: query } }
+- { say: "mở app nào",                                             expect: { verdict: OK, device: app_control, action: query } }
+- { say: "mở cửa kính đi nào",                                     expect: { verdict: OK, device: window, action: open } }
+- { say: "bật điều hòa lên nào",                                   expect: { verdict: OK, device: hvac, action: turn_on } }
+- { say: "mở cốp thôi",                                            expect: { verdict: OK, device: trunk, action: open } }
+- { say: "bật wifi nhé",                                           expect: { verdict: OK, device: wifi, action: turn_on } }
+
+# ---------------------------------------------------------------- alias bổ sung
+- { say: "tăng nhiệt độ",                                          expect: { verdict: OK, device: hvac, action: increase } }
+- { say: "giảm nhiệt độ",                                          expect: { verdict: OK, device: hvac, action: decrease } }
+- { say: "mở nhạc",                                                expect: { verdict: OK, device: app_control, action: open, item: music } }
+- { say: "cho nhạc to lên",                                        expect: { verdict: OK, device: volume, action: increase, zone: media } }
+
+# ---------------------------------------------------------------- không ý định / không slot
+- { say: "bật",              expect: { verdict: ASK, code: VA_DEVICE_REQUIRED, tts: "Anh/chị muốn bật cái gì ạ?" } }
+- { say: "mở",               expect: { verdict: ASK, code: VA_DEVICE_REQUIRED, tts: "Anh/chị muốn mở cái gì ạ?" } }
+- { say: "tắt đi",           expect: { verdict: ASK, code: VA_DEVICE_REQUIRED } }
+- { say: "cửa kính",         expect: { verdict: INVALID, code: VA_NO_DEFAULT_ACTION, tts: "Anh/chị muốn mở hay đóng cửa kính ạ?" } }
+- { say: "gương",            expect: { verdict: INVALID, code: VA_NO_DEFAULT_ACTION, tts: "Anh/chị muốn gập hay bung gương ạ?" } }
+- { say: "điều hòa",         expect: { verdict: OK, device: hvac, action: turn_on } }
+- { say: "",                 expect: { verdict: INVALID, code: VA_TOO_SHORT } }
+- { say: "   ",              expect: { verdict: INVALID, code: VA_TOO_SHORT } }
+- { say: "mở cái đó",        expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "kể chuyện cười đi",expect: { verdict: ESCALATE_UNKNOWN } }
+
+# ---------------------------------------------------------------- hỏi lại thiết bị
+- { say: "bật đèn",  expect: { verdict: ASK, code: VA_DEVICE_REQUIRED } }
+- { say: "đèn viền", context: ["tắt đèn"], expect: { verdict: OK, device: ambient_light, action: turn_off } }
+- { say: "đèn viền", context: ["bật đèn"], expect: { verdict: OK, device: ambient_light, action: turn_on } }
+- { say: "cửa kính", context: ["mở"],      expect: { verdict: OK, device: window, action: open } }
+- { say: "wifi",     context: ["tắt"],     expect: { verdict: OK, device: wifi, action: turn_off } }
+- { say: "5 phút nữa bật điều hòa",        expect: { verdict: INVALID, code: VA_NOT_SCHEDULABLE } }
+
+# ---------------------------------------------------------------- tham chiếu mơ hồ
+- { say: "chỉnh cái kia lên", context: ["bật đèn viền"], expect: { verdict: ASK, code: VA_VAGUE_REFERENCE, tts: "Anh/chị muốn chỉnh đèn viền phải không ạ?" } }
+- { say: "cái đó tắt đi",     context: ["bật đèn viền"], expect: { verdict: OK, device: ambient_light, action: turn_off } }
+
+# ---------------------------------------------------------------- khoá TẦNG
+# Kết quả đúng mà đi sai đường vẫn là sai: câu thường lọt lên cloud thì vừa chậm
+# vừa tốn tiền, câu cần suy luận mà bị tầng edge chộp thì ra lệnh sai.
+# (eval tắt LLM nên ở đây chỉ khoá các tầng tại chỗ; tầng cloud khoá ở golden_hard)
+- { say: "bật điều hòa",            expect: { checkpoint: 2, path: edge, label: none } }
+- { say: "hạ kính một nửa",         expect: { checkpoint: 2, path: edge } }
+- { say: "điều hòa mấy độ rồi",     expect: { checkpoint: 2, path: edge } }
+- { say: "",                        expect: { checkpoint: 1, label: gate } }
+- { say: "5 phút nữa bật điều hòa", expect: { checkpoint: 3, path: edge, label: not_now } }
+- { say: "bật đèn",                 expect: { checkpoint: 4, path: edge, label: device } }
+- { say: "chỉnh cái kia lên", context: ["bật đèn viền"], expect: { checkpoint: 4, path: edge } }
+- { say: "cái đó tắt đi",     context: ["bật đèn viền"], expect: { checkpoint: 2, path: edge } }
+
+# ---------------------------------------------------------------- câu không dấu (ASR)
+- { say: "bat dieu hoa",              expect: { verdict: OK, device: hvac, action: turn_on, checkpoint: 2 } }
+- { say: "ha kinh mot nua",           expect: { verdict: OK, device: window, action: set_level, value: 60 } }
+- { say: "bat dieu hoa hai muoi ba do", expect: { verdict: OK, device: hvac, action: set_level, value: 23 } }
+- { say: "am luong muoi lam",         expect: { verdict: OK, device: volume, action: set_level, value: 15 } }
+- { say: "bat suoi ghe lai muc 2",    expect: { verdict: OK, device: seat_heating, zone: driver, value: 2 } }
+- { say: "gap guong",                 expect: { verdict: OK, device: mirror, action: fold } }
+- { say: "bat dieu hoa hai muoi ba do ruoi", expect: { verdict: OK, device: hvac, action: set_level, value: 23.5 } }
+
+# ---------------------------------------------------------------- không được nhận nhầm
+# Tên màu và mấy chế độ gọi bằng MỘT chữ đều là từ thường ngày. "giá vàng hôm nay"
+# từng bị hiểu thành chuyển đèn viền sang màu vàng (M10).
+# Đổi có chủ đích 25/09: "giá vàng" nằm trong needs_live_data mà hệ không có nguồn,
+# nên trả lời thẳng trên xe "em chưa xem được" thay vì tốn một vòng cloud để nghe
+# đúng câu đó. Vẫn KHÔNG ra lệnh nào — đó mới là điều bộ này canh.
+- { say: "giá vàng hôm nay",   expect: { verdict: REPLY } }
+- { say: "đèn đỏ phía trước",  expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "áo màu cam",         expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "quả cam",            expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "mua cái áo nâu",     expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "nhảy bài này đi",    expect: { verdict: ESCALATE_UNKNOWN } }
+- { say: "học morse",          expect: { verdict: ESCALATE_UNKNOWN } }
+# nhưng cụm hai chữ trở lên thì vẫn phải nhận
+- { say: "lấy gió trong",         expect: { verdict: OK, device: fan, mode: recirc, checkpoint: 2 } }
+- { say: "thổi mặt",              expect: { verdict: OK, device: fan, mode: blow_face } }
+- { say: "massage kiểu làn sóng", expect: { verdict: OK, device: seat_massage, mode: msg_wave } }
+- { say: "phanh tái sinh mức cao",expect: { verdict: OK, device: regen_brake, mode: regen_high } }
+- { say: "đèn viền màu vàng",     expect: { verdict: OK, device: ambient_light, mode: amb_yellow } }
+
+# ---------------------------------------------------------------- lệnh lẫn trong câu dài (M12)
+- { say: "hôm nay tắc đường kinh khủng mà trời thì nóng nên bật điều hòa 22 độ đi", expect: { verdict: OK, device: hvac, action: set_level, value: 22 } }
+- { say: "nói chuyện với ông anh về cái quạt ở nhà hỏng mà nóng quá nên mở cửa kính ra đi", expect: { verdict: OK, device: window, action: open } }
+- { say: "tôi đang đọc thẻ bảo hành mà chữ bé quá với lại trong xe tối nữa nên bật đèn trần lên giúp tôi", expect: { verdict: OK, device: dome_light, action: turn_on } }
+
+# ---------------------------------------------------------------- trộn hai ý (M13, M14)
+- say: "tắt đèn viền với cả đèn trần"
+  expect:
+    verdict: OK
+    commands:
+      - { device: ambient_light, action: turn_off }
+      - { device: dome_light, action: turn_off }        # KHÔNG được thành turn_on
+- say: "mở cửa kính với cửa sổ trời"
+  expect:
+    verdict: OK
+    commands:
+      - { device: window, action: open }
+      - { device: sunroof, action: open }
+- { say: "massage ghế với mức 2", expect: { verdict: OK, device: seat_massage, action: set_level, value: 2, commands: [{device: seat_massage}] } }
+- { say: "bật điều hòa cho cả xe", expect: { verdict: OK, device: hvac, zone: all } }
+
+# ---------------------------------------------------------------- tự sửa giữa câu (M15)
+- { say: "bật điều hòa 24 độ à không 22 thôi",         expect: { verdict: OK, device: hvac, action: set_level, value: 22 } }
+- { say: "mở cửa kính thôi đóng lại",                  expect: { verdict: OK, device: window, action: close } }
+- { say: "bật đèn viền màu đỏ à không màu xanh dương", expect: { verdict: OK, device: ambient_light, mode: amb_blue } }
+- { say: "tăng âm lượng lên 30 à thôi 20 thôi",        expect: { verdict: OK, device: volume, action: set_level, value: 20 } }
+- { say: "bật sưởi ghế mức 3 à quên mức 1",            expect: { verdict: OK, device: seat_heating, action: set_level, value: 1 } }
+# "thôi" ở CUỐI câu là giục, không phải sửa ý
+- { say: "mở cốp thôi",                                expect: { verdict: OK, device: trunk, action: open } }
+- { say: "tắt đèn viền thôi",                          expect: { verdict: OK, device: ambient_light, action: turn_off } }
+- { say: "bật điều hòa đi thôi",                       expect: { verdict: OK, device: hvac, action: turn_on, value: 22 } }
+
+# ---------------------------------------------------------------- hư từ khi MẤT DẤU (M16)
+# Mọi tập hư từ (từ nối, giới từ đích, từ sửa ý, từ hỏi) trước đây so chuỗi CÓ DẤU,
+# nên câu ASR mất dấu đi qua hết: "len" không khớp "lên", "voi" không khớp "với",
+# "nham" không khớp "nhầm".
+- { say: "tang dieu hoa len 24 do",            expect: { verdict: OK, device: hvac, action: set_level, value: 24 } }
+- { say: "tang dieu hoa len 24 do a nham 26 do", expect: { verdict: OK, device: hvac, action: set_level, value: 26 } }
+- { say: "bat dieu hoa 24 do a khong 22 thoi", expect: { verdict: OK, device: hvac, action: set_level, value: 22 } }
+- { say: "dieu hoa may do roi",                expect: { verdict: OK, device: hvac, action: query } }
+- { say: "mo cua kinh di nao",                 expect: { verdict: OK, device: window, action: open } }
+- say: "tat den vien voi ca den tran"
+  expect:
+    verdict: OK
+    commands:
+      - { device: ambient_light, action: turn_off }
+      - { device: dome_light, action: turn_off }
+# "máy" bỏ dấu thành "may", trùng "mấy" — không được biến câu lệnh thành câu hỏi
+- { say: "bật máy lạnh lên 26 độ",             expect: { verdict: OK, device: hvac, action: set_level, value: 26 } }
+- { say: "bat may lanh len 26 do",             expect: { verdict: OK, device: hvac, action: set_level, value: 26 } }
+
+# ---------------------------------------------------------------- MẤT DẤU trộn lẫn
+# Lớp này soạn sau khi bạn gõ "tang dieu hoa len 24 do à nhầm 26" — câu thật trộn
+# mất dấu + hư từ + sửa ý cùng lúc, thứ 284 case cũ không có.
+# mất dấu + sửa ý
+- { say: "bat suoi ghe lai muc 3 a nham muc 2",    expect: { verdict: OK, device: seat_heating, action: set_level, value: 2, zone: driver } }
+- { say: "mo cua kinh a thoi dong lai",            expect: { verdict: OK, device: window, action: close } }
+- { say: "den vien mau do a khong mau xanh duong", expect: { verdict: OK, device: ambient_light, mode: amb_blue } }
+- { say: "am luong 30 a lon 20",                   expect: { verdict: OK, device: volume, action: set_level, value: 20 } }
+# mất dấu + nhiều lệnh
+- say: "bat dieu hoa roi mo nhac len"
+  expect: { verdict: OK, commands: [{ device: hvac }, { device: app_control }] }
+- say: "tat den vien kem den tran"
+  expect: { verdict: OK, commands: [{ device: ambient_light, action: turn_off }, { device: dome_light, action: turn_off }] }
+- say: "mo cua kinh voi cua so troi"
+  expect: { verdict: OK, commands: [{ device: window, action: open }, { device: sunroof, action: open }] }
+# mất dấu + số đọc bằng chữ
+- { say: "bat dieu hoa hai muoi sau do", expect: { verdict: OK, device: hvac, action: set_level, value: 26 } }
+- { say: "suoi ghe lai muc hai",         expect: { verdict: OK, device: seat_heating, value: 2, zone: driver } }
+# mất dấu + câu hỏi
+- { say: "dieu hoa bat chua",       expect: { verdict: OK, device: hvac, action: query } }
+- { say: "suoi ghe dang muc may",   expect: { verdict: OK, device: seat_heating, action: query } }
+- { say: "dang mo app gi",          expect: { verdict: OK, device: app_control, action: query } }
+# mất dấu + giục (KHÔNG phải câu hỏi)
+- { say: "bat dieu hoa len nao",    expect: { verdict: OK, device: hvac, action: turn_on } }
+# mất dấu + vùng
+- { say: "suoi ghe sau ben trai muc 2", expect: { verdict: OK, device: seat_heating, zone: rear_left, value: 2 } }
+- { say: "tat den suong mu truoc",      expect: { verdict: OK, device: fog_light, action: turn_off, zone: front } }
+- { say: "tang am luong nhac",          expect: { verdict: OK, device: volume, action: increase, zone: media } }
+# mất dấu + lệnh lẫn trong câu dài
+- { say: "hom nay tac duong kinh khung ma troi nong nen bat dieu hoa 22 do di", expect: { verdict: OK, device: hvac, action: set_level, value: 22 } }
+- { say: "cai quat o nha hong roi thoi mo cua kinh ra di", expect: { verdict: OK, device: window, action: open } }
+# mất dấu + nói tắt
+- { say: "giam 2 do",   context: ["bat dieu hoa"], expect: { verdict: OK, device: hvac, action: decrease } }
+- { say: "mat hon nua", context: ["bat dieu hoa"], expect: { verdict: OK, device: hvac, action: decrease } }
+
+# ---------------------------------------------------------------- bẫy dấu ở TẦNG SỐ
+# "nhăm" (số 5 trong "hai mươi nhăm") bỏ dấu trùng "nhầm" (sửa ý);
+# "một" (số 1) bỏ dấu trùng "mốt" (dạng kết hợp). Cùng họ bẫy máy/mấy, đỏ/độ.
+- { say: "bật điều hòa hai mươi nhăm độ", expect: { verdict: OK, device: hvac, action: set_level, value: 25 } }
+- { say: "bật điều hòa hai mươi mốt độ",  expect: { verdict: OK, device: hvac, action: set_level, value: 21 } }
+- { say: "bật điều hòa hai mươi tư độ",   expect: { verdict: OK, device: hvac, action: set_level, value: 24 } }
+- { say: "âm lượng mười lăm",             expect: { verdict: OK, device: volume, action: set_level, value: 15 } }
+# "nhầm"/"lăm"/"tư" đứng một mình KHÔNG phải số
+- { say: "điều hòa nhầm rồi",             expect: { verdict: OK, device: hvac, action: turn_on, value: 22 } }
+- { say: "bật sưởi ghế nhầm",             expect: { verdict: OK, device: seat_heating, action: turn_on } }
+
+# ---------------------------------------------------------------- needle: thêm 9 câu
+# Phần lan man CỐ Ý nhắc từ trùng alias, để chắc M12 chọn theo mệnh đề có động từ.
+- { say: "vừa rồi đi qua cái cửa hàng bán gương với kính mà đông người quá thôi bật điều hòa lên đi", expect: { verdict: OK, device: hvac, action: turn_on } }
+- { say: "hôm qua đi rửa xe xong mà bụi vẫn bám đầy thôi hạ kính xuống 50 đi", expect: { verdict: OK, device: window, action: set_level, value: 60 } }
+- { say: "ông anh vừa gọi bảo cốp xe ông ấy hỏng rồi mà thôi tăng âm lượng lên chút", expect: { verdict: OK, device: volume, action: increase } }
+- { say: "cái áo màu đỏ với cái quạt ở nhà anh để đâu rồi nhỉ à mà bật sưởi ghế lái đi", expect: { verdict: OK, device: seat_heating, zone: driver } }
+- { say: "trời đang mưa mà đường thì tắc kinh khủng nên đóng hết cửa kính lại đi", expect: { verdict: OK, device: window, action: close } }
+- { say: "anh đang nghe podcast về xe điện với pin sạc các thứ thôi mở bản đồ lên xem đường", expect: { verdict: OK, device: app_control, item: map } }
+- { say: "nay họp căng quá đầu anh đau kinh mà thôi bật massage ghế lên", expect: { verdict: OK, device: seat_massage, action: turn_on } }
+- { say: "em gái anh thích màu tím lắm thôi đổi đèn viền sang màu vàng đi", expect: { verdict: OK, device: ambient_light, mode: amb_yellow } }
+- { say: "xe bên cạnh mở nhạc to kinh khủng mà thôi đóng cửa kính lại", expect: { verdict: OK, device: window, action: close } }
+# "hỏng" bỏ dấu thành "hong" = "hồng" (màu) — không được biến thành lệnh đèn viền
+- { say: "cái quạt ở nhà hỏng rồi thôi mở cửa kính ra đi", expect: { verdict: OK, device: window, action: open } }
+- { say: "cai quat o nha hong roi thoi mo cua kinh ra di", expect: { verdict: OK, device: window, action: open } }
+
+# ---------------------------------------------------------------- correction: thêm 11 câu
+- { say: "bật điều hòa 26 độ à không 24",              expect: { verdict: OK, device: hvac, value: 24 } }
+- { say: "mở cửa sổ trời à thôi mở cửa kính",          expect: { verdict: OK, device: window, action: open } }
+- { say: "sưởi ghế lái mức 2 à nhầm ghế phụ",          expect: { verdict: OK, device: seat_heating, zone: passenger } }
+- { say: "âm lượng 30 à không 35",                     expect: { verdict: OK, device: volume, value: 35 } }
+- { say: "đèn viền màu xanh lá à không xanh dương",    expect: { verdict: OK, device: ambient_light, mode: amb_blue } }
+- { say: "tắt điều hòa à quên bật lên chứ",            expect: { verdict: OK, device: hvac, action: turn_on } }
+- { say: "bật quạt gió mức 5 à lộn mức 3",             expect: { verdict: OK, device: fan, value: 3 } }
+- { say: "mở cốp à không đóng lại",                    expect: { verdict: OK, device: trunk, action: close } }
+- { say: "độ sáng màn hình 80 à thôi 50",              expect: { verdict: OK, device: screen_brightness, value: 50 } }
+# sửa ý đổi hẳn THIẾT BỊ
+- { say: "bật sưởi ghế à không làm mát ghế",           expect: { verdict: OK, device: seat_cooling, action: turn_on } }
+# sửa ý HAI lần
+- { say: "điều hòa 26 à không 24 à thôi 22",           expect: { verdict: OK, device: hvac, value: 22 } }
+- { say: "massage ghế kiểu sóng à không kiểu thư giãn", expect: { verdict: OK, device: seat_massage, mode: msg_relieve } }

@@ -1,0 +1,785 @@
+{
+  "n": 4473,
+  "command": {
+    "precision": 0.6538,
+    "recall": 0.7986,
+    "f1": 0.719
+  },
+  "command_intent_acc": 0.8715,
+  "n_commands_acc": 0.8746,
+  "slot": {
+    "precision": 0.7865,
+    "recall": 0.8805,
+    "f1": 0.8309
+  },
+  "exact_match": 0.706,
+  "route_acc": 0.9523,
+  "by_n_commands": {
+    "1": {
+      "n": 4058,
+      "exact_match": 0.7132
+    },
+    "2": {
+      "n": 352,
+      "exact_match": 0.5852
+    },
+    "3": {
+      "n": 3,
+      "exact_match": 1.0
+    },
+    "4": {
+      "n": 60,
+      "exact_match": 0.9167
+    }
+  },
+  "by_noise": {
+    "disfluency": {
+      "n": 456,
+      "exact_match": 0.682
+    },
+    "fillers": {
+      "n": 1250,
+      "exact_match": 0.696
+    },
+    "code_switch": {
+      "n": 556,
+      "exact_match": 0.777
+    },
+    "dialect": {
+      "n": 388,
+      "exact_match": 0.6907
+    },
+    "clean": {
+      "n": 2013,
+      "exact_match": 0.699
+    },
+    "asr_confusion": {
+      "n": 93,
+      "exact_match": 0.7527
+    },
+    "no_diacritics": {
+      "n": 1,
+      "exact_match": 1.0
+    }
+  },
+  "worst_intents": [
+    [
+      "nav.eta_query",
+      {
+        "n": 67,
+        "intent_acc": 0.1493
+      }
+    ],
+    [
+      "nav.cancel",
+      {
+        "n": 13,
+        "intent_acc": 0.1538
+      }
+    ],
+    [
+      "bluetooth.query",
+      {
+        "n": 26,
+        "intent_acc": 0.3077
+      }
+    ],
+    [
+      "dialog.courtesy",
+      {
+        "n": 39,
+        "intent_acc": 0.3077
+      }
+    ],
+    [
+      "reject.unsupported_feature",
+      {
+        "n": 21,
+        "intent_acc": 0.3333
+      }
+    ],
+    [
+      "steering_wheel.turn_off",
+      {
+        "n": 9,
+        "intent_acc": 0.3333
+      }
+    ],
+    [
+      "chitchat.smalltalk",
+      {
+        "n": 19,
+        "intent_acc": 0.3684
+      }
+    ],
+    [
+      "screen_control.open",
+      {
+        "n": 8,
+        "intent_acc": 0.375
+      }
+    ],
+    [
+      "oos.unclear",
+      {
+        "n": 18,
+        "intent_acc": 0.3889
+      }
+    ],
+    [
+      "dialog.cancel",
+      {
+        "n": 25,
+        "intent_acc": 0.4
+      }
+    ]
+  ],
+  "top_confusions": [
+    [
+      "nav.eta_query -> call.dial",
+      25
+    ],
+    [
+      "nav.eta_query -> message.send",
+      23
+    ],
+    [
+      "dialog.courtesy -> assist.implicit_need",
+      14
+    ],
+    [
+      "window.close -> defrost.turn_on",
+      10
+    ],
+    [
+      "window.decrease -> window.increase",
+      10
+    ],
+    [
+      "nav.add_stop -> nav.navigate",
+      9
+    ],
+    [
+      "media.stop -> app_control.close",
+      9
+    ],
+    [
+      "info.weather -> hvac.query",
+      8
+    ],
+    [
+      "bluetooth.query -> bluetooth.turn_on",
+      8
+    ],
+    [
+      "nav.cancel -> dialog.cancel",
+      7
+    ],
+    [
+      "screen_control.close -> screen_control.open",
+      7
+    ],
+    [
+      "window.set -> window.decrease",
+      6
+    ],
+    [
+      "hvac.set -> hvac.increase",
+      6
+    ],
+    [
+      "bluetooth.turn_off -> call.dial",
+      5
+    ],
+    [
+      "bluetooth.turn_on -> call.dial",
+      5
+    ]
+  ],
+  "per_intent": {
+    "ambient_light.decrease": {
+      "n": 12,
+      "intent_acc": 0.9167
+    },
+    "ambient_light.increase": {
+      "n": 22,
+      "intent_acc": 0.7273
+    },
+    "ambient_light.query": {
+      "n": 40,
+      "intent_acc": 1.0
+    },
+    "ambient_light.set": {
+      "n": 123,
+      "intent_acc": 0.9675
+    },
+    "ambient_light.turn_off": {
+      "n": 48,
+      "intent_acc": 0.875
+    },
+    "ambient_light.turn_on": {
+      "n": 16,
+      "intent_acc": 0.875
+    },
+    "app_control.close": {
+      "n": 42,
+      "intent_acc": 0.9286
+    },
+    "app_control.open": {
+      "n": 32,
+      "intent_acc": 0.9062
+    },
+    "assist.implicit_need": {
+      "n": 45,
+      "intent_acc": 0.6889
+    },
+    "assist.unsupported_request": {
+      "n": 40,
+      "intent_acc": 0.525
+    },
+    "auto_highbeam.query": {
+      "n": 6,
+      "intent_acc": 1.0
+    },
+    "auto_highbeam.turn_off": {
+      "n": 12,
+      "intent_acc": 1.0
+    },
+    "auto_highbeam.turn_on": {
+      "n": 10,
+      "intent_acc": 1.0
+    },
+    "bluetooth.query": {
+      "n": 26,
+      "intent_acc": 0.3077
+    },
+    "bluetooth.turn_off": {
+      "n": 21,
+      "intent_acc": 0.6667
+    },
+    "bluetooth.turn_on": {
+      "n": 41,
+      "intent_acc": 0.8537
+    },
+    "call.dial": {
+      "n": 107,
+      "intent_acc": 0.9533
+    },
+    "charge_port.close": {
+      "n": 18,
+      "intent_acc": 0.9444
+    },
+    "charge_port.open": {
+      "n": 40,
+      "intent_acc": 0.925
+    },
+    "charge_port.query": {
+      "n": 13,
+      "intent_acc": 0.7692
+    },
+    "chitchat.smalltalk": {
+      "n": 19,
+      "intent_acc": 0.3684
+    },
+    "defrost.query": {
+      "n": 34,
+      "intent_acc": 1.0
+    },
+    "defrost.turn_off": {
+      "n": 16,
+      "intent_acc": 1.0
+    },
+    "defrost.turn_on": {
+      "n": 63,
+      "intent_acc": 0.9683
+    },
+    "dialog.cancel": {
+      "n": 25,
+      "intent_acc": 0.4
+    },
+    "dialog.confirm": {
+      "n": 18,
+      "intent_acc": 0.8889
+    },
+    "dialog.correct": {
+      "n": 37,
+      "intent_acc": 1.0
+    },
+    "dialog.courtesy": {
+      "n": 39,
+      "intent_acc": 0.3077
+    },
+    "dialog.deny": {
+      "n": 24,
+      "intent_acc": 0.75
+    },
+    "dialog.repeat": {
+      "n": 39,
+      "intent_acc": 0.7179
+    },
+    "dialog.select_option": {
+      "n": 26,
+      "intent_acc": 0.7692
+    },
+    "dome_light.query": {
+      "n": 14,
+      "intent_acc": 0.7857
+    },
+    "dome_light.set": {
+      "n": 21,
+      "intent_acc": 1.0
+    },
+    "dome_light.turn_off": {
+      "n": 11,
+      "intent_acc": 0.4545
+    },
+    "dome_light.turn_on": {
+      "n": 17,
+      "intent_acc": 0.5882
+    },
+    "fan.decrease": {
+      "n": 29,
+      "intent_acc": 0.9655
+    },
+    "fan.increase": {
+      "n": 40,
+      "intent_acc": 0.925
+    },
+    "fan.query": {
+      "n": 32,
+      "intent_acc": 1.0
+    },
+    "fan.set": {
+      "n": 73,
+      "intent_acc": 1.0
+    },
+    "fan.turn_off": {
+      "n": 23,
+      "intent_acc": 0.9565
+    },
+    "fan.turn_on": {
+      "n": 22,
+      "intent_acc": 0.8636
+    },
+    "fog_light.query": {
+      "n": 7,
+      "intent_acc": 1.0
+    },
+    "fog_light.turn_off": {
+      "n": 19,
+      "intent_acc": 1.0
+    },
+    "fog_light.turn_on": {
+      "n": 13,
+      "intent_acc": 0.8462
+    },
+    "foot_kick.query": {
+      "n": 15,
+      "intent_acc": 1.0
+    },
+    "foot_kick.turn_off": {
+      "n": 14,
+      "intent_acc": 1.0
+    },
+    "foot_kick.turn_on": {
+      "n": 14,
+      "intent_acc": 1.0
+    },
+    "frunk.close": {
+      "n": 17,
+      "intent_acc": 0.9412
+    },
+    "frunk.open": {
+      "n": 16,
+      "intent_acc": 0.8125
+    },
+    "frunk.query": {
+      "n": 12,
+      "intent_acc": 1.0
+    },
+    "hud.query": {
+      "n": 9,
+      "intent_acc": 1.0
+    },
+    "hud.set": {
+      "n": 26,
+      "intent_acc": 1.0
+    },
+    "hud.turn_off": {
+      "n": 11,
+      "intent_acc": 0.9091
+    },
+    "hud.turn_on": {
+      "n": 9,
+      "intent_acc": 0.6667
+    },
+    "hvac.decrease": {
+      "n": 70,
+      "intent_acc": 1.0
+    },
+    "hvac.increase": {
+      "n": 73,
+      "intent_acc": 0.9178
+    },
+    "hvac.query": {
+      "n": 44,
+      "intent_acc": 0.9091
+    },
+    "hvac.set": {
+      "n": 211,
+      "intent_acc": 0.9336
+    },
+    "hvac.turn_off": {
+      "n": 42,
+      "intent_acc": 0.9286
+    },
+    "hvac.turn_on": {
+      "n": 134,
+      "intent_acc": 0.9776
+    },
+    "info.news": {
+      "n": 50,
+      "intent_acc": 0.9
+    },
+    "info.open_question": {
+      "n": 25,
+      "intent_acc": 0.44
+    },
+    "info.time": {
+      "n": 15,
+      "intent_acc": 0.8
+    },
+    "info.weather": {
+      "n": 52,
+      "intent_acc": 0.7692
+    },
+    "media.next": {
+      "n": 15,
+      "intent_acc": 1.0
+    },
+    "media.pause": {
+      "n": 20,
+      "intent_acc": 1.0
+    },
+    "media.play": {
+      "n": 183,
+      "intent_acc": 0.9836
+    },
+    "media.previous": {
+      "n": 15,
+      "intent_acc": 0.9333
+    },
+    "media.resume": {
+      "n": 13,
+      "intent_acc": 0.6923
+    },
+    "media.stop": {
+      "n": 29,
+      "intent_acc": 0.6552
+    },
+    "message.send": {
+      "n": 76,
+      "intent_acc": 1.0
+    },
+    "mirror.fold": {
+      "n": 33,
+      "intent_acc": 0.9697
+    },
+    "mirror.query": {
+      "n": 25,
+      "intent_acc": 1.0
+    },
+    "mirror.unfold": {
+      "n": 22,
+      "intent_acc": 1.0
+    },
+    "nav.add_stop": {
+      "n": 51,
+      "intent_acc": 0.7843
+    },
+    "nav.cancel": {
+      "n": 13,
+      "intent_acc": 0.1538
+    },
+    "nav.eta_query": {
+      "n": 67,
+      "intent_acc": 0.1493
+    },
+    "nav.find_poi": {
+      "n": 48,
+      "intent_acc": 0.9792
+    },
+    "nav.navigate": {
+      "n": 190,
+      "intent_acc": 0.9053
+    },
+    "nav.route_instruction": {
+      "n": 48,
+      "intent_acc": 0.7292
+    },
+    "oos.unclear": {
+      "n": 18,
+      "intent_acc": 0.3889
+    },
+    "regen_brake.query": {
+      "n": 20,
+      "intent_acc": 1.0
+    },
+    "regen_brake.set": {
+      "n": 30,
+      "intent_acc": 0.7333
+    },
+    "regen_brake.turn_off": {
+      "n": 11,
+      "intent_acc": 0.8182
+    },
+    "regen_brake.turn_on": {
+      "n": 7,
+      "intent_acc": 0.5714
+    },
+    "reject.unsafe_action": {
+      "n": 45,
+      "intent_acc": 0.8222
+    },
+    "reject.unsupported_feature": {
+      "n": 21,
+      "intent_acc": 0.3333
+    },
+    "scene_mode.query": {
+      "n": 43,
+      "intent_acc": 1.0
+    },
+    "scene_mode.set": {
+      "n": 67,
+      "intent_acc": 0.8507
+    },
+    "scene_mode.turn_off": {
+      "n": 62,
+      "intent_acc": 0.9516
+    },
+    "screen_brightness.decrease": {
+      "n": 21,
+      "intent_acc": 0.7619
+    },
+    "screen_brightness.increase": {
+      "n": 25,
+      "intent_acc": 0.8
+    },
+    "screen_brightness.query": {
+      "n": 13,
+      "intent_acc": 1.0
+    },
+    "screen_brightness.set": {
+      "n": 23,
+      "intent_acc": 1.0
+    },
+    "screen_control.close": {
+      "n": 50,
+      "intent_acc": 0.8
+    },
+    "screen_control.open": {
+      "n": 8,
+      "intent_acc": 0.375
+    },
+    "seat_cooling.decrease": {
+      "n": 27,
+      "intent_acc": 0.7778
+    },
+    "seat_cooling.increase": {
+      "n": 37,
+      "intent_acc": 1.0
+    },
+    "seat_cooling.query": {
+      "n": 27,
+      "intent_acc": 1.0
+    },
+    "seat_cooling.set": {
+      "n": 105,
+      "intent_acc": 0.9714
+    },
+    "seat_cooling.turn_off": {
+      "n": 8,
+      "intent_acc": 1.0
+    },
+    "seat_cooling.turn_on": {
+      "n": 12,
+      "intent_acc": 0.9167
+    },
+    "seat_heating.decrease": {
+      "n": 19,
+      "intent_acc": 0.9474
+    },
+    "seat_heating.increase": {
+      "n": 17,
+      "intent_acc": 0.7059
+    },
+    "seat_heating.query": {
+      "n": 49,
+      "intent_acc": 1.0
+    },
+    "seat_heating.set": {
+      "n": 34,
+      "intent_acc": 0.9412
+    },
+    "seat_heating.turn_off": {
+      "n": 16,
+      "intent_acc": 0.875
+    },
+    "seat_heating.turn_on": {
+      "n": 47,
+      "intent_acc": 0.7872
+    },
+    "seat_massage.decrease": {
+      "n": 16,
+      "intent_acc": 0.75
+    },
+    "seat_massage.increase": {
+      "n": 20,
+      "intent_acc": 0.9
+    },
+    "seat_massage.query": {
+      "n": 24,
+      "intent_acc": 0.75
+    },
+    "seat_massage.set": {
+      "n": 43,
+      "intent_acc": 1.0
+    },
+    "seat_massage.turn_off": {
+      "n": 15,
+      "intent_acc": 1.0
+    },
+    "seat_massage.turn_on": {
+      "n": 43,
+      "intent_acc": 1.0
+    },
+    "steering_wheel.query": {
+      "n": 18,
+      "intent_acc": 1.0
+    },
+    "steering_wheel.turn_off": {
+      "n": 9,
+      "intent_acc": 0.3333
+    },
+    "steering_wheel.turn_on": {
+      "n": 26,
+      "intent_acc": 1.0
+    },
+    "sunroof.close": {
+      "n": 34,
+      "intent_acc": 1.0
+    },
+    "sunroof.decrease": {
+      "n": 26,
+      "intent_acc": 0.8077
+    },
+    "sunroof.increase": {
+      "n": 29,
+      "intent_acc": 0.8621
+    },
+    "sunroof.open": {
+      "n": 48,
+      "intent_acc": 1.0
+    },
+    "sunroof.query": {
+      "n": 22,
+      "intent_acc": 0.8636
+    },
+    "sunroof.set": {
+      "n": 24,
+      "intent_acc": 1.0
+    },
+    "tire_pressure.query": {
+      "n": 15,
+      "intent_acc": 1.0
+    },
+    "trunk.close": {
+      "n": 12,
+      "intent_acc": 1.0
+    },
+    "trunk.open": {
+      "n": 11,
+      "intent_acc": 1.0
+    },
+    "trunk.query": {
+      "n": 7,
+      "intent_acc": 1.0
+    },
+    "vehicle_status.query": {
+      "n": 47,
+      "intent_acc": 0.7872
+    },
+    "volume.decrease": {
+      "n": 39,
+      "intent_acc": 0.9487
+    },
+    "volume.increase": {
+      "n": 35,
+      "intent_acc": 0.8286
+    },
+    "volume.mute": {
+      "n": 26,
+      "intent_acc": 0.7692
+    },
+    "volume.query": {
+      "n": 34,
+      "intent_acc": 0.9412
+    },
+    "volume.set": {
+      "n": 66,
+      "intent_acc": 0.9697
+    },
+    "volume.unmute": {
+      "n": 26,
+      "intent_acc": 0.8077
+    },
+    "wifi.query": {
+      "n": 10,
+      "intent_acc": 0.9
+    },
+    "wifi.turn_off": {
+      "n": 15,
+      "intent_acc": 0.8
+    },
+    "wifi.turn_on": {
+      "n": 11,
+      "intent_acc": 0.7273
+    },
+    "wifi_hotspot.query": {
+      "n": 18,
+      "intent_acc": 0.7778
+    },
+    "wifi_hotspot.turn_off": {
+      "n": 11,
+      "intent_acc": 0.9091
+    },
+    "wifi_hotspot.turn_on": {
+      "n": 15,
+      "intent_acc": 1.0
+    },
+    "window.close": {
+      "n": 72,
+      "intent_acc": 0.7917
+    },
+    "window.decrease": {
+      "n": 33,
+      "intent_acc": 0.5758
+    },
+    "window.increase": {
+      "n": 40,
+      "intent_acc": 1.0
+    },
+    "window.open": {
+      "n": 48,
+      "intent_acc": 0.8542
+    },
+    "window.query": {
+      "n": 25,
+      "intent_acc": 0.96
+    },
+    "window.set": {
+      "n": 54,
+      "intent_acc": 0.8519
+    }
+  }
+}

@@ -1,0 +1,574 @@
+{
+  "khi": "2026-10-06T13:54:17",
+  "cau_hinh": {
+    "model": "qwen-plus",
+    "prompt_sha": "fab6ecd722e8",
+    "seed": 7,
+    "mau": 500,
+    "lan": 3,
+    "prompt_cu": true,
+    "ghi_chu_van_tay": "MỐC CŨ - đo bằng prompt TRƯỚC commit a802230. Vân tay ghi ở đây theo cách băm cũ (chỉ phủ SYSTEM thô), không so được với mốc mới. ĐỪNG --compare với file này: nó sẽ báo tăng giả. Mốc đang dùng là tests/baseline_cloud_sach.json."
+  },
+  "bo_cau": "tests/golden_qc.vi.yaml (tren_xe=false)",
+  "so_cau": 500,
+  "tong_dung": 0.582,
+  "edge_tu_lo": 0.726,
+  "cloud_khi_goi": 0.7177,
+  "so_lan_goi": 137,
+  "do_tre_ms": {
+    "trung_vi": 877.9545000288635,
+    "p90": 1167.7597089437768,
+    "max": 3046.7443329980597
+  },
+  "truong_khi_goi": {
+    "action": 0.7883,
+    "device": 0.8467,
+    "item": 0.7636,
+    "mode": 0.7,
+    "step": 0.9,
+    "value": 0.6667,
+    "zone": 0.8333
+  },
+  "ly_do": {
+    "edge tự lo": 363,
+    "đúng": 96,
+    "sai hành động": 12,
+    "cloud không ra lệnh": 8,
+    "sai tham số": 8,
+    "cloud ra lệnh, tầng sau chặn": 8,
+    "sai thiết bị": 5
+  },
+  "sai": [
+    {
+      "say": "Màn hình hệ thống điều hòa đang hiện cho tui coi đúng hông",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "hvac"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Khóa nắp sạc ni răng rồi nghen.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "charge_port",
+        "action": "query"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Kéo tui ra khỏi trình phát nhạc",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "music"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Màn hình settings đang hiện cho tui coi đúng hông",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "general_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Răng ghế ni nóng ri, làm mát cộng thêm 2 mức đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "passenger",
+        "step": 2
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "driver",
+        "step": 2
+      }
+    },
+    {
+      "say": "Cho cửa trời full.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "glass",
+        "value": 100
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "glass"
+      }
+    },
+    {
+      "say": "Hiện có đang ở giao diện thiết bị kết nối không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "bluetooth"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "device_connect"
+      }
+    },
+    {
+      "say": "Đưa tấm che nắng lên mức tối đa giúp tôi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 100
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      }
+    },
+    {
+      "say": "Chỉnh quạt làm mát ghế lái nhẹ hơn giúp tôi với.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "Ngắt đèn vàng đằng trước xe.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho điều hoà chạy hết ga đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "hvac",
+        "action": "set_mode",
+        "mode": "max"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "set_level",
+        "zone": "all",
+        "value": 32
+      }
+    },
+    {
+      "say": "Cho toàn bộ hàng 3 chạy kiểu đấm vỗ nhé",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_jump"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Thôi hủy lệnh chỉnh âm thanh vừa rồi đi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "volume",
+        "action": "query"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "kéo tiếng trợ lý ảo lùi -2 nấc coi sao nha",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "decrease",
+        "zone": "va",
+        "step": -2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "va",
+        "step": -2
+      }
+    },
+    {
+      "say": "Màn hình độ sáng hiện ra đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "nhích tiếng chuông cuộc gọi điện thoại mốc nhỏ nhất 0 đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "ring",
+        "value": 0
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "ring",
+        "step": 0
+      }
+    },
+    {
+      "say": "Rear left seat lạnh quá trời, boost lên 3 nha",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "rear_left",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear_left",
+        "step": 3
+      }
+    },
+    {
+      "say": "Mở shade nha",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Nhanh tay bật cái đèn vàng phía trước lên coi chứ lị",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đang hiện dịch vụ xe đấy hả",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "vehicle_utilities"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "book_service"
+      }
+    },
+    {
+      "say": "đẩy tiếng cuộc gọi sang mức -5 xem",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "call",
+        "step": -5
+      }
+    },
+    {
+      "say": "Không cần đèn vàng trước, chỉ bật đèn sau.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      }
+    },
+    {
+      "say": "Tui đang trong audio positioning settings đúng không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "audio_focus"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "wifi mất tích rồi, tìm lại giúp với",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "wifi",
+        "action": "turn_on"
+      },
+      "duoc": {
+        "device": "wifi",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Cho tui vô media",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "music"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "nã tiếng nhạc kịch trần bay nóc nhà luôn",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "media",
+        "value": 40
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "glass"
+      }
+    },
+    {
+      "say": "xem hộ chuông tin nhắn mô rồi mi",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "query",
+        "zone": "chime"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bỏ mọi hiệu ứng trên dải đèn nội thất.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_none"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "amb_white"
+      }
+    },
+    {
+      "say": "Cho anh vào hotspot setup cái",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "wifi_hotspot"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "ADAS đang active hả",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "driving_assistance"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cái màn hình trợ lý giọng nói đang hiện đó hả",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "va_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "đẩy tiếng bản đồ ở mức 25% giùm",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": 25
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Vô phần trợ lý giọng nói với nờ",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "va_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho shade lên 45% chạy đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 45
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      }
+    },
+    {
+      "say": "Hạ cấp độ ghế giữa hàng hai chạm mốc -2 giúp tôi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "rear",
+        "value": -2
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "rear",
+        "value": -2
+      }
+    },
+    {
+      "say": "đẩy tiếng chuông cuộc gọi sang mức -5 coi mi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "ring",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "ring",
+        "step": -5
+      }
+    },
+    {
+      "say": "Không phải mức 1 đâu, chuyển mức 3",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "driver",
+        "value": 1
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Chuyển khỏi màn hình settings cho tui nha",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "general_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "cho tất cả âm lượng sang mức 20% cái coi",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "all",
+        "value": 20
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho ánh sáng nội thất shutdown đi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "ambient_light",
+        "action": "turn_off"
+      },
+      "duoc": {
+        "device": "dome_light",
+        "action": "turn_off"
+      }
+    },
+    {
+      "say": "Ánh sáng màn hình hơi gắt, hạ xuống 41% nữa nhé",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "screen_brightness",
+        "action": "decrease",
+        "step": 41
+      },
+      "duoc": {
+        "device": "screen_brightness",
+        "action": "set_level",
+        "value": 41
+      }
+    }
+  ],
+  "cloud_khi_goi_cac_lan": [
+    0.7226,
+    0.7299,
+    0.7007
+  ]
+}

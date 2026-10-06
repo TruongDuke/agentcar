@@ -1,0 +1,85 @@
+# Luật suy luận cho tầng [2] — DỮ LIỆU, không phải văn xuôi trong prompt.
+#
+# Vì sao tách ra: prompt viết tay đã tự trùng lặp (luật hẹn giờ từng xuất hiện hai
+# lần), và luật trỏ tới thiết bị mà không ai kiểm — thêm dòng "ngột ngạt -> fan
+# fresh" cho VF9 thì với dòng xe không có fan.fresh nó vẫn nằm trong prompt.
+#
+# Giờ: prompt SINH từ file này, lọc theo caps của từng xe, và linter kiểm từng dòng.
+# Thêm luật = thêm một dòng ở đây + một case trong tests/golden_hard.vi.yaml.
+#
+#   cue     các cách nói, cách nhau bằng dấu phẩy
+#   device  id trong caps
+#   action  action canonical (turn_on/decrease/...)
+#   mode    dùng thay action khi việc cần làm là đặt chế độ
+
+version: 1
+locale: vi
+
+# Người ta tả CẢM GIÁC. Phải suy đúng chiều: họ muốn thoát khỏi trạng thái đang có.
+sensations:
+  - { cue: "nóng, nóng quá, hầm hập",        device: hvac,              action: decrease }
+  - { cue: "lạnh, rét, lạnh quá",            device: hvac,              action: increase }
+  - { cue: "ngột ngạt, bí, thiếu khí",       device: fan,               mode: fresh }
+  - { cue: "chói mắt, sáng quá",             device: screen_brightness, action: decrease }
+  - { cue: "tối, không thấy rõ màn hình",    device: screen_brightness, action: increase }
+  - { cue: "ồn, ồn quá, to quá",             device: volume,            action: decrease }
+  - { cue: "nhỏ quá, không nghe rõ",         device: volume,            action: increase }
+  # Bốn luật dưới thêm sau khi đối chiếu tier4_implicit của Audio2Tool và MAC-SLU —
+  # cả hai bộ đều có nhóm này mà mình thiếu. Không phải mình tự nghĩ ra.
+  - { cue: "lạnh tay, buốt tay, tay lạnh",   device: steering_wheel,    mode: heating }
+  - { cue: "ghế bí, nóng lưng, ngồi bí, bí lưng", device: seat_cooling, action: turn_on }
+
+# Người ta tả HOÀN CẢNH, không nói việc cần làm.
+situations:
+  - { cue: "con ngủ, em bé ngủ, cháu đang ngủ", device: volume,     action: decrease }
+  - { cue: "sắp vào hầm, hầm gửi xe, đường hẹp", device: mirror,    action: fold }
+  - { cue: "trời mưa, mưa to",                   device: window,     action: close }
+  - { cue: "đi rửa xe, chuẩn bị rửa xe",         device: scene_mode, mode: wash }
+  - { cue: "đi cắm trại, dựng lều",              device: scene_mode, mode: camp }
+  - { cue: "có thú cưng trong xe, để chó mèo ở lại", device: scene_mode, mode: pet }
+  - { cue: "chuẩn bị xuống xe, tới rồi",         device: hvac,       action: turn_off }
+  - { cue: "kính mờ, mờ kính, mờ hết kính, sương bám kính", device: defrost, action: turn_on }
+  - { cue: "tối không thấy gì, rơi đồ trong xe, tìm đồ trong xe", device: dome_light, action: turn_on }
+
+# Tên gọi chung cho nhiều thiết bị — gặp là phải hỏi lại, không được tự chọn.
+ambiguous: [đèn, ghế, màn hình, cửa]
+
+# Từ tham chiếu mơ hồ. Dùng cho HAI việc:
+#   - sinh ví dụ vào prompt (gợi ý, model vẫn tự quyết)
+#   - làm điều kiện cho chốt tất định trong agent: có từ này VÀ không suy ra được
+#     thiết bị thì hỏi lại ngay, không gọi cloud, không đoán bừa.
+# Lưu ý "cái đó tắt đi" vẫn chạy bình thường khi suy ra được thiết bị từ lượt trước
+# — điều kiện "không suy ra được" mới là chỗ chặn.
+# CHỈ gồm từ trỏ tới THIẾT BỊ. Không đưa "bên kia", "phía kia" vào đây: mấy chữ đó
+# trỏ tới VÙNG ("ghế bên kia cũng vậy" = ghế phụ, thiết bị đã rõ là sưởi ghế), và
+# suy ra vùng nào thì cần ngữ cảnh — việc của tầng [2].
+vague_references: ["cái kia", "cái đó", "cái này", "cái ấy", "cái đấy", "thứ kia", "cái nớ"]
+
+# ---------------------------------------------------------------- CÂU HỎI CHUNG
+# Câu không phải lệnh điều khiển thì vẫn nên trả lời, đừng từ chối máy móc —
+# người ta ngồi trong xe hỏi gì cũng là hỏi trợ lý.
+#
+# Nhưng phải tách hai loại, vì model KHÔNG biết số liệu hiện tại:
+#   - trả lời được từ kiến thức sẵn có  -> cứ trả lời, ngắn gọn
+#   - cần số liệu cập nhật theo thời gian -> nói rõ là chưa xem được, ĐỪNG BỊA
+knowledge:
+  # Để trống = tầng [2] tự trả lời câu hỏi chung (đang chạy như vậy).
+  # Điền tên trợ lý chung của hệ (vd "assistant") thì mọi câu lẽ ra tự trả lời sẽ
+  # được CHUYỂN sang đó: nội dung do bên đó chịu trách nhiệm, không phải model của
+  # mình bịa. Lưu ý vẫn tốn một lượt gọi để phân loại — không thể biết câu nào là
+  # hỏi chung trước khi gọi.
+  route_to: assistant
+
+  answer_from_knowledge: true
+
+  # Vị trí dùng cho câu hỏi thời tiết. caps không có GPS nên phải khai tạm — bỏ đi
+  # khi nền tảng đích cấp được toạ độ thật. Đổi bằng AGENTCAR_CITY.
+  city: "Hà Nội"
+  # Khớp theo CHUỖI CON nên phải khai cả cách nói tự nhiên: "giá cả" không khớp
+  # "giá vàng hôm nay", "tắc đường" không khớp "đường có tắc không".
+  needs_live_data: ["thời tiết", "dự báo", "giao thông", "tắc đường", "đường có tắc",
+                    "tin tức", "giá cả", "giá vàng", "giá xăng", "giá dầu",
+                    "tỉ giá", "tỷ giá", "chứng khoán", "cổ phiếu",
+                    "kết quả bóng đá", "tỉ số", "tỷ số", "lịch chiếu", "chuyến bay"]
+  # "mấy giờ rồi" KHÔNG nằm trong danh sách trên: agent gửi kèm thời điểm hiện tại
+  # trong ngữ cảnh nên model trả lời được.

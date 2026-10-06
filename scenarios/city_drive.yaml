@@ -1,0 +1,18 @@
+# Kịch bản lái trong phố cho MockSignalMonitor.
+#   python -m agentcar repl --scenario scenarios/city_drive.yaml
+#
+# Mỗi mốc chỉ ghi cái gì ĐỔI so với mốc trước, khỏi chép lại cả 5 tín hiệu.
+# Các mốc chọn để nằm hai bên đúng những ngưỡng đang khai trong caps/vf9.yaml:
+#   mirror fold                          DENY    khi speed_kmh >= 16
+#   window/sunroof/fog_light/regen_brake CONFIRM khi gear != P
+#   trunk open                           DENY    khi gear != P
+#   charge_port                          DENY    khi speed_kmh > 0
+#   scene_mode camp|pet                  DENY    khi battery_pct <= 25
+period: 60          # 60 giây thì quay lại đầu; mốc 52s được phát trọn 8 giây
+frames:
+  - { at: 0,  gear: P, speed: 0,  battery: 68, brake: engaged }  # đỗ: mở được mọi thứ
+  - { at: 6,  gear: D, speed: 12, brake: released }              # vừa lăn: gương vẫn gập được
+  - { at: 12, speed: 34 }                                        # qua ngưỡng 16: gập gương bị chặn
+  - { at: 24, speed: 62 }
+  - { at: 40, speed: 8 }                                         # tắc đường
+  - { at: 52, gear: P, speed: 0, brake: engaged, battery: 21 }   # đỗ lại, pin đã dưới 25

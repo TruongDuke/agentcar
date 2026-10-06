@@ -1,0 +1,314 @@
+# 69 luật parser của BA (Capability sheet 3.1 + 3.2), dựng thành bộ chạy được.
+# `can` = Loại Xử lý BA yêu cầu: EXECUTE / CONFIRM / SUGGEST / INFORM.
+# `context` = tiền đề BA ghi bằng văn xuôi ở cột câu lệnh mẫu, dựng lại bằng lượt nói trước.
+
+- id: N1
+  can: SUGGEST
+  say: Bật điều hòa 35 độ
+  dieu_kien: X ngoài range hỗ trợ
+- id: N2
+  can: INFORM
+  say: Đặt độ sáng màn hình mức 20
+  context:
+  - đặt độ sáng màn hình mức 20
+  dieu_kien: X trong range, trùng mức hiện tại
+- id: N3
+  can: EXECUTE
+  say: Bật điều hòa 22 độ
+  context:
+  - đặt điều hòa 20 độ
+  dieu_kien: X trong range, khác mức hiện tại
+- id: N4
+  can: INFORM
+  say: tăng 1 mức
+  context:
+  - đặt quạt gió mức 6
+  dieu_kien: Mức hiện tại = Max
+- id: N5
+  can: EXECUTE
+  say: tăng 5 độ
+  context:
+  - đặt điều hòa 30 độ
+  dieu_kien: Mức hiện tại < Max, (hiện tại + X) ≥ Max
+- id: N6
+  can: EXECUTE
+  say: tăng 5 độ
+  context:
+  - đặt điều hòa 20 độ
+  dieu_kien: Mức hiện tại < Max, (hiện tại + X) < Max
+- id: N7
+  can: INFORM
+  say: giảm 1 mức
+  context:
+  - đặt quạt gió mức 1
+  dieu_kien: Mức hiện tại = Min
+- id: N8
+  can: EXECUTE
+  say: giảm 5 độ
+  context:
+  - đặt điều hòa 20 độ
+  dieu_kien: Mức hiện tại > Min, (hiện tại − X) ≤ Min
+- id: N9
+  can: EXECUTE
+  say: giảm 5 độ
+  context:
+  - đặt điều hòa 22 độ
+  dieu_kien: Mức hiện tại > Min, (hiện tại − X) > Min
+- id: N10
+  can: EXECUTE
+  say: Tăng điều hòa 24 độ
+  dieu_kien: Tính năng = điều khiển nhiệt độ điều hòa
+- id: N11
+  can: EXECUTE
+  say: Tăng quạt 3 mức
+  dieu_kien: Tính năng khác (quạt, đèn, ghế, âm lượng…)
+- id: N12
+  can: CONFIRM
+  say: Bật quạt gió mức 0
+  dieu_kien: Tính năng CÓ mức 0 = Tắt (quạt gió, ghế sưởi/mát/massage)
+- id: N12b
+  can: CONFIRM
+  say: tăng, giảm quạt mức 0
+  dieu_kien: Tính năng CÓ mức 0 = Tắt (quạt gió, ghế sưởi/mát/massage)
+- id: N13
+  can: CONFIRM
+  say: Bật điều hòa 0 mức
+  dieu_kien: Tính năng KHÔNG CÓ mức 0 = Tắt (điều hòa, đèn viền, màn hình, âm lượng…)
+- id: N13b
+  can: CONFIRM
+  say: tăng, giảm sưởi ghế 0 mức
+  dieu_kien: Tính năng KHÔNG CÓ mức 0 = Tắt (điều hòa, đèn viền, màn hình, âm lượng…)
+- id: N14
+  can: INFORM
+  say: Giảm điều hòa xuống -2 độ
+  dieu_kien: Bất kỳ tính năng nào
+- id: N15
+  can: EXECUTE
+  say: Bật điều hòa mức tối đa 32 độ
+  dieu_kien: Giá trị số khớp với min/max thực tế
+- id: N16
+  can: CONFIRM
+  say: Bật điều hòa mức tối đa 20 độ
+  dieu_kien: Giá trị số KHÔNG khớp với min/max thực tế
+- id: N17
+  can: EXECUTE
+  say: Bật quạt gió mức lớn nhất
+  dieu_kien: '"Bật ... mức nhỏ nhất/lớn nhất/tối thiểu/tối đa"'
+- id: N18
+  can: EXECUTE
+  say: Tăng quạt mức ít nhất có thể
+  dieu_kien: '"Tăng ... mức nhỏ nhất/ít nhất có thể/tối thiểu" (không có "đến")'
+- id: N19
+  can: EXECUTE
+  say: Tăng quạt đến mức nhỏ nhất
+  dieu_kien: '"Tăng ... đến mức nhỏ nhất/ít nhất có thể/tối thiểu" (có "đến")'
+- id: N20
+  can: EXECUTE
+  say: Tăng quạt đến mức lớn nhất
+  dieu_kien: '"Tăng ... đến mức lớn nhất/tối đa/nhiều nhất có thể"'
+- id: N21
+  can: EXECUTE
+  say: Giảm quạt xuống mức tối đa
+  dieu_kien: '"Giảm ... đến/xuống mức lớn nhất/nhiều nhất có thể/tối đa"'
+- id: N22
+  can: EXECUTE
+  say: Giảm quạt xuống mức thấp nhất
+  dieu_kien: '"Giảm ... đến/xuống mức tối thiểu/thấp nhất/bé nhất"'
+- id: Z1
+  can: EXECUTE
+  say: Bật điều hòa phía sau
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z2
+  can: EXECUTE
+  say: Bật điều hòa
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z3
+  can: SUGGEST
+  say: Bật điều hòa hàng 3
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe
+- id: Z4
+  can: SUGGEST
+  say: Tắt điều hòa bên trái
+  dieu_kien: Nhắc vùng trái / phải
+- id: Z5
+  can: EXECUTE
+  say: Đặt nhiệt độ khu lái 24 độ
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z6
+  can: EXECUTE
+  say: Giảm điều hòa 2 độ
+  context:
+  - bật điều hòa khu lái 24 độ
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z7
+  can: SUGGEST
+  say: Tăng nhiệt độ hàng 3
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe
+- id: Z8
+  can: EXECUTE
+  say: Giảm nhiệt độ bên phải 2 độ
+  context:
+  - bật điều hòa khu khách 24 độ
+  dieu_kien: Nhắc trái / phải
+- id: Z9
+  can: EXECUTE
+  say: Bật điều hòa tự động phía trước
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z10
+  can: EXECUTE
+  say: Bật điều hòa tự động
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z11
+  can: SUGGEST
+  say: Bật auto điều hòa bên phải
+  dieu_kien: 'Nhắc vùng không hỗ trợ: trái / phải'
+- id: Z12
+  can: EXECUTE
+  say: Tắt quạt gió phía sau
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z13
+  can: EXECUTE
+  say: Bật quạt gió
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z14
+  can: SUGGEST
+  say: Bật quạt ghế giữa
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe
+- id: Z15
+  can: SUGGEST
+  say: Bật quạt gió bên phải
+  dieu_kien: Nhắc vùng trái / phải
+- id: Z16
+  can: EXECUTE
+  say: Tăng quạt phía sau lên mức 4
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z17
+  can: EXECUTE
+  say: Tăng quạt 1 mức
+  context:
+  - bật quạt gió phía trước mức 3
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z18
+  can: SUGGEST
+  say: Giảm quạt bên trái
+  dieu_kien: Nhắc vùng trái / phải
+- id: Z19
+  can: EXECUTE
+  say: Chỉnh gió ghế lái hướng chân và kính trước
+  dieu_kien: Nhắc vùng HỢP LỆ + hướng được ghế đó hỗ trợ
+- id: Z20
+  can: EXECUTE
+  say: Chỉnh gió hướng mặt
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z21
+  can: SUGGEST
+  say: Chỉnh hướng gió hàng 3
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe
+- id: Z22
+  can: SUGGEST
+  say: Chỉnh gió ghế phụ hướng kính trước
+  dieu_kien: Nhắc vùng HỢP LỆ nhưng HƯỚNG không được ghế đó hỗ trợ
+- id: Z23
+  can: EXECUTE
+  say: Chỉnh gió hướng kính trước
+  dieu_kien: 'KHÔNG nhắc vùng + HƯỚNG chỉ một số ghế hỗ trợ (VD: kính trước — chỉ ghế lái)'
+- id: Z24
+  can: EXECUTE
+  say: Bật sưởi ghế sau tài xế
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z25
+  can: EXECUTE
+  say: Bật làm mát ghế
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z26
+  can: SUGGEST
+  say: Bật massage ghế giữa hàng 2
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe
+- id: Z27
+  can: SUGGEST
+  say: Bật sưởi ghế hàng 3
+  dieu_kien: Nhắc hàng 3 (mọi dòng xe, kể cả xe 3 hàng ghế)
+- id: Z28
+  can: EXECUTE
+  say: Tăng sưởi ghế lái lên mức 3
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z29
+  can: EXECUTE
+  say: Giảm sưởi ghế 1 mức
+  context:
+  - bật sưởi ghế phụ mức 2
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z30
+  can: SUGGEST
+  say: Tăng làm mát ghế hàng 3
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe (gồm hàng 3 — Q13)
+- id: Z31
+  can: EXECUTE
+  say: Mở kính sau ghế lái
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z32
+  can: EXECUTE
+  say: Đóng cửa kính
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z33
+  can: SUGGEST
+  say: Mở cửa kính hàng 3
+  dieu_kien: Nhắc vùng KHÔNG hợp lệ / không tồn tại trên xe
+- id: Z34
+  can: SUGGEST
+  say: Mở kính ghế giữa hàng 2
+  dieu_kien: Nhắc ghế giữa hàng 2
+- id: Z35
+  can: EXECUTE
+  say: Gập gương
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z36
+  can: SUGGEST
+  say: Gập gương bên trái
+  dieu_kien: Nhắc BẤT KỲ vùng nào (trước / sau / trái / phải)
+- id: Z37
+  can: EXECUTE
+  say: Bật sấy kính sau
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z38
+  can: EXECUTE
+  say: Bật sấy kính
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z39
+  can: SUGGEST
+  say: Bật sấy kính bên phải
+  dieu_kien: 'Nhắc vùng không hỗ trợ: trái / phải'
+- id: Z40
+  can: EXECUTE
+  say: Mở cốp trước
+  dieu_kien: Nhắc vùng cụ thể, vùng HỢP LỆ
+- id: Z41
+  can: EXECUTE
+  say: Mở cốp
+  dieu_kien: KHÔNG nhắc vùng
+- id: Z42
+  can: SUGGEST
+  say: Mở cốp bên trái
+  dieu_kien: 'Nhắc vùng không hỗ trợ: trái / phải'
+- id: Z43
+  can: EXECUTE
+  say: Bật điều hòa ghế lái
+  dieu_kien: 'Vùng nhắc CHI TIẾT hơn độ phân giải của tính năng (VD: nhắc ghế lái cho tính năn'
+- id: Z44
+  can: EXECUTE
+  say: Bật sưởi ghế hàng 2
+  dieu_kien: 'Vùng nhắc RỘNG hơn, chứa cả vị trí hỗ trợ và không hỗ trợ (VD: hàng 2 cho sưởi g'
+- id: Z45
+  can: EXECUTE+INFORM
+  say: Mở kính ghế lái và hàng 3
+  dieu_kien: Nhắc NHIỀU vùng, một phần không hợp lệ
+- id: Z46
+  can: CONFIRM
+  say: Tăng sưởi ghế 1 mức
+  dieu_kien: Lệnh Mức, KHÔNG nhắc vùng, KHÔNG có vùng nào đang ACTIVE
+  context:
+  - tắt sưởi ghế
+- id: Z47
+  can: CONFIRM
+  say: Bật massage ghế khách
+  dieu_kien: Tên vùng "khách" (passenger) với tính năng theo vị trí ghế (với nhiệt độ điều hò

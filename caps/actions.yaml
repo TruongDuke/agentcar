@@ -1,0 +1,194 @@
+# Catalog action canonical theo TYPE.
+#
+# caps/<model>.yaml chỉ khai `actions: { exclude: [...] }` — tức là giả định có một
+# catalog mặc định theo type. Đây là catalog đó. Nó KHÔNG phụ thuộc dòng xe;
+# phần khác nhau giữa VF5/VF8/VF9 nằm ở exclude/support/zones/value trong file caps.
+#
+# Công thức suy ra action hợp lệ của một device:
+#   effective(device) = types[device.type].actions
+#                     − device.actions.exclude
+#                     + modes của device            (nếu mode_as_action)
+#                     − set_level/increase/decrease (nếu device không có value số)
+#                     − set_mode/clear_mode         (nếu device không có modes)
+#                     + query                       (nếu readable hoặc query_only)
+#                     = []                          (nếu support:false hoặc cloud_only)
+#
+# Chỗ nào mình suy đoán, đánh dấu Q<n> — cần bạn xác nhận (xem cuối file).
+
+version: 1
+
+# ---------------------------------------------------------------- PRIMITIVES
+# args: value/mode/item = bắt buộc, value?/mode? = tuỳ chọn
+actions:
+  turn_on:    { args: [],        semantics: "bật nguồn/chức năng" }
+  turn_off:   { args: ["mode?"],   semantics: "tắt; mode chỉ dùng cho type mode_as_action" }
+  open:       { args: ["item?"],   semantics: "mở khẩu độ / mở app-màn hình (item)" }
+  close:      { args: ["item?"],   semantics: "đóng hoàn toàn" }
+  fold:       { args: [],        semantics: "gập" }
+  unfold:     { args: [],        semantics: "mở/bung" }
+  adjust:     { args: [],        semantics: "chỉnh vi lượng (VF9 exclude)" }
+  set_level:  { args: [value],   semantics: "đặt giá trị tuyệt đối theo unit" }
+  increase:   { args: ["value?"],  semantics: "tăng; thiếu value thì dùng nudge" }
+  decrease:   { args: ["value?"],  semantics: "giảm; thiếu value thì dùng nudge" }
+  set_mode:   { args: [mode],    semantics: "bật một mode" }
+  clear_mode: { args: [mode],    semantics: "tắt một mode (chỉ mode toggle được)" }
+  mute:       { args: [],        semantics: "tắt tiếng, nhớ mức cũ" }
+  unmute:     { args: [],        semantics: "khôi phục mức trước khi mute" }
+  query:      { args: [],        semantics: "hỏi trạng thái; tự thêm nếu readable" }
+
+# ---------------------------------------------------------------- PER TYPE
+types:
+  # ---- CLIMATE
+  hvac:
+    actions: [turn_on, turn_off, set_level, increase, decrease, set_mode, clear_mode]
+    # auto/max/sync/ionizer là toggle độc lập → có clear_mode
+    mode_groups: { toggle: ["auto", "max", "sync", "ionizer"] }
+
+  fan:
+    actions: [turn_on, turn_off, set_level, increase, decrease, set_mode]
+    # D1: hai nhóm mode ĐỘC LẬP. Đặt recirc KHÔNG được xoá blow_face.
+    # set_mode trả kèm mode_group để lớp thực thi biết chỉ ghi đè trong nhóm đó.
+    mode_groups:
+      airflow: ["blow_*"]
+      intake:  ["recirc", "fresh", "intake_auto"]
+
+  defrost:
+    actions: [turn_on, turn_off]
+
+  # ---- CỬA / KÍNH / CỐP
+  window:
+    actions: [open, close, set_level, increase, decrease]
+  sunroof:
+    actions: [open, close, set_level, increase, decrease]
+  trunk:
+    actions: [open, close]
+  frunk:
+    actions: [open, close]
+  charge_port:
+    actions: [open, close]
+
+  # ---- GƯƠNG / ĐÈN
+  mirror:
+    actions: [fold, unfold, adjust]     # VF9 exclude adjust
+  fog_light:
+    actions: [turn_on, turn_off]
+  auto_highbeam:
+    actions: [turn_on, turn_off]
+  ambient_light:
+    actions: [turn_on, turn_off, set_level, increase, decrease, set_mode]
+    # D1: màu và hiệu ứng là hai slot độc lập (cùng quy tắc với fan).
+    # D2: fx_none vừa là mode vừa nằm trong exclude → exclude THẮNG, trả
+    # VA_MODE_EXCLUDED. Tạm chốt, xem phần decisions cuối file.
+    mode_groups:
+      color:  ["amb_*"]
+      effect: ["fx_*"]
+
+  # ---- GHẾ
+  seat_heating:
+    actions: [turn_on, turn_off, set_level, increase, decrease]
+  seat_cooling:
+    actions: [turn_on, turn_off, set_level, increase, decrease]
+  seat_massage:
+    actions: [turn_on, turn_off, set_level, increase, decrease, set_mode]
+
+  # ---- SCENE
+  scene_mode:
+    actions: [turn_off]
+    # Policy trong caps viết `action: camp` → tên mode DÙNG LÀM action.
+    mode_as_action: true
+    # D3: "tắt chế độ cắm trại" → turn_off(mode=camp). turn_off BẮT BUỘC kèm mode,
+    # vì caps không nói có nhiều scene chạy song song hay không.
+
+  # ---- MISC
+  foot_kick:
+    actions: [turn_on, turn_off]
+  regen_brake:
+    actions: [turn_on, turn_off, set_mode]
+
+  # ---- INFOTAINMENT / KẾT NỐI
+  volume:
+    actions: [set_level, increase, decrease]
+    # D4: KHÔNG có mute/unmute. volume.lo=0 nên "tắt tiếng" = set_level(0) — lệnh này
+    # chắc chắn chạy được trên mọi lớp thực thi. "bật tiếng lại" cần nhớ mức trước đó,
+    # đó là việc của tầng agent (state), không phải một action của thiết bị.
+  screen_brightness:
+    actions: [set_level, increase, decrease]
+  hud:
+    actions: [turn_on, turn_off, set_level]
+  wifi:
+    actions: [turn_on, turn_off]
+  wifi_hotspot:
+    actions: [turn_on, turn_off]
+  bluetooth:
+    actions: [turn_on, turn_off]
+
+  # ---- QUERY-ONLY
+  tire_pressure:
+    actions: []
+
+  # ---- LIST SELECTOR
+  app_control:
+    actions: [open, close]
+  screen_control:
+    actions: [open, close, query]
+    # D5 (cũ): không có close — "đóng màn hình cài đặt" là nút back của hệ điều
+    # hành, không phải lệnh thiết bị.
+    #
+    # ĐÃ ĐỔI, theo nguồn nghiệm thu QC: 743 câu mong close và 816 câu mong query
+    # trên tổng 2.407 câu screen_control — tức là 2/3 số câu về màn hình đang
+    # không thể trả lời được. Lập luận D5 không sai, nhưng người dùng vẫn nói
+    # "đóng màn hình cài đặt" và trợ lý bấm back hộ được. Muốn quay lại D5 thì
+    # bỏ close/query khỏi dòng trên.
+
+  dome_light:
+    actions: [turn_on, turn_off, set_mode]
+  steering_wheel:
+    actions: [turn_on, turn_off, set_mode]
+
+  # ---- CLOUD
+  nav:
+    actions: []      # cloud_only → escalate, không resolve ở edge
+
+# ---------------------------------------------------------------- ĐÃ CHỐT
+decisions:
+  D1:
+    what: "Mode chia nhóm; các nhóm độc lập nhau."
+    detail: >
+      fan có airflow và intake, ambient_light có color và effect. Đặt mode trong một
+      nhóm không xoá mode của nhóm kia. Command trả kèm mode_group để lớp thực thi biết.
+    status: chốt
+
+  D2:
+    what: "exclude thắng modes khi caps khai cả hai."
+    detail: >
+      VF9 khai fx_none ở cả modes lẫn actions.exclude. Chọn exclude vì loại trừ là khai
+      báo có chủ đích, còn danh sách modes dùng chung nhiều dòng xe. "Tắt hiệu ứng đèn
+      viền" trả VA_MODE_EXCLUDED kèm câu giải thích, không phải lỗi cú pháp chung chung.
+    status: tạm chốt — cần bên định nghĩa xe xác nhận, đây là mâu thuẫn trong caps
+
+  D3:
+    what: "scene_mode: bật bằng tên mode, tắt bằng turn_off kèm mode."
+    detail: >
+      Policy trong caps dùng `action: camp` nên tên mode là action. turn_off bắt buộc
+      kèm mode, vì caps không nói rõ có bao nhiêu scene chạy song song.
+    status: chốt
+
+  D4:
+    what: "volume không có mute/unmute."
+    detail: >
+      "Tắt tiếng" = set_level(0), hợp lệ vì volume.lo=0. Không phát action mute vì caps
+      không có bằng chứng lớp thực thi hỗ trợ. "Bật tiếng lại" cần nhớ mức trước đó —
+      xử lý ở tầng agent, không phải action của thiết bị.
+    status: tạm chốt — nếu lớp thực thi có sẵn mute thì thêm lại
+
+  D5:
+    what: "screen_control chỉ có open, app_control có cả open và close."
+    status: chốt
+
+  D6:
+    what: "Làm tròn set_level: half-up tính từ 0, rồi mới ép về [lo, hi]."
+    detail: >
+      window resolution=20: 50 -> 60, 49 -> 40. hvac resolution=0.5: 22,3 -> 22,5.
+      Lưu ý window khai lo=1 hi=100 nên dải 99 không chia hết cho 20; mốc thực tế
+      là 20/40/60/80/100.
+    status: chốt

@@ -1,0 +1,20 @@
+# Caps tối giản chỉ để test: VF9 không có thiết bị nào vừa CONFIRM vừa DENY,
+# nên không kiểm được ca "đồng ý xong mới phát hiện xe đã vào trạng thái cấm".
+version: 1
+model: MINI
+locales: [vi]
+
+devices:
+  window:
+    type: window
+    zones: [all]
+    default_zone: all
+    value: { default_unit: percent, units: { percent: { lo: 0, hi: 100, nudge: 20 } } }
+    readable: true
+    safety_gated: true
+
+safety:
+  - { device: window, action: open, verdict: CONFIRM, when: "gear != P", reason: "Xe đang di chuyển, chắc mở cửa kính chứ ạ?" }
+  - { device: window, action: open, verdict: DENY, when: "speed_kmh >= 30", reason: "Xe chạy trên 30 km/h, không mở cửa kính được ạ." }
+
+gate: { enabled: false }

@@ -1,0 +1,144 @@
+# SINH TỰ ĐỘNG bởi tools/qc_to_golden.py — đừng sửa tay.
+# Nguồn: test_docs/VITA-GRAMMAR-API-TESTREPORT-2509.xlsx (cột VA_SAMPLE + EXPECTED_INTENTS).
+# Đáp án do BA soạn cho hệ S6; schema đã map sang caps/vf9.yaml.
+
+# CHỈ giữ câu 'giữ nguyên đi, đừng đụng vào'. Câu PHỦ ĐỊNH đã tách sang
+# golden_qc_tranhchap.vi.yaml vì QC ghi hai đáp án ngược nhau cho cùng kiểu câu.
+
+- Tôi muốn giữ nguyên cửa sổ trời
+- Không phải mức tối đa
+- Giữ nguyên rèm
+- Tạm thời cứ để bài nhạc phát bình thường
+- Thôi bỏ qua việc vặn nút âm báo đi em
+- Bản đồ cứ để mở đi
+- Điện thoại cứ để đó đi
+- Podcast cứ mở vậy đi
+- Phần Pin cứ để nguyên đi
+- Dịch vụ xe cứ để mở vậy đi
+- ADAS cứ giữ nguyên đi
+- Sổ tay cứ để đó đi
+- Calendar cứ mở vậy đi
+- FPT Play cứ để nguyên đi
+- VietMap cứ mở vậy đi
+- Danh sách ứng dụng cứ để nguyên đi
+- Không phải bảo thoát Podcast đâu
+- App điện thoại cứ để vậy đi
+- Đóng gì đâu tôi vẫn đang xem
+- Chưa nói thoát ứng dụng nha
+- Giữ nguyên màn hình hiện tại đi
+- Cứ để nguyên giao diện hiện tại
+- Chả cần biết app nhạc đang mở không
+- Chả quan tâm radio đang hiện không
+- Khỏi kiểm tra nhạc USB làm gì
+- Thôi bỏ qua kiểm tra nhạc USB đi
+- Chả cần xác nhận app nhạc USB
+- Khỏi kiểm tra nhạc Bluetooth nha
+- Chả cần xác nhận màn hình Bluetooth Music
+- Khỏi kiểm tra bản đồ đâu
+- Chả cần biết app bản đồ đang mở
+- Khỏi kiểm tra điện thoại làm gì
+- Chả cần biết tôi đang ở phone không
+- Khỏi kiểm tra Podcast đâu nha
+- Chả cần kiểm tra Podcast đâu
+- Khỏi kiểm tra Pin làm gì
+- Chả cần biết app Pin đang hiện
+- Khỏi kiểm tra dịch vụ xe nha
+- Chả cần biết tiện ích xe đang hiện
+- Khỏi kiểm tra hỗ trợ lái làm gì
+- Chả cần biết ADAS có mở không
+- Khỏi kiểm tra hướng dẫn sử dụng
+- Chả cần biết giao diện hướng dẫn đang hiện
+- Khỏi kiểm tra lịch nha
+- Chả cần biết lịch có đang hiện không
+- Khỏi kiểm tra FPT Play đâu
+- Chả cần biết FPT Play có hiện không
+- Khỏi kiểm tra VietMap nha
+- Chả cần biết VietMap đang hiện không
+- Khỏi kiểm tra App Drawer làm gì
+- Chả cần biết App Drawer đang hiện không
+- Tôi đâu có hỏi app nhạc đang mở không
+- Không phải kêu kiểm tra radio đâu nha
+- Ai bảo kiểm tra FPT Play làm gì
+- Podcast mở hay không cũng kệ đi
+- Chưa yêu cầu kiểm tra ứng dụng nào hết
+- Thôi bỏ qua phần xác nhận ứng dụng đi
+- Chả cần tra trạng thái ứng dụng đâu
+- miễn bật wifi nhé
+- cứ giữ kết nối mạng như hiện tại
+- thôi vẫn dùng internet
+- bỏ qua việc kiểm tra wifi nhé
+- thôi cứ kết nối như vậy đi
+- thôi cứ để bluetooth vô hiệu hóa
+- bỏ qua việc kích hoạt bluetooth nhé
+- thôi cứ để bluetooth hoạt động
+- cứ giữ bluetooth như hiện tại
+- thôi vẫn cần dùng bluetooth
+- bỏ qua việc kiểm tra bluetooth
+- bỏ qua việc ghép nối bluetooth
+- thôi cứ giữ kết nối bluetooth
+- tiếp tục giữ ghép đôi bluetooth
+- bỏ qua việc phát wifi nhé
+- Đặt phanh tái sinh mức 0
+- Đặt phanh tái sinh mức 10
+- Đặt phanh tái sinh mức -1
+- Giảm phanh tái sinh xuống 1 mức
+- Chả muốn chỉnh brightness đâu
+- Giữ nguyên màn hình là được rồi
+- Giữ nguyên display hiện tại thôi
+- Chả cần kiểm tra monitor đâu
+- Bỏ qua việc kiểm tra monitor hiện tại
+- Chả cần biết có đang ở cài đặt độ sáng không
+- Chả cần biết có đang ở cài đặt gương không
+- Chả cần xem có đang ở phần thời gian không
+- Chả cần kiểm tra màn hình wifi đâu
+- Chả cần kiểm tra wifi hotspot đâu
+- Chả cần xem profile có đang mở không
+- Chả cần biết equalizer đang mở không
+- Lê Minh Hưng hiện giữ chức vụ gì?
+- Trần Thanh Mẫn là ai?
+- Ông ấy quê ở đâu?
+- Ông ấy từng giữ những chức vụ nào?
+- Phạm Minh Chính sinh năm nào?
+- Ông ấy làm Thủ tướng từ khi nào?
+- Ông ấy có những đóng góp nổi bật gì?
+- Nguyễn Thị Kim Ngân là ai?
+- Bà ấy quê ở đâu?
+- Võ Văn Kiệt nổi tiếng vì điều gì?
+- Ông ấy giữ chức Thủ tướng trong giai đoạn nào?
+- Ông ấy có những đóng góp gì cho đất nước?
+- Chế độ lái tiết kiệm pin có nên bật thường xuyên không?
+- Tôi có nên sạc pin xe điện mỗi ngày không?
+- Sạc thường xuyên như vậy có hại pin không?
+- Thói quen sạc pin tốt nhất là gì?
+- Tôi có nên sạc nhanh cho xe thường xuyên không?
+- Sạc nhanh hoạt động ra sao?
+- Khi nào nên tránh dùng sạc nhanh?
+- Chế độ phanh tái sinh có nên bật mức cao không?
+- Ai là tác giả Truyện Kiều?
+- Sinh năm nào?
+- Quê ở đâu?
+- Ai viết Truyện Kiều thế?
+- Tác giả sinh năm mấy?
+- Quê gốc ở đâu vậy?
+- Ai là người sáng tác Truyện Kiều?
+- Năm sinh của tác giả là năm nào?
+- Tác giả quê ở đâu?
+- Hồ Chí Minh sinh ra ở đâu?
+- Tên khai sinh là gì?
+- Mất năm nào?
+- Bác Hồ sinh ra ở đâu nhỉ?
+- Tên khai sinh của Bác là gì?
+- Bác mất năm nào thế?
+- Quê Hồ Chí Minh ở đâu?
+- Lúc sinh ra Bác tên là gì?
+- Năm mất của Bác là năm bao nhiêu?
+- Võ Nguyên Giáp là ai?
+- Ông này chỉ huy chiến dịch nào nổi tiếng nhất?
+- Chiến dịch đó diễn ra năm nào?
+- Võ Nguyên Giáp là vị tướng nào vậy?
+- Ông Võ Nguyên Giáp là ai thế?
+- Trận nào nổi tiếng nhất do ông chỉ huy?
+- Năm diễn ra trận đó là năm mấy?
+- Bạn có biết Việt Nam có bao nhiêu tỉnh, thành phố trực thuộc trung ương không?
+- Mình vừa hỏi gì ấy nhỉ?
+- Bạn có chắc mình vừa hỏi như vậy không?

@@ -1,0 +1,147 @@
+{
+  "khi": "2026-10-06T16:45:38",
+  "commit": "ccfc884",
+  "bo_cau": {
+    "duong": "tests/golden_qc.vi.yaml",
+    "so_cau": 24851,
+    "bo_am": "tests/golden_qc_negative.vi.yaml",
+    "so_cau_am": 137
+  },
+  "cau_hinh": {
+    "policy": {
+      "gia_tri_ngoai_dai": "qc",
+      "phu_dinh": "qc",
+      "buoc_khong_duong": "qc"
+    },
+    "tang_nlu": true,
+    "nguong_nlu": 0.8
+  },
+  "chinh": {
+    "dung_ca_cau": 0.5397,
+    "do_phu": 0.8032,
+    "precision": 0.6716,
+    "recall": 0.5397,
+    "f1": 0.5985
+  },
+  "truong": {
+    "device": 0.7487,
+    "action": 0.6779,
+    "zone": 0.6304,
+    "value": 0.6224,
+    "step": 0.706,
+    "item": 0.6025,
+    "mode": 0.6169
+  },
+  "cong_chan": {
+    "so_cau": 137,
+    "lenh_that_su_xuong_xe": 11,
+    "ty_le": 0.0803
+  },
+  "chi_tang_luat": {
+    "dung_ca_cau": 0.4228,
+    "do_phu": 0.6053
+  },
+  "cloud": {
+    "nguon": "tests/baseline_cloud_sach.json",
+    "giu_sach": true,
+    "so_cau_edge_bo_tay": 738,
+    "cloud_va_duoc": 0.7724,
+    "do_tre_trung_vi_ms": 848.1350829824805,
+    "do_tre_p90_ms": 1056.5480830846354,
+    "bo_cau": "3,000 câu QC cần mạng, chưa dùng để chỉnh prompt",
+    "truong_khi_goi": {
+      "action": 0.874,
+      "device": 0.8767,
+      "item": 0.8051,
+      "mode": 0.8293,
+      "step": 0.8545,
+      "value": 0.8227,
+      "zone": 0.8709
+    },
+    "ly_do": {
+      "edge tự lo": 2262,
+      "đúng": 570,
+      "sai tham số": 50,
+      "cloud ra lệnh, tầng sau chặn": 37,
+      "sai thiết bị": 31,
+      "sai hành động": 26,
+      "cloud không ra lệnh": 24
+    }
+  },
+  "edge_cong_cloud": 0.6917,
+  "moc_xuat_phat": {
+    "dung_ca_cau": 0.2154,
+    "ghi_chu": "trước khi gắn model on-edge"
+  },
+  "luat_uc_cua_ba": {
+    "tong": 71,
+    "dat": 62,
+    "truot": 9,
+    "dong": "71 luật · đạt 62 (87.3%) · trượt 9"
+  },
+  "lich_su_cloud": {
+    "ghi_chu": [
+      "Lịch sử đo tầng cloud. Trước đây số này chỉ nằm trong commit message,",
+      "muốn dựng lại bảng tiến triển phải đi dò git — và dò thì dễ nối nhầm",
+      "hai lượt đo KHÁC CỠ MẪU rồi tính ra mức tăng không có thật.",
+      "",
+      "CHỈ SO HAI Ô CÙNG CỘT. Cùng một prompt fab6ecd đo trên mẫu 500 ra 71,8%",
+      "còn trên mẫu 3.600 ra 73,7% — chênh 1,9 điểm hoàn toàn do cỡ mẫu."
+    ],
+    "cot": {
+      "mau_500": "500 câu QC cần mạng, seed 7, n~137, biên ±7,5",
+      "mau_3600": "3.600 câu QC cần mạng, seed 7, n~960, biên ±2,8",
+      "tap_sach": "3.000 câu seed 7 BỎ 3.600 câu đầu — chưa dùng để chỉnh prompt, n=738, biên ±3,0"
+    },
+    "lan_do": [
+      {
+        "commit": "4013309",
+        "prompt_sha": "9e9de987d6f6",
+        "viec": "mốc xuất phát của đợt cloud",
+        "mau_500": 0.671,
+        "mau_3600": null,
+        "tap_sach": null
+      },
+      {
+        "commit": "5d42391",
+        "prompt_sha": "fab6ecd722e8",
+        "viec": "ghế lạnh là sưởi; vô/exit khỏi X là lệnh",
+        "mau_500": 0.718,
+        "mau_3600": 0.737,
+        "tap_sach": null,
+        "ghi_chu": "mau_3600 đo ở commit 4f943f9, cùng prompt"
+      },
+      {
+        "commit": "a802230",
+        "prompt_sha": "5e4c1af81351",
+        "viec": "digest dùng từ người nói; phủ định lấy vế sau",
+        "mau_500": null,
+        "mau_3600": 0.777,
+        "tap_sach": 0.772,
+        "ghi_chu": "mau_3600 đo bằng --compare, KHÔNG ghi file — chỉ còn trong commit message"
+      }
+    ],
+    "muc_tang_that": {
+      "tren_mau_500": {
+        "tu": 0.671,
+        "den": 0.718,
+        "tang": 0.047,
+        "so_sanh_duoc": true
+      },
+      "tren_mau_3600": {
+        "tu": 0.737,
+        "den": 0.777,
+        "tang": 0.04,
+        "so_sanh_duoc": true
+      },
+      "canh_bao": "Đừng cộng 4,7 + 4,0. Hai mức tăng đo trên hai mẫu khác nhau, không cộng được."
+    },
+    "so_chot": {
+      "gia_tri": 0.772,
+      "bien": 0.03,
+      "n": 738,
+      "file": "tests/baseline_cloud_sach.json",
+      "vi_sao": "tập chưa dùng để chỉnh prompt — số duy nhất không bị nhiễm"
+    }
+  }
+}

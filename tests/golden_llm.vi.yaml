@@ -1,0 +1,14 @@
+# Bộ câu cho TẦNG [2] — câu mà tầng edge cố tình không bắt được.
+# Chạy thật, tốn tiền, nên mặc định bị bỏ qua. Bật bằng:  AGENTCAR_LIVE=1 pytest
+#
+# Mục đích chính: giữ CHIỀU của lệnh. Loại lỗi này tầng [3][4] không bắt được vì
+# lệnh vẫn hoàn toàn hợp lệ — chỉ sai ý người nói.
+
+- { say: "nóng quá",              expect: { device: hvac, action: decrease } }
+- { say: "lạnh quá",              expect: { device: hvac, action: increase } }
+- { say: "rét quá",               expect: { device: hvac, action: increase } }
+- { say: "chói mắt quá",          expect: { device: screen_brightness, action: decrease } }
+- { say: "ồn quá",                expect: { device: volume, action: decrease } }
+- { say: "nhỏ quá không nghe rõ", expect: { device: volume, action: increase } }
+- { say: "hôm nay trời đẹp quá",  expect: { empty: true } }
+- { say: "xe bay lên trời đi",    expect: { empty: true } }

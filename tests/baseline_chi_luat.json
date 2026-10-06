@@ -1,0 +1,77 @@
+{
+  "khi": "2026-10-02T16:54:54",
+  "cau_hinh": {
+    "policy": {
+      "gia_tri_ngoai_dai": "qc",
+      "phu_dinh": "qc",
+      "buoc_khong_duong": "qc"
+    },
+    "tang_nlu": false,
+    "nguong_nlu": 0.8
+  },
+  "bo_cau": "tests/golden_qc.vi.yaml",
+  "so_cau": 24851,
+  "do_phu": 0.6053,
+  "dung_ca_cau": 0.4228,
+  "truong": {
+    "device": 0.5749,
+    "action": 0.5079,
+    "zone": 0.4891,
+    "value": 0.5111,
+    "step": 0.4919,
+    "item": 0.5573,
+    "mode": 0.5749
+  },
+  "truong_khi_ra_lenh": {
+    "device": 0.9516,
+    "action": 0.8407,
+    "zone": 0.7914,
+    "value": 0.778,
+    "step": 0.7873,
+    "item": 0.8837,
+    "mode": 0.8889
+  },
+  "nhan_dung_thiet_bi": {
+    "ambient_light": 0.4865,
+    "app_control": 0.6436,
+    "auto_highbeam": 0.0,
+    "bluetooth": 0.5406,
+    "charge_port": 0.5154,
+    "defrost": 0.7948,
+    "dome_light": 0.5493,
+    "fan": 0.7223,
+    "fog_light": 0.217,
+    "foot_kick": 0.4176,
+    "hud": 0.0,
+    "hvac": 0.854,
+    "mirror": 0.3421,
+    "regen_brake": 0.5165,
+    "scene_mode": 0.7995,
+    "screen_brightness": 0.1683,
+    "screen_control": 0.5222,
+    "seat_cooling": 0.3796,
+    "seat_heating": 0.4034,
+    "seat_massage": 0.7863,
+    "steering_wheel": 0.8792,
+    "sunroof": 0.774,
+    "trunk": 0.6238,
+    "volume": 0.6964,
+    "wifi": 0.3694,
+    "wifi_hotspot": 0.0738,
+    "window": 0.9455
+  },
+  "im_lang": {
+    "bo_cau": "tests/golden_qc_negative.vi.yaml",
+    "so_cau": 137,
+    "ra_lenh_oan": 34,
+    "ty_le_oan": 0.2482,
+    "gui_xuong_xe": 8,
+    "ty_le_gui": 0.0584
+  },
+  "pr": {
+    "precision": 0.6982,
+    "recall": 0.4228,
+    "f1": 0.5267,
+    "ghi_chu": "exact match; mẫu lệch nên xem kèm im_lang.ty_le_gui"
+  }
+}

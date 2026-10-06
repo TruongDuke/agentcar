@@ -1,0 +1,3433 @@
+{
+  "khi": "2026-10-06T14:15:36",
+  "cau_hinh": {
+    "model": "qwen-plus",
+    "prompt_sha": "fab6ecd722e8",
+    "seed": 7,
+    "mau": 3600,
+    "prompt_cu": true,
+    "ghi_chu_van_tay": "MỐC CŨ - đo bằng prompt TRƯỚC commit a802230. Vân tay ghi ở đây theo cách băm cũ (chỉ phủ SYSTEM thô), không so được với mốc mới. ĐỪNG --compare với file này: nó sẽ báo tăng giả. Mốc đang dùng là tests/baseline_cloud_sach.json."
+  },
+  "bo_cau": "tests/golden_qc.vi.yaml (tren_xe=false)",
+  "so_cau": 3600,
+  "tong_dung": 0.6075,
+  "edge_tu_lo": 0.7322,
+  "cloud_khi_goi": 0.7365,
+  "so_lan_goi": 964,
+  "do_tre_ms": {
+    "trung_vi": 840.9612079849467,
+    "p90": 1008.1596249947324,
+    "max": 1518.6910419724882
+  },
+  "truong_khi_goi": {
+    "action": 0.8475,
+    "device": 0.8807,
+    "item": 0.832,
+    "mode": 0.6393,
+    "step": 0.8471,
+    "value": 0.796,
+    "zone": 0.8516
+  },
+  "ly_do": {
+    "edge tự lo": 2636,
+    "đúng": 710,
+    "sai tham số": 79,
+    "sai hành động": 60,
+    "cloud ra lệnh, tầng sau chặn": 41,
+    "sai thiết bị": 40,
+    "cloud không ra lệnh": 34
+  },
+  "sai": [
+    {
+      "say": "Khóa nắp sạc ni răng rồi nghen.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "charge_port",
+        "action": "query"
+      },
+      "duoc": {
+        "device": "charge_port",
+        "action": "close"
+      }
+    },
+    {
+      "say": "Màn hình settings đang hiện cho tui coi đúng hông",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "general_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Răng ghế ni nóng ri, làm mát cộng thêm 2 mức đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "passenger",
+        "step": 2
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "all",
+        "step": 2
+      }
+    },
+    {
+      "say": "Cho cửa trời full.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "glass",
+        "value": 100
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "glass"
+      }
+    },
+    {
+      "say": "Hiện có đang ở giao diện thiết bị kết nối không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "bluetooth"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "device_connect"
+      }
+    },
+    {
+      "say": "Đưa tấm che nắng lên mức tối đa giúp tôi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 100
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      }
+    },
+    {
+      "say": "Chỉnh quạt làm mát ghế lái nhẹ hơn giúp tôi với.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "Ngắt đèn vàng đằng trước xe.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho điều hoà chạy hết ga đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "hvac",
+        "action": "set_mode",
+        "mode": "max"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "set_level",
+        "zone": "all",
+        "value": 32
+      }
+    },
+    {
+      "say": "Cho toàn bộ hàng 3 chạy kiểu đấm vỗ nhé",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_jump"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Thôi hủy lệnh chỉnh âm thanh vừa rồi đi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "volume",
+        "action": "query"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "kéo tiếng trợ lý ảo lùi -2 nấc coi sao nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "decrease",
+        "zone": "va",
+        "step": -2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "decrease",
+        "zone": "va",
+        "step": 2
+      }
+    },
+    {
+      "say": "Màn hình độ sáng hiện ra đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "nhích tiếng chuông cuộc gọi điện thoại mốc nhỏ nhất 0 đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "ring",
+        "value": 0
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "ring",
+        "step": 0
+      }
+    },
+    {
+      "say": "Rear left seat lạnh quá trời, boost lên 3 nha",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "rear_left",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear_left",
+        "step": 3
+      }
+    },
+    {
+      "say": "Mở shade nha",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Nhanh tay bật cái đèn vàng phía trước lên coi chứ lị",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đang hiện dịch vụ xe đấy hả",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "vehicle_utilities"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Cài đặt hiện trên màn hình hả",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "general_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Khoang xe sáng rõ rồi, không cần bật đèn phía trên thêm đâu",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "dome_light",
+        "action": "turn_off"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "đẩy tiếng cuộc gọi sang mức -5 xem",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "call",
+        "step": -5
+      }
+    },
+    {
+      "say": "Không cần đèn vàng trước, chỉ bật đèn sau.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      }
+    },
+    {
+      "say": "Tui đang trong audio positioning settings đúng không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "audio_focus"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "wifi mất tích rồi, tìm lại giúp với",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "wifi",
+        "action": "turn_on"
+      },
+      "duoc": {
+        "device": "wifi",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Cho tui vô media",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "music"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "nã tiếng nhạc kịch trần bay nóc nhà luôn",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "media",
+        "value": 40
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "glass"
+      }
+    },
+    {
+      "say": "xem hộ chuông tin nhắn mô rồi mi",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "query",
+        "zone": "chime"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bỏ mọi hiệu ứng trên dải đèn nội thất.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_none"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "amb_white"
+      }
+    },
+    {
+      "say": "Cho anh vào hotspot setup cái",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "wifi_hotspot"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "ADAS đang active hả",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "driving_assistance"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cái màn hình trợ lý giọng nói đang hiện đó hả",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "va_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "đẩy tiếng bản đồ ở mức 25% giùm",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": 25
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Vô phần trợ lý giọng nói với nờ",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "va_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho shade lên 45% chạy đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 45
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      }
+    },
+    {
+      "say": "Hạ cấp độ ghế giữa hàng hai chạm mốc -2 giúp tôi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "rear",
+        "value": -2
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "rear",
+        "value": -2
+      }
+    },
+    {
+      "say": "đẩy tiếng chuông cuộc gọi sang mức -5 coi mi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "ring",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "ring",
+        "step": -5
+      }
+    },
+    {
+      "say": "Không phải mức 1 đâu, chuyển mức 3",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "driver",
+        "value": 1
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Chuyển khỏi màn hình settings cho tui nha",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "general_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho ánh sáng nội thất shutdown đi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "ambient_light",
+        "action": "turn_off"
+      },
+      "duoc": {
+        "device": "dome_light",
+        "action": "turn_off"
+      }
+    },
+    {
+      "say": "Ánh sáng màn hình hơi gắt, hạ xuống 41% nữa nhé",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "screen_brightness",
+        "action": "decrease",
+        "step": 41
+      },
+      "duoc": {
+        "device": "screen_brightness",
+        "action": "set_level",
+        "value": 41
+      }
+    },
+    {
+      "say": "Ê đang ở màn settings đúng hông",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "general_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Chuyển ghế phải hàng 2 sang hình thức đấm bóp đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_right",
+        "mode": "msg_jump"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "passenger",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Chuyển ghế phải hàng 1 sang kiểu nắn bóp đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "passenger",
+        "mode": "msg_cross"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "passenger",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Để màu cam nhạt ở mức sáng 85%",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "value": 85,
+        "mode": "amb_light_orange"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "amb_light_orange"
+      }
+    },
+    {
+      "say": "Đưa tôi tới màn hình bản đồ VietMap",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "vietmap"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Quạt ghế lái to quá, bớt bớt đi.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "Cho hiện giao diện VietMap lên",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "vietmap"
+      },
+      "duoc": {
+        "device": "app_control",
+        "action": "open",
+        "item": "map"
+      }
+    },
+    {
+      "say": "Khoan tắt đồng bộ nhiệt độ vội",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "hvac",
+        "action": "set_mode",
+        "zone": "all",
+        "mode": "sync"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "clear_mode",
+        "zone": "all",
+        "mode": "sync"
+      }
+    },
+    {
+      "say": "Bật giao diện brightness lên nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "cho tiếng phương tiện kịch trần 100% luôn coi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "media",
+        "value": 100
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "all",
+        "value": 100
+      }
+    },
+    {
+      "say": "Mi đẩy cái đèn ni lên 15 nữa coi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "ambient_light",
+        "action": "increase"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đặt đèn sương mù thành 50%.",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Quạt làm mát ghế hàng 1 bên trái to quá, bớt bớt đi.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "vặn loa cuộc gọi ở mức 50% nghe thử",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 50
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Mở shade.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "sunroof",
+        "action": "open",
+        "zone": "curtain"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho tôi chuyển đến phần cài đặt độ sáng của màn hình xe",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "Răng ghế phía sau lạnh ri",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_heating",
+        "action": "turn_on",
+        "zone": "rear_left"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear",
+        "step": 1
+      }
+    },
+    {
+      "say": "Apply LED Ambient Light sang none effect.",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_none"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Khóa cổng sạc răng rồi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "charge_port",
+        "action": "query"
+      },
+      "duoc": {
+        "device": "charge_port",
+        "action": "close"
+      }
+    },
+    {
+      "say": "Cho thời gian mở màn hình",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "date_time"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Exit khỏi account settings",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "profile_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Quạt ghế hàng 2 bên trái to quá, hạ bớt đi.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "rear_left",
+        "step": 1
+      }
+    },
+    {
+      "say": "Cài quạt gió bên phải mức 6",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "fan",
+        "action": "set_level",
+        "zone": "all",
+        "value": 6
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho ghế trái hàng 2 chạy kiểu vuốt ve đi bạn",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "rear_left"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Đang đứng ở mục cấu hình hành trình đúng không nhỉ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "trip_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "journey"
+      }
+    },
+    {
+      "say": "chỉnh giọng con Vivi sang nấc 50% coi rứa",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "va",
+        "value": 50
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "va",
+        "value": 20
+      }
+    },
+    {
+      "say": "Bỏ animation để ambient lighting sáng cố định.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_none"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "amb_white"
+      }
+    },
+    {
+      "say": "Qua giao diện dữ liệu hành trình cái",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "trip_statistics"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "journey"
+      }
+    },
+    {
+      "say": "Cho hiệu ứng mã Morse hoạt động ở mức sáng lớn nhất",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 100
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_morse"
+      }
+    },
+    {
+      "say": "Ghế này nóng dữ bro",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "rear_left"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "driver",
+        "value": 2
+      }
+    },
+    {
+      "say": "Cho tui vô dẫn đường",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "map"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "có người đang bám vào mạng tôi phát không",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "wifi_hotspot",
+        "action": "query"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Hạ nhiệt độ ghế khách",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "hvac",
+        "action": "decrease",
+        "zone": "passenger"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "decrease",
+        "zone": "passenger",
+        "step": 1
+      }
+    },
+    {
+      "say": "Chuyển khu vực hàng 2 sang hình thức đấm bóp đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_jump"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Đưa khu phía sau ghế lái phụ về mức làm mát 2",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "rear_right",
+        "value": 2
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "passenger",
+        "value": 2
+      }
+    },
+    {
+      "say": "hotspot off rồi bật lại nha",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "wifi_hotspot",
+        "action": "turn_on"
+      },
+      "duoc": {
+        "device": "wifi_hotspot",
+        "action": "turn_off"
+      }
+    },
+    {
+      "say": "đẩy tiếng cuộc gọi sang mức -5 coi mi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "call",
+        "step": -5
+      }
+    },
+    {
+      "say": "Tôi muốn quạt gió ghế hàng 2 bên trái chạy ở mức 2.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "fan",
+        "action": "set_level",
+        "zone": "rear",
+        "value": 2
+      },
+      "duoc": {
+        "device": "fan",
+        "action": "set_level",
+        "zone": "all",
+        "value": 2
+      }
+    },
+    {
+      "say": "Giao diện VietMap đang hiện đúng không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "vietmap"
+      },
+      "duoc": {
+        "device": "app_control",
+        "action": "query",
+        "item": "map"
+      }
+    },
+    {
+      "say": "Chuyển khỏi màn hình lỗi xe cho tui nha",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "vehicle_alert"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho anh xem vehicle info screen",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "about_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "đẩy loa bản đồ sang mốc nhỏ nhất 0 coi sao nha",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": 0
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bật max heated seat luôn bro",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_off",
+        "zone": "all"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "set_mode",
+        "zone": "all",
+        "mode": "max"
+      }
+    },
+    {
+      "say": "Cho ghế lái đỡ massage coi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "turn_off",
+        "zone": "driver"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "decrease",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "Tăng phanh tái sinh lên 1 mức",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "regen_brake",
+        "action": "set_mode",
+        "mode": "regen_low"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Ghế hàng hai bên phải nóng ghê",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "rear_right"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "rear_right",
+        "value": 3
+      }
+    },
+    {
+      "say": "Exit khỏi system settings",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "general_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cài đặt kiểu mát-xa lượn sóng ở phía tay trái nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "driver",
+        "mode": "msg_wave"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_wave"
+      }
+    },
+    {
+      "say": "Đừng bật đèn sương sau, bật phía trước.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "rear"
+      }
+    },
+    {
+      "say": "Giao diện dịch vụ xe đang hiện đúng không",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "vehicle_utilities"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "book_service"
+      }
+    },
+    {
+      "say": "Đặt quạt làm mát ghế hàng 2 bên trái nhẹ hơn giúp tôi với.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "rear_left",
+        "step": 1
+      }
+    },
+    {
+      "say": "decrease chuông điện thoại to maximum level",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "ring",
+        "value": 40
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "decrease",
+        "zone": "ring",
+        "step": 40
+      }
+    },
+    {
+      "say": "vặn loa giải trí to hơn tẹo nghe cho sướng nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "media",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "media",
+        "step": 1
+      }
+    },
+    {
+      "say": "Đặt quạt ghế khách nhẹ hơn giúp tôi với.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "passenger",
+        "step": 1
+      }
+    },
+    {
+      "say": "Boss ơi, bật giúp cái đèn vàng phía trước đi bạn ơi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Tắt cái vàng phía trước nha.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "VietMap đang active hả",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "vietmap"
+      },
+      "duoc": {
+        "device": "app_control",
+        "action": "query",
+        "item": "map"
+      }
+    },
+    {
+      "say": "dạ đẩy giùm tôi loa giải trí to hơn một xíu ạ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "media",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "media",
+        "step": 1
+      }
+    },
+    {
+      "say": "Hiện là wifi hotspot đúng không?",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "wifi_hotspot"
+      },
+      "duoc": {
+        "device": "wifi_hotspot",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Tui đang trong software update screen đúng không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "firmware"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Điều hòa thôi chạy hết cỡ",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "hvac",
+        "action": "clear_mode"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "set_level",
+        "zone": "all",
+        "value": 32
+      }
+    },
+    {
+      "say": "Răng ghế phụ nóng dữ ri",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "passenger"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "passenger",
+        "step": 1
+      }
+    },
+    {
+      "say": "Đèn vàng đằng trước tắt.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đang hiện Media Player đấy hả",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "music"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "cài tiếng cuộc gọi ở mức 20% giùm tau phát",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 20
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Rear left seat nóng quá trời, boost lên 3 nha",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "rear_left",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear_left",
+        "step": 3
+      }
+    },
+    {
+      "say": "Qua khỏi phần ADAS giùm tui nha",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "driving_assistance"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Qua khỏi phần tiện ích xe giùm tui nha",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "vehicle_utilities"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Hiệu ứng nhấp nháy gây lóa, hạ ánh sáng 50",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "ambient_light",
+        "action": "decrease"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_blinking"
+      }
+    },
+    {
+      "say": "Exit khỏi vehicle info screen",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "about_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Vặn mức massage bên trái chạm ngưỡng 50% nhé",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "driver",
+        "value": 50
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "rear_left",
+        "value": 50
+      }
+    },
+    {
+      "say": "cho tiếng phương tiện chạm mức tối đa coi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "media",
+        "value": 40
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "all",
+        "value": 40
+      }
+    },
+    {
+      "say": "Cho sưởi ghế sau phải dịu hơn tí nhé",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_heating",
+        "action": "decrease",
+        "zone": "rear_right"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "decrease",
+        "zone": "rear",
+        "step": 1
+      }
+    },
+    {
+      "say": "Trợ lý ảo hiện trên màn hình hả",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "va_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Chuyển driver seat qua chế độ cat pow",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "driver"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "driver",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Exit khỏi time settings",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "date_time"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "timefencing"
+      }
+    },
+    {
+      "say": "Kéo sang Here Map hộ tôi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "map"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đừng mở phía sau, mở phía trước.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "window",
+        "action": "open",
+        "zone": "driver"
+      }
+    },
+    {
+      "say": "Driver seat nóng vãi, set level 3 đi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "driver",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "driver",
+        "value": 3
+      }
+    },
+    {
+      "say": "Cho anh về home với",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "home_screen"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "đẩy tiếng Vivi sang mốc nhỏ nhất xem sao",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "va",
+        "value": 6
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "va",
+        "value": 0
+      }
+    },
+    {
+      "say": "mạng tắt hồi nào vậy, bật lại coi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "wifi",
+        "action": "turn_on"
+      },
+      "duoc": {
+        "device": "wifi",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Đừng để cửa sạc không được khóa khi xe chạy",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "charge_port",
+        "action": "close"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "dạ đẩy giùm tôi chuông cảnh báo to hơn một xíu ạ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "chime",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "chime",
+        "step": 1
+      }
+    },
+    {
+      "say": "Cho ngôn ngữ mất màn hình",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "language_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "language_settings"
+      }
+    },
+    {
+      "say": "Cho anh vào screen brightness settings",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "Cho mình quay lại home với",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "home_screen"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đổi toàn bộ hàng ghế sang vuốt cái",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "all",
+        "mode": "msg_cat_paw"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "nhờ bạn cho tiếng dẫn đường sang mức -10 nhé",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": -10
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "navigation",
+        "step": -10
+      }
+    },
+    {
+      "say": "Cho ánh sáng bảng điều khiển đạt mức maximum",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 100
+      },
+      "duoc": {
+        "device": "screen_brightness",
+        "action": "set_level",
+        "value": 100
+      }
+    },
+    {
+      "say": "Cho ghế lái phụ đỡ massage coi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "turn_off",
+        "zone": "passenger"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "passenger",
+        "value": 2
+      }
+    },
+    {
+      "say": "đẩy loa thoại sang mốc bé nhất 0 coi rứa",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 6
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 0
+      }
+    },
+    {
+      "say": "Đừng để ghế phụ nóng nữa nha",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "passenger"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "turn_off",
+        "zone": "passenger"
+      }
+    },
+    {
+      "say": "Cho anh vào account settings cái",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "profile_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cất phần chỉnh âm đi coi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "equalizer"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "volume_settings"
+      }
+    },
+    {
+      "say": "Tui đang trong time settings đúng không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "date_time"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Cho ẩn cái Media Player đi",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "music"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "cho phép các thiết bị dùng mạng của tôi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "wifi_hotspot",
+        "action": "turn_on"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Tắt hộ cái vàng phía trước.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cất màn hình hành trình đi coi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "trip_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "journey"
+      }
+    },
+    {
+      "say": "Rear left seat nóng muốn xỉu, set level 3",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "rear_left",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "rear_left",
+        "value": 3
+      }
+    },
+    {
+      "say": "dạ mở giùm tôi loa chỉ đường với ạ",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "navigation"
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": 20
+      }
+    },
+    {
+      "say": "Quạt thông gió ghế hàng 1 bên trái còn nhẹ quá, nâng lên đi.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "increase",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "dạ đẩy giùm tôi loa đàm thoại chạm mức tối thiểu ạ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 6
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 0
+      }
+    },
+    {
+      "say": "Hạ cấp độ ghế trái hàng đầu chạm mốc -2 giúp tôi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "driver",
+        "value": -2
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "driver",
+        "value": -2
+      }
+    },
+    {
+      "say": "Check front mirror status giúp",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "mirror",
+        "action": "query",
+        "zone": "all"
+      },
+      "duoc": {
+        "device": "mirror",
+        "action": "query",
+        "zone": "driver"
+      }
+    },
+    {
+      "say": "Rét căm luôn, cho toàn bộ ghế ấm lên",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_heating",
+        "action": "turn_on",
+        "zone": "all"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "all",
+        "value": 3
+      }
+    },
+    {
+      "say": "Quạt làm mát ghế giữa hàng 2 to quá, giảm bớt đi.",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "fan",
+        "action": "decrease",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "rear",
+        "step": 1
+      }
+    },
+    {
+      "say": "Ghế sau phải lạnh ngang, tăng thêm 1 mức lẹ",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear_right",
+        "step": 1
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "rear",
+        "step": 1
+      }
+    },
+    {
+      "say": "Disable tính năng pha tự động ngay",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "auto_highbeam",
+        "action": "turn_off"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "clear_mode",
+        "zone": "all",
+        "mode": "auto"
+      }
+    },
+    {
+      "say": "Bớt lực massage hàng giữa vị trí trung tâm thu hẹp về 80% nhé",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "rear",
+        "value": 80
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho ghế phải hàng 2 chạy kiểu vuốt ve đi bạn",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "rear_right"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "passenger",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "đặt chuông cảnh báo bé tý luôn hộ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "chime",
+        "value": 0
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "chime",
+        "value": 1
+      }
+    },
+    {
+      "say": "Giao diện dịch vụ xe hiện lên đi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "vehicle_utilities"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "book_service"
+      }
+    },
+    {
+      "say": "Đổi ghế phụ sang vuốt cái",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "passenger"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "dạ đẩy giùm tôi loa trợ lý to hơn một xíu ạ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "va",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "va",
+        "step": 1
+      }
+    },
+    {
+      "say": "Bật max nhiệt cho ghế phụ luôn",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "passenger",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "set_level",
+        "zone": "passenger",
+        "value": 3
+      }
+    },
+    {
+      "say": "Cho ghế mát hơn, mức 3 nờ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "rear_right",
+        "value": 3
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "all",
+        "value": 3
+      }
+    },
+    {
+      "say": "Ghế sau trái nóng ngang luôn",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "rear_left"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear_left",
+        "step": 1
+      }
+    },
+    {
+      "say": "Activate đèn vàng sau xe.",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "rear"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "có máy mô đang bám mạng ni không",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "wifi_hotspot",
+        "action": "query"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bật hệ thống làm mát ở mức cao nhất",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "hvac",
+        "action": "set_mode",
+        "mode": "max"
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "turn_on",
+        "zone": "all",
+        "value": 22
+      }
+    },
+    {
+      "say": "Set hệ thống đèn nội thất mạnh hết khả năng",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 100
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Khúc này cho ánh sáng trang trí tới bến",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 100
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "turn_on",
+        "value": 100
+      }
+    },
+    {
+      "say": "cho cái mạng chạy lại nha",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "wifi",
+        "action": "turn_on"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "nhích âm bản đồ -3 mức giùm phát",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "navigation",
+        "step": -3
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Màn hình trợ lý giọng nói đang hiện cho tui coi đúng hông",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "va_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Bật sóng cho ghế trước bên phải giùm cái",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "passenger",
+        "mode": "msg_wave"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "turn_on",
+        "zone": "passenger",
+        "value": 2
+      }
+    },
+    {
+      "say": "Chỗ ngồi tui nóng quá trời bro",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "driver"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "driver",
+        "value": 2
+      }
+    },
+    {
+      "say": "Lỗi xe hiện ra đi",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "vehicle_alert"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đóng hộ cái dẫn đường lại",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "map"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Coi thử giao diện cấu hình hành trình đang mở không ta",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "trip_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "journey"
+      }
+    },
+    {
+      "say": "vặn chuông tin nhắn to hơn tí mốt coi mi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "chime",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "chime",
+        "step": 1
+      }
+    },
+    {
+      "say": "Đặt độ sáng đèn sương mù thành 80%.",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Qua màn hình thông tin phương tiện nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "about_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "vehicle_settings"
+      }
+    },
+    {
+      "say": "Răng ghế phía sau nóng ri",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "rear_left"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "rear",
+        "value": 2
+      }
+    },
+    {
+      "say": "Chuyển phần phía sau sang kiểu bóp nắn đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cross"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Ghế phía sau bên phải nóng thật",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "turn_on",
+        "zone": "rear_right"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "query",
+        "zone": "rear_right"
+      }
+    },
+    {
+      "say": "Bật đèn khi trời có sương nhé.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho ghế trung tâm hàng 2 chạy kiểu vuốt ve đi bạn",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cat_paw"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "all",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "phiền bạn cài tất cả âm lượng ở mức 20% giúp tôi",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "all",
+        "value": 20
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Chuyển phần phía tay trái sang kiểu bóp nắn đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "driver",
+        "mode": "msg_cross"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "driver",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "đặt loa chỉ đường bé tý luôn hộ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": 0
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": 1
+      }
+    },
+    {
+      "say": "Ánh sáng ni cho mạnh hết khả năng đi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 100
+      },
+      "duoc": {
+        "device": "screen_brightness",
+        "action": "set_level",
+        "value": 100
+      }
+    },
+    {
+      "say": "đẩy loa thoại sang mốc nhỏ nhất xem sao mày",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 6
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 0
+      }
+    },
+    {
+      "say": "Cho anh vào system settings cái",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "general_settings"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Không cần mức 1 đâu, chuyển lên mức 3",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "set_level",
+        "zone": "all",
+        "value": 3
+      },
+      "duoc": {
+        "device": "hvac",
+        "action": "set_level",
+        "zone": "all",
+        "value": 3
+      }
+    },
+    {
+      "say": "Bật vuốt cho ghế phía sau bên phải giùm cái",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_right",
+        "mode": "msg_cat_paw"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "turn_on",
+        "zone": "rear_right",
+        "value": 2
+      }
+    },
+    {
+      "say": "Nâng ánh sáng viền lên 8 mức.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "ambient_light",
+        "action": "increase"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 8
+      }
+    },
+    {
+      "say": "Chuyển rear right seat qua chế độ cat pow",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "rear_right"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_right",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Hiện là cài đặt độ sáng đúng không?",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_brightness",
+        "action": "query"
+      }
+    },
+    {
+      "say": "đẩy âm lượng nghe nhạc ở mức 25% giùm",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "media",
+        "value": 25
+      },
+      "duoc": {}
+    },
+    {
+      "say": "cài tiếng chuông cuộc gọi ở mức 20% giùm cái",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "ring",
+        "value": 20
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Qua khỏi phần FPT Play giùm tui nha",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "fpt_play"
+      },
+      "duoc": {
+        "device": "app_control",
+        "action": "open",
+        "item": "fpt_play"
+      }
+    },
+    {
+      "say": "Bật Regenerative Braking chill chill thôi nha.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "regen_brake",
+        "action": "set_mode",
+        "mode": "regen_low"
+      },
+      "duoc": {
+        "device": "regen_brake",
+        "action": "turn_on",
+        "mode": "regen_low"
+      }
+    },
+    {
+      "say": "Đừng để cái đèn phía trên tự ý sáng nữa",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "dome_light",
+        "action": "clear_mode"
+      },
+      "duoc": {
+        "device": "dome_light",
+        "action": "turn_off"
+      }
+    },
+    {
+      "say": "có ai xài mạng mình hông",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "wifi_hotspot",
+        "action": "query"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bớt cường độ hàng giữa vị trí trung tâm chùng xuống 50% đi bạn",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "decrease",
+        "zone": "rear",
+        "step": 50
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_level",
+        "zone": "all",
+        "value": 1.5
+      }
+    },
+    {
+      "say": "vặn chuông gọi đến to hơn tẹo nghe cho rõ nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "ring",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "ring",
+        "step": 1
+      }
+    },
+    {
+      "say": "Cho hệ thống đèn trang trí thấp sát đáy dùm tao",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 20
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_level",
+        "value": 1
+      }
+    },
+    {
+      "say": "đẩy âm lượng cuộc gọi sang mốc nhỏ nhất xem sao",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 6
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "call",
+        "value": 0
+      }
+    },
+    {
+      "say": "Giảm shade độ mở xuống nào",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "sunroof",
+        "action": "decrease",
+        "zone": "curtain"
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 0
+      }
+    },
+    {
+      "say": "Tui đang trong vehicle info screen đúng không",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "query",
+        "item": "about_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Hãy tắt toàn bộ đèn trang trí để ánh sáng không tiếp tục phản lên kính và gây mất tập trung",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "ambient_light",
+        "action": "turn_off"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho hệ thống high beam tự điều chỉnh khi cần",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "auto_highbeam",
+        "action": "turn_on"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho đèn phía trên tự bật đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "dome_light",
+        "action": "set_mode",
+        "mode": "auto"
+      },
+      "duoc": {
+        "device": "dome_light",
+        "action": "turn_on",
+        "mode": "auto"
+      }
+    },
+    {
+      "say": "Hạ sáng thêm 180% trên màn",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "screen_brightness",
+        "action": "decrease",
+        "step": 180
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho mình vô phần chỉnh sáng cái",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "Kéo tui ra khỏi phần hướng dẫn",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "app_control",
+        "action": "close",
+        "item": "owner_manual"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho cái màn hình xuống đáy phát",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "screen_brightness",
+        "action": "set_level",
+        "value": 1
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Từ giờ hãy ngừng tự động điều khiển hệ thống đèn trần và để tôi chủ động hoàn toàn",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "dome_light",
+        "action": "clear_mode"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Cho driver seat chạy cat pow mode",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "driver"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "driver",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Quạt thông gió ghế khách còn nhẹ quá, tăng lên đi.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "fan",
+        "action": "increase",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "fan",
+        "action": "increase",
+        "zone": "all",
+        "step": 1
+      }
+    },
+    {
+      "say": "Ghế sau phải mát ngang, giảm bớt 1 mức lẹ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "rear_right",
+        "step": 1
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "decrease",
+        "zone": "rear",
+        "step": 1
+      }
+    },
+    {
+      "say": "Chuyển qua sóng cho ghế hàng hai bên phải nha",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_right",
+        "mode": "msg_wave"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đừng để cổng nạp điện mở khóa, chốt nó lại",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "charge_port",
+        "action": "close"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bật vuốt cho ghế trước bên phải giùm cái",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "passenger",
+        "mode": "msg_cat_paw"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "turn_on",
+        "zone": "passenger",
+        "value": 2
+      }
+    },
+    {
+      "say": "increase tất cả âm thanh to 10 percent",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "all",
+        "value": 10
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "all",
+        "step": 10
+      }
+    },
+    {
+      "say": "Đừng bật đèn sương trước, bật sau.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      }
+    },
+    {
+      "say": "Đừng mở đèn vàng trước, mở đèn sau.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      }
+    },
+    {
+      "say": "Chuyển phần ghế phía dưới sang hình thức đấm bóp đi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_jump"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "turn_on",
+        "zone": "all",
+        "value": 2,
+        "mode": "msg_jump"
+      }
+    },
+    {
+      "say": "Passenger seat nóng quá, increase level 2 đi",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_cooling",
+        "action": "increase",
+        "zone": "passenger",
+        "step": 2
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "passenger",
+        "step": 2
+      }
+    },
+    {
+      "say": "vặn toàn bộ âm lượng to hơn tẹo nghe cho rõ nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "all",
+        "step": 2
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "all",
+        "step": 3
+      }
+    },
+    {
+      "say": "Chuyển khỏi màn hình chỉnh độ sáng cho tui nha",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "display_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "close",
+        "item": "light_settings"
+      }
+    },
+    {
+      "say": "đẩy tiếng bản đồ sang mức -5 cái nhế",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "navigation",
+        "step": -5
+      }
+    },
+    {
+      "say": "Qua giao diện cấu hình hành trình cái",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "trip_settings"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "journey"
+      }
+    },
+    {
+      "say": "Quạt gió ghế lái còn nhẹ quá, nâng lên đi.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "fan",
+        "action": "increase",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "fan",
+        "action": "increase",
+        "zone": "all",
+        "step": 1
+      }
+    },
+    {
+      "say": "Turn fan to feet mode ở ghế lái",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "fan",
+        "action": "set_mode",
+        "zone": "all",
+        "mode": "blow_feet"
+      },
+      "duoc": {
+        "device": "fan",
+        "action": "set_mode",
+        "zone": "front",
+        "mode": "blow_feet"
+      }
+    },
+    {
+      "say": "Răng lạnh ri, tăng mức sưởi đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "rear_right"
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "driver",
+        "step": 1
+      }
+    },
+    {
+      "say": "Check var cái đèn vàng phía trước xem nào, bật lẹ lên ae",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "query",
+        "zone": "front"
+      }
+    },
+    {
+      "say": "Cho ghế hàng 2 bên trái chạy kiểu đấm vỗ nhé",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_jump"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_cat_paw"
+      }
+    },
+    {
+      "say": "Navigation đang hiện hả",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "app_control",
+        "action": "query",
+        "item": "map"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "query"
+      }
+    },
+    {
+      "say": "Tắt sương mù sau.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "all"
+      }
+    },
+    {
+      "say": "Tắt yellow lamp phía trước.",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Đừng để ghế phụ lạnh nữa nha",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_heating",
+        "action": "turn_on",
+        "zone": "passenger"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "turn_off",
+        "zone": "passenger"
+      }
+    },
+    {
+      "say": "Đừng mở đèn trước, mở đèn sau.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "rear"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "front"
+      }
+    },
+    {
+      "say": "Chạy xe buổi tối, hạ monitor 50% giúp tôi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "screen_brightness",
+        "action": "decrease",
+        "step": 50
+      },
+      "duoc": {
+        "device": "screen_brightness",
+        "action": "set_level",
+        "value": 50
+      }
+    },
+    {
+      "say": "Răng vẫn lạnh ri, cộng thêm sưởi 2 mức đi",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "driver",
+        "step": 2
+      },
+      "duoc": {
+        "device": "seat_heating",
+        "action": "increase",
+        "zone": "all",
+        "step": 2
+      }
+    },
+    {
+      "say": "đừng tắt sưởi vô lăng vội, để tí nữa",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "steering_wheel",
+        "action": "set_mode",
+        "mode": "heating"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "vặn tiếng giải trí sang mức 30% xem nào",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "media",
+        "value": 30
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Qua sổ tay xe giùm",
+      "ly_do": "cloud không ra lệnh",
+      "mong": {
+        "device": "app_control",
+        "action": "open",
+        "item": "owner_manual"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Chuyển ghế trung tâm hàng 2 sang kiểu bóp nắn đi",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear",
+        "mode": "msg_cross"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Bật sóng cho ghế phía sau bên trái giùm cái",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_wave"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "turn_on",
+        "zone": "rear_left",
+        "value": 2
+      }
+    },
+    {
+      "say": "Hiệu ứng nhấp nháy để độ sáng 15% là được",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "value": 15,
+        "mode": "fx_blinking"
+      },
+      "duoc": {
+        "device": "ambient_light",
+        "action": "set_mode",
+        "mode": "fx_blinking"
+      }
+    },
+    {
+      "say": "đẩy tiếng chỉ đường sang mức -5 coi mi",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "volume",
+        "action": "set_level",
+        "zone": "navigation",
+        "value": -5
+      },
+      "duoc": {
+        "device": "volume",
+        "action": "increase",
+        "zone": "navigation",
+        "step": -5
+      }
+    },
+    {
+      "say": "Đừng để đèn viền bảng điều khiển sáng.",
+      "ly_do": "cloud ra lệnh, tầng sau chặn",
+      "mong": {
+        "device": "ambient_light",
+        "action": "turn_off"
+      },
+      "duoc": {}
+    },
+    {
+      "say": "Tôi muốn quạt thông gió ghế hàng 1 bên trái chạy ở mức 6.",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "fan",
+        "action": "set_level",
+        "zone": "front",
+        "value": 6
+      },
+      "duoc": {
+        "device": "fan",
+        "action": "set_level",
+        "zone": "all",
+        "value": 6
+      }
+    },
+    {
+      "say": "Vô chỉnh âm thanh với nờ",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "audio_focus"
+      },
+      "duoc": {
+        "device": "screen_control",
+        "action": "open",
+        "item": "volume_settings"
+      }
+    },
+    {
+      "say": "Rèm 1000%",
+      "ly_do": "sai tham số",
+      "mong": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 1000
+      },
+      "duoc": {
+        "device": "sunroof",
+        "action": "set_level",
+        "zone": "curtain",
+        "value": 100
+      }
+    },
+    {
+      "say": "Đừng để ghế lái lạnh nữa",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "seat_heating",
+        "action": "turn_on",
+        "zone": "driver"
+      },
+      "duoc": {
+        "device": "seat_cooling",
+        "action": "turn_off",
+        "zone": "driver"
+      }
+    },
+    {
+      "say": "Đừng bật đèn sương sau, bật đèn trước.",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "fog_light",
+        "action": "turn_on",
+        "zone": "front"
+      },
+      "duoc": {
+        "device": "fog_light",
+        "action": "turn_off",
+        "zone": "rear"
+      }
+    },
+    {
+      "say": "Không phải mở khóa cổng, tôi cần khóa nó",
+      "ly_do": "sai thiết bị",
+      "mong": {
+        "device": "charge_port",
+        "action": "close"
+      },
+      "duoc": {
+        "device": "trunk",
+        "action": "close",
+        "zone": "all"
+      }
+    },
+    {
+      "say": "Bật vuốt cho ghế phía sau bên trái giùm cái",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_cat_paw"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "turn_on",
+        "zone": "rear_left",
+        "value": 2
+      }
+    },
+    {
+      "say": "Activate cat pow mode cho rear left seat",
+      "ly_do": "sai hành động",
+      "mong": {
+        "device": "seat_massage",
+        "action": "clear_mode",
+        "zone": "rear_left"
+      },
+      "duoc": {
+        "device": "seat_massage",
+        "action": "set_mode",
+        "zone": "rear_left",
+        "mode": "msg_cat_paw"
+      }
+    }
+  ]
+}

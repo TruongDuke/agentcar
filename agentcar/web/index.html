@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giả lập khoang lái</title>
+<style>
+  :root {
+    --bg:#11141a; --panel:#181d26; --line:#2a3140; --text:#e6eaf2; --dim:#8b95a8;
+    --on:#3ddc97; --warn:#ffb020; --deny:#ff5c5c; --cold:#4aa8ff; --hot:#ff8a4a;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  .wrap { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:14px; padding:14px;
+          height:100vh; }
+  @media (max-width:900px){ .wrap{ grid-template-columns:1fr; height:auto; } }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim);
+       margin:0 0 10px; font-weight:600; }
+  .col { display:flex; flex-direction:column; gap:12px; min-height:0; }
+
+  /* ---- khoang lái */
+  .cabin { position:relative; background:#0d1016; border:2px solid var(--line);
+           border-radius:44px 44px 20px 20px; padding:16px; }
+  .seats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 22px; }
+  .seat { background:#151a23; border:1px solid var(--line); border-radius:10px; padding:10px;
+          min-height:74px; }
+  .seat .who { font-size:11px; color:var(--dim); }
+  .badges { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+  .badge { font-size:11px; padding:1px 7px; border-radius:20px; border:1px solid var(--line);
+           color:var(--dim); }
+  .badge.hot { background:rgba(255,138,74,.18); border-color:var(--hot); color:#ffc7a8; }
+  .badge.cold{ background:rgba(74,168,255,.18); border-color:var(--cold); color:#b6dcff; }
+  .badge.on  { background:rgba(61,220,151,.16); border-color:var(--on); color:#a9f2d1; }
+
+  .win { position:absolute; background:#151a23; border:1px solid var(--line); border-radius:4px;
+         overflow:hidden; }
+  .win i { position:absolute; inset:auto 0 0 0; background:var(--cold); opacity:.55;
+           transition:height .25s; }
+  .win span { position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+              font-size:10px; color:var(--dim); }
+  .win.l { left:-4px; width:10px; } .win.r { right:-4px; width:10px; }
+  .roof { margin:0 22px 10px; display:flex; gap:8px; }
+  .strip { flex:1; background:#151a23; border:1px solid var(--line); border-radius:8px;
+           padding:6px 10px; font-size:12px; color:var(--dim); text-align:center; }
+  .strip.on { border-color:var(--on); color:#a9f2d1; }
+
+  /* ---- thẻ thiết bị */
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; }
+  .dev { background:#141922; border:1px solid var(--line); border-radius:8px; padding:8px 10px; }
+  .dev.active { border-color:var(--on); }
+  .dev.off { opacity:.75; }
+  .dev.unsupported { opacity:.35; }
+  .dev .n { font-size:12px; color:var(--dim); }
+  .dev .v { font-size:14px; margin-top:2px; }
+  .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#39404f;
+         margin-right:6px; vertical-align:middle; }
+  .dot.on { background:var(--on); } .dot.off { background:#4b5364; }
+  .swatch { display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:6px;
+            vertical-align:-1px; border:1px solid rgba(255,255,255,.25); }
+
+  /* ---- điều khiển */
+  .row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .row label { width:72px; font-size:12px; color:var(--dim); }
+  .gears { display:flex; gap:4px; }
+  .gears button { flex:1; }
+  button { background:#1e2532; color:var(--text); border:1px solid var(--line);
+           border-radius:7px; padding:6px 10px; cursor:pointer; font-size:13px; }
+  button:hover { border-color:#4a5468; }
+  button.sel { background:var(--on); border-color:var(--on); color:#07130e; font-weight:600; }
+  button.danger { border-color:var(--deny); color:#ffb3b3; }
+  input[type=range] { flex:1; accent-color:var(--cold); }
+  input[type=text] { flex:1; background:#0e1219; border:1px solid var(--line); color:var(--text);
+                     border-radius:7px; padding:9px 11px; font-size:14px; }
+  .num { width:52px; text-align:right; font-variant-numeric:tabular-nums; color:var(--dim); }
+
+  /* ---- nhật ký */
+  #log { overflow-y:auto; flex:1; min-height:160px; display:flex; flex-direction:column; gap:8px; }
+  .turn { border-left:3px solid var(--line); padding:6px 10px; background:#141922;
+          border-radius:0 8px 8px 0; }
+  .turn .said { font-weight:600; }
+  .turn .tts { color:#cdd6e6; }
+  .turn .lat { font-size:11px; color:var(--dim); font-family:ui-monospace,Menlo,monospace;
+               margin:2px 0 4px; }
+  .turn .lat b { color:var(--on); font-weight:600; }
+  .turn .lat b.over { color:var(--warn); }
+  .turn .lat .cloud { color:var(--warn); }
+  .turn .meta { font-size:11px; color:var(--dim); font-family:ui-monospace,Menlo,monospace;
+                margin-top:4px; white-space:pre-wrap; word-break:break-all; }
+  .v-OK .said { color:var(--on); } .v-OK { border-left-color:var(--on); }
+  .v-CONFIRM .said { color:var(--warn); } .v-CONFIRM { border-left-color:var(--warn); }
+  .v-DENY .said, .v-NOT_SUPPORT .said, .v-INVALID .said { color:var(--deny); }
+  .v-DENY, .v-NOT_SUPPORT, .v-INVALID { border-left-color:var(--deny); }
+  .v-ESCALATE_UNKNOWN, .v-ESCALATE_ROUTED, .v-CANCELLED { border-left-color:#6b7488; }
+  .hint { font-size:11px; color:var(--dim); }
+  .chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
+  .chips button { font-size:11px; padding:3px 8px; }
+  #mic.rec { background:var(--deny); border-color:var(--deny); color:#fff; }
+  /* đang chờ trả lời: nhìn là biết, khỏi bấm Enter thêm lần nữa */
+  #say.busy { opacity:.55; cursor:progress; }
+  #say.busy::placeholder { color:var(--dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- ------------------------------------------------ trái: khoang lái -->
+  <div class="col">
+    <div class="panel" style="overflow:auto">
+      <h2>Khoang lái <span id="model"></span></h2>
+      <div class="cabin">
+        <div class="roof">
+          <div class="strip" id="s-sunroof">cửa sổ trời</div>
+          <div class="strip" id="s-curtain">rèm</div>
+          <div class="strip" id="s-frunk">cốp trước</div>
+        </div>
+        <div style="position:relative">
+          <div class="win l" id="w-driver"      style="top:0;height:74px"><i></i><span></span></div>
+          <div class="win r" id="w-passenger"   style="top:0;height:74px"><i></i><span></span></div>
+          <div class="win l" id="w-rear_left"   style="top:84px;height:74px"><i></i><span></span></div>
+          <div class="win r" id="w-rear_right"  style="top:84px;height:74px"><i></i><span></span></div>
+          <div class="seats">
+            <div class="seat" id="seat-driver"><div class="who">ghế lái</div><div class="badges"></div></div>
+            <div class="seat" id="seat-passenger"><div class="who">ghế phụ</div><div class="badges"></div></div>
+            <div class="seat" id="seat-rear_left"><div class="who">sau trái</div><div class="badges"></div></div>
+            <div class="seat" id="seat-rear_right"><div class="who">sau phải</div><div class="badges"></div></div>
+          </div>
+        </div>
+        <div class="roof" style="margin-top:10px">
+          <div class="strip" id="s-mirror">gương</div>
+          <div class="strip" id="s-trunk">cốp sau</div>
+          <div class="strip" id="s-charge_port">nắp sạc</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" style="overflow:auto">
+      <h2>Thiết bị</h2>
+      <div class="grid" id="devices"></div>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ phải: điều khiển -->
+  <div class="col">
+    <div class="panel">
+      <h2>Trạng thái xe</h2>
+      <div class="row"><label>Số</label><div class="gears" id="gears"></div></div>
+      <div class="row"><label>Tốc độ</label><input type="range" id="speed" min="0" max="120" value="0">
+        <span class="num" id="speed-v">0</span></div>
+      <div class="row"><label>Pin</label><input type="range" id="battery" min="0" max="100" value="100">
+        <span class="num" id="battery-v">100%</span></div>
+      <div class="row"><label>Khác</label>
+        <button id="charging">đang sạc: không</button>
+        <button id="brake">phanh tay: kéo</button>
+      </div>
+      <div class="hint" id="safety-hint"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Nói / gõ lệnh</h2>
+      <div class="row">
+        <input type="text" id="say" placeholder="bật sưởi ghế lái mức 2" autofocus>
+        <button id="mic" title="nói (vi-VN)">🎤</button>
+      </div>
+      <div class="row" style="margin:0">
+        <button id="speak-toggle">đọc trả lời: tắt</button>
+        <button id="baseline">mốc xuất phát</button>
+        <button id="reset" class="danger">reset</button>
+        <span class="hint" id="llm-state"></span>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="panel col" style="flex:1; min-height:0">
+      <h2>Nhật ký</h2>
+      <div id="log"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+let LAYOUT = null, STATE = null, SPEAK = false;
+
+const api = async (path, body) => {
+  const res = await fetch(path, body ? {
+    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+  } : {});
+  return res.json();
+};
+
+// ---------------------------------------------------------------- vẽ trạng thái
+const keyOf = (d, z) => `${d}|${z ?? ''}`;
+let byKey = new Map();
+
+function stateOf(device, zone) {
+  if (byKey.has(keyOf(device, zone))) return byKey.get(keyOf(device, zone));
+  // hỏi chung chung: nếu chỉ có một vùng từng đặt thì lấy vùng đó
+  const all = [...byKey.values()].filter(s => s.device === device);
+  return all.length === 1 ? all[0] : null;
+}
+
+const COLORS = {
+  amb_white:'#fff', amb_red:'#e33', amb_dark_red:'#901', amb_orange_red:'#f52',
+  amb_yellow:'#fd3', amb_dark_yellow:'#ca0', amb_light_yellow:'#ffa',
+  amb_green:'#3c6', amb_dark_green:'#173', amb_light_green:'#9f9',
+  amb_blue:'#39f', amb_dark_blue:'#149', amb_light_blue:'#9cf',
+  amb_pink:'#f6a', amb_dark_pink:'#c17', amb_light_pink:'#fcd',
+  amb_orange:'#f92', amb_dark_orange:'#c60', amb_light_orange:'#fc9',
+  amb_purple:'#a5f', amb_dark_purple:'#639', amb_light_purple:'#dbf', amb_brown:'#963',
+};
+const labelOf = (kind, id, device) => {
+  const dev = LAYOUT.devices.find(d => d.device === device);
+  if (kind === 'mode') {
+    for (const d of LAYOUT.devices) {
+      const m = d.modes.find(m => m.mode === id);
+      if (m) return m.label;
+    }
+  }
+  if (kind === 'zone' && dev) return (dev.zones.find(z => z.zone === id) || {label:id}).label;
+  return id;
+};
+
+function render() {
+  byKey = new Map(STATE.devices.map(s => [keyOf(s.device, s.zone), s]));
+
+  // ---- ghế
+  for (const zone of ['driver','passenger','rear_left','rear_right']) {
+    const box = $(`#seat-${zone} .badges`);
+    box.innerHTML = '';
+    const add = (cls, text) => {
+      const b = document.createElement('span');
+      b.className = `badge ${cls}`; b.textContent = text; box.appendChild(b);
+    };
+    for (const [device, cls, name] of [['seat_heating','hot','sưởi'],
+                                       ['seat_cooling','cold','mát'],
+                                       ['seat_massage','on','massage']]) {
+      const s = byKey.get(keyOf(device, zone)) || byKey.get(keyOf(device, 'all'));
+      if (!s || s.on === false) continue;
+      const mode = Object.values(s.modes || {})[0];
+      add(cls, name + (s.value != null ? ` ${s.value}` : '') + (mode ? ` ${labelOf('mode', mode)}` : ''));
+    }
+    const hv = byKey.get(keyOf('hvac', zone)) || byKey.get(keyOf('hvac','all'));
+    if (hv && hv.on !== false && hv.value != null) add('cold', `${hv.value}°`);
+  }
+
+  // ---- cửa kính
+  for (const zone of ['driver','passenger','rear_left','rear_right']) {
+    const el = $(`#w-${zone}`);
+    const s = byKey.get(keyOf('window', zone)) || byKey.get(keyOf('window','all'));
+    const open = s ? (s.on === false ? 0 : (s.value ?? 100)) : 0;
+    el.querySelector('i').style.height = `${open}%`;
+    el.querySelector('span').textContent = open ? open : '';
+    el.title = `cửa kính ${zone}: ${open ? 'mở ' + open + '%' : 'đóng'}`;
+  }
+
+  // ---- dải trên/dưới
+  const strip = (id, text, on) => {
+    const el = $(id); el.textContent = text; el.classList.toggle('on', !!on);
+  };
+  const sr = stateOf('sunroof','glass'), cu = byKey.get(keyOf('sunroof','curtain'));
+  strip('#s-sunroof', 'cửa sổ trời: ' + (sr ? (sr.on === false ? 'đóng' : 'mở' + (sr.value!=null?` ${sr.value}%`:'')) : '?'), sr && sr.on);
+  strip('#s-curtain', 'rèm: ' + (cu ? (cu.on === false ? 'đóng' : 'mở') : '?'), cu && cu.on);
+  // Trước đây dòng này viết cứng "không hỗ trợ", có từ hồi caps khai
+  // frunk support:false. BA chốt 28/09 là VF9 CÓ cốp trước, caps sửa theo, còn
+  // trang này thì không — mở được cốp trước mà bảng vẫn báo không hỗ trợ.
+  const fr = stateOf('frunk');
+  strip('#s-frunk', 'cốp trước: ' + (fr ? (fr.on ? 'mở' : 'đóng') : '?'), fr && fr.on);
+  const mi = stateOf('mirror'), tr = stateOf('trunk'), cp = stateOf('charge_port');
+  strip('#s-mirror', 'gương: ' + (mi ? (mi.on === false ? 'gập' : 'mở') : '?'), mi && mi.on);
+  strip('#s-trunk', 'cốp sau: ' + (tr ? (tr.on ? 'mở' : 'đóng') : '?'), tr && tr.on);
+  strip('#s-charge_port', 'nắp sạc: ' + (cp ? (cp.on ? 'mở' : 'đóng') : '?'), cp && cp.on);
+
+  // ---- thẻ thiết bị còn lại
+  const skip = new Set(['seat_heating','seat_cooling','seat_massage','window','sunroof',
+                        'mirror','trunk','charge_port','frunk','nav']);
+  const box = $('#devices'); box.innerHTML = '';
+  for (const d of LAYOUT.devices) {
+    if (skip.has(d.device)) continue;
+    const s = stateOf(d.device, d.default_zone);
+    // Thiết bị nhiều vùng: thẻ chỉ đọc default_zone, nên âm lượng trợ lý ảo bật
+    // mức 20 mà vùng 'all' chưa đặt thì thẻ báo "tắt" — sai hẳn. Gom mọi vùng
+    // ĐANG BẬT khác mặc định ra, kèm nhãn vùng.
+    const nhan = new Map((d.zones || []).map(z => [z.zone, z.label]));
+    // `x !== s`: stateOf có nước lùi "chỉ một vùng thì lấy vùng đó", nên thiết bị
+    // chỉ đặt đúng một vùng lẻ sẽ bị kể hai lần nếu không loại ra.
+    const vung_bat = [...byKey.values()].filter(
+      x => x.device === d.device && x !== s && x.zone && x.zone !== d.default_zone && x.on);
+    const card = document.createElement('div');
+    const song = (s && s.on) || vung_bat.length > 0;
+    card.className = 'dev' + (!d.supported ? ' unsupported'
+                              : song ? ' active' : (s || vung_bat.length) ? ' off' : '');
+    let value = !d.supported ? 'không hỗ trợ' : s ? describe(d, s) : '—';
+    if (vung_bat.length) {
+      const phan = vung_bat.map(x => `${nhan.get(x.zone) || x.zone} ${describe(d, x)}`);
+      value = (s && s.on ? [describe(d, s), ...phan] : phan).join(' · ');
+    }
+    let swatch = '';
+    if (s) for (const m of Object.values(s.modes || {})) if (COLORS[m])
+      swatch = `<span class="swatch" style="background:${COLORS[m]}"></span>`;
+    const dot = d.supported ? `<span class="dot ${(s || vung_bat.length) ? (song ? 'on' : 'off') : ''}"></span>` : '';
+    card.innerHTML = `<div class="n">${dot}${d.label}</div><div class="v">${swatch}${value}</div>`;
+    box.appendChild(card);
+  }
+
+  // ---- trạng thái xe
+  const v = STATE.vehicle;
+  [...$('#gears').children].forEach(b => b.classList.toggle('sel', b.textContent === v.gear));
+  $('#speed').value = v.speed_kmh; $('#speed-v').textContent = Math.round(v.speed_kmh);
+  $('#battery').value = v.battery_pct; $('#battery-v').textContent = Math.round(v.battery_pct) + '%';
+  $('#charging').textContent = 'đang sạc: ' + (v.charging ? 'có' : 'không');
+  $('#brake').textContent = 'phanh tay: ' + (v.parking_brake === 'engaged' ? 'kéo' : 'nhả');
+
+  const blocked = LAYOUT.safety.filter(r => willTrigger(r, v));
+  $('#safety-hint').textContent = blocked.length
+    ? `luật đang kích hoạt: ${blocked.map(r => r.device + '/' + r.action + ' → ' + r.verdict).join(', ')}`
+    : 'không luật an toàn nào đang kích hoạt';
+}
+
+function describe(d, s) {
+  const bits = [];
+  if (s.value != null) bits.push(d.unit === 'celsius' ? `${s.value}°C`
+    : d.unit === 'percent' ? `${s.value}%` : `mức ${s.value}`);
+  for (const m of Object.values(s.modes || {})) bits.push(labelOf('mode', m));
+  if (s.item) bits.push(s.item);
+  if (!bits.length) bits.push(s.on ? 'bật' : 'tắt');
+  else if (s.on === false) bits.unshift('tắt');
+  return bits.join(' · ');
+}
+
+function willTrigger(rule, v) {
+  const m = rule.when.match(/^(\w+)\s*(==|!=|>=|<=|>|<)\s*(.+)$/);
+  if (!m) return false;
+  let [, field, op, raw] = m;
+  let actual = v[field], want = raw === 'true' ? true : raw === 'false' ? false
+    : isNaN(Number(raw)) ? raw : Number(raw);
+  switch (op) {
+    case '==': return actual === want; case '!=': return actual !== want;
+    case '>': return actual > want; case '>=': return actual >= want;
+    case '<': return actual < want; case '<=': return actual <= want;
+  }
+  return false;
+}
+
+// ---------------------------------------------------------------- nhật ký
+const NHAN = {slot:'có nhắc thiết bị, grammar không ghép nổi',
+              device:'có động từ, không rõ thiết bị',
+              not_now:'điều kiện / hẹn giờ',
+              off_domain:'không nhắc gì thuộc xe'};
+
+function latency(turn) {
+  if (turn.ms == null) return '';
+  const budget = LAYOUT.deadline_ms;
+  // Tô theo ngân sách caps khai, và CHỈ khi lượt đó đi tầng edge: tầng [2] chạy
+  // trên cloud, lấy deadline của edge ra chấm nó là so sai thước.
+  const over = budget && turn.path === 'edge' && turn.ms > budget;
+  const num = turn.ms >= 1000 ? (turn.ms / 1000).toFixed(2) + 's' : Math.round(turn.ms) + 'ms';
+  const bits = [`<b class="${over ? 'over' : ''}">${num}</b>`];
+  if (turn.path === 'cloud') {
+    bits.push(`<span class="cloud">on-cloud ${Math.round(turn.cloud_ms)}ms` +
+              (turn.cloud_kind ? ` · ${escapeHtml(turn.cloud_kind)}` : '') + `</span>`);
+  } else {
+    bits.push('on-edge');
+  }
+  if (turn.cloud_error) bits.push(`<span class="cloud">lỗi: ${escapeHtml(turn.cloud_error)}</span>`);
+  if (turn.label && NHAN[turn.label]) bits.push(escapeHtml(NHAN[turn.label]));
+  return `<div class="lat">${bits.join(' · ')}</div>`;
+}
+
+function logTurn(turn) {
+  const el = document.createElement('div');
+  el.className = `turn v-${turn.verdict}`;
+  const plans = turn.results.filter(r => r.plan).flatMap(r => r.plan);
+  el.innerHTML =
+    `<div class="said">${turn.verdict} · ${escapeHtml(turn.text)}</div>` +
+    (turn.tts ? `<div class="tts">${escapeHtml(turn.tts)}</div>` : '') +
+    latency(turn) +
+    (turn.awaiting_confirm ? `<div class="hint">đang chờ xác nhận — trả lời "ừ" hoặc "thôi"</div>` : '') +
+    `<div class="meta">${escapeHtml(plans.map(p => JSON.stringify(p)).join('\n'))}` +
+    (turn.trace.length ? `\n· ${escapeHtml(turn.trace.join('\n· '))}` : '') + `</div>`;
+  $('#log').prepend(el);
+}
+const escapeHtml = (s) => (s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+// ---------------------------------------------------------------- hành động
+async function say(text) {
+  if (!text.trim()) return;
+  // BUSY vốn chỉ dùng để tạm dừng vòng hỏi trạng thái, KHÔNG chặn gửi trùng:
+  // Enter lần hai là gửi thêm một lượt nữa. Mà bấm lại là phản xạ đúng, vì câu
+  // lên cloud mất ~2 giây và màn hình không báo gì cả — nên chặn trùng thôi
+  // chưa đủ, phải cho thấy nó đang chạy.
+  if (BUSY) return;
+  BUSY = true;
+  const o = $('#say'); o.classList.add('busy'); o.disabled = true;
+  let data;
+  try { data = await api('/api/say', {text}); }
+  finally { BUSY = false; o.classList.remove('busy'); o.disabled = false; o.focus(); }
+  STATE = {vehicle: data.vehicle, devices: data.devices, pending: data.pending};
+  render(); logTurn(data.turn);
+  if (SPEAK && data.turn.tts) {
+    const u = new SpeechSynthesisUtterance(data.turn.tts);
+    u.lang = 'vi-VN'; speechSynthesis.speak(u);
+  }
+}
+const setVehicle = async (changes) => { STATE = await api('/api/vehicle', changes); render(); };
+
+// Hỏi lại đều đặn để thấy thay đổi từ NGOÀI trang này — `agentcar run` ở terminal
+// ghi vào cùng file trạng thái. Bỏ lượt nào rơi vào lúc đang gửi câu nói, nếu
+// không trả lời cũ về sau sẽ ghi đè trạng thái mới.
+let BUSY = false;
+async function poll() {
+  if (BUSY || document.hidden) return;
+  try { STATE = await api('/api/snapshot'); render(); } catch (e) { /* server tắt thì thôi */ }
+}
+
+// ---------------------------------------------------------------- khởi động
+(async () => {
+  LAYOUT = await api('/api/layout');
+  STATE = await api('/api/snapshot');
+  $('#model').textContent = LAYOUT.model;
+  $('#llm-state').textContent = LAYOUT.llm ? 'LLM: bật' : 'LLM: tắt';
+
+  for (const g of ['P','R','N','D']) {
+    const b = document.createElement('button');
+    b.textContent = g; b.onclick = () => setVehicle({gear: g});
+    $('#gears').appendChild(b);
+  }
+  $('#speed').oninput = (e) => { $('#speed-v').textContent = e.target.value; };
+  $('#speed').onchange = (e) => setVehicle({speed_kmh: +e.target.value});
+  $('#battery').oninput = (e) => { $('#battery-v').textContent = e.target.value + '%'; };
+  $('#battery').onchange = (e) => setVehicle({battery_pct: +e.target.value});
+  $('#charging').onclick = () => setVehicle({charging: !STATE.vehicle.charging});
+  $('#brake').onclick = () => setVehicle({
+    parking_brake: STATE.vehicle.parking_brake === 'engaged' ? 'released' : 'engaged'});
+  $('#reset').onclick = async () => { STATE = await api('/api/reset', {}); render(); $('#log').innerHTML=''; };
+  $('#baseline').onclick = async () => { STATE = await api('/api/baseline', {}); render(); };
+  $('#speak-toggle').onclick = (e) => {
+    SPEAK = !SPEAK; e.target.textContent = 'đọc trả lời: ' + (SPEAK ? 'bật' : 'tắt');
+    e.target.classList.toggle('sel', SPEAK);
+  };
+  $('#say').onkeydown = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); say(e.target.value); e.target.select(); }
+  };
+
+  for (const s of ['bật điều hòa','bật sưởi ghế lái mức 2','mở cửa kính','hạ kính một nửa',
+                   'đèn viền màu xanh dương','mở spotify','bật chế độ cắm trại','gập gương',
+                   'điều hòa mấy độ rồi','nóng quá','mở cốp trước','ừ','thôi']) {
+    const b = document.createElement('button');
+    b.textContent = s; b.onclick = () => say(s);
+    $('#chips').appendChild(b);
+  }
+
+  // Nhận giọng nói sẵn có của trình duyệt (Chrome/Safari), tiếng Việt.
+  //
+  // Trước đây không có onerror: mọi lỗi đều bị NUỐT IM LẶNG — chưa cho phép
+  // micro, không nghe thấy gì, Chrome không gọi được dịch vụ Google. Nút chỉ
+  // hết đỏ rồi thôi, người dùng tưởng hệ thống điếc. Giờ lỗi nào cũng hiện ra
+  // nhật ký, nói rõ phải làm gì.
+  const LOI_MIC = {
+    'not-allowed':      'trình duyệt chưa cho dùng micro — bấm ổ khoá trên thanh địa chỉ rồi cho phép',
+    'service-not-allowed': 'hệ điều hành chặn micro — mở Cài đặt > Quyền riêng tư > Micro',
+    'no-speech':        'không nghe thấy gì — nói to hơn, hoặc kiểm tra đúng micro chưa',
+    'audio-capture':    'không tìm thấy micro nào',
+    'network':          'không gọi được dịch vụ nhận giọng (Chrome gửi âm thanh lên Google, cần mạng)',
+    'aborted':          'bị ngắt giữa chừng',
+  };
+  const ghiMic = (chu) => {
+    const el = document.createElement('div');
+    el.className = 'turn v-DENY';
+    el.innerHTML = `<div class="said">MICRO</div><div class="tts">${escapeHtml(chu)}</div>`;
+    $('#log').prepend(el);
+  };
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR) {
+    const rec = new SR();
+    let dangNghe = false;
+    rec.lang = 'vi-VN'; rec.interimResults = false;
+    rec.onresult = (e) => { const t = e.results[0][0].transcript; $('#say').value = t; say(t); };
+    rec.onerror = (e) => ghiMic(LOI_MIC[e.error] || `lỗi nhận giọng: ${e.error}`);
+    rec.onend = () => { dangNghe = false; $('#mic').classList.remove('rec'); };
+    $('#mic').onclick = () => {
+      if (dangNghe) { rec.stop(); return; }          // bấm lần hai là dừng
+      try { rec.start(); dangNghe = true; $('#mic').classList.add('rec'); }
+      catch (err) { ghiMic(`không khởi động được micro: ${err.message}`); }
+    };
+  } else {
+    $('#mic').disabled = true;
+    $('#mic').title = 'trình duyệt này không có nhận giọng nói';
+    ghiMic('trình duyệt này không có nhận giọng nói — dùng Chrome hoặc Safari');
+  }
+
+  render();
+  setInterval(poll, 1000);
+})();
+</script>
+</body>
+</html>

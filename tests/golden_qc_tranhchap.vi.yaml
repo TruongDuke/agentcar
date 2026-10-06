@@ -1,0 +1,798 @@
+# KHÔNG PHẢI BỘ TEST — danh sách gửi QC để chốt, sinh bởi tools/qc_to_golden.py.
+#
+# Những câu PHỦ ĐỊNH mà QC ghi EXPECTED_INTENTS = [] (không làm gì). Nhưng với
+# cùng kiểu câu, QC lại ghi có lệnh ở 684 dòng khác:
+#     defrost  D268 "Đừng bật sấy kính nha"         -> defrost.turn_off
+#     defrost  D272 "Đừng bật sấy kính lái lên nhé" -> []
+#     foglight D55  "Đừng tắt đèn sương mù."        -> fog_light.turn_on
+#     foglight D58  "Không cần tắt đèn sương mù đâu." -> []
+#
+# Chốt 29/09: theo QC = theo phe ra lệnh. Nên những dòng dưới đây KHÔNG dùng
+# chấm điểm — chấm thì agent chắc chắn rớt, mà rớt theo đáp án đã bị bác bỏ.
+
+- sheet: defrost
+  say: Đừng bật sấy kính lái lên nhé
+- sheet: defrost
+  say: Không cần sấy kính hậu đâu trợ lý
+- sheet: defrost
+  say: Đừng sấy kính bên phụ nha
+- sheet: defrost
+  say: Thôi đừng có mở chức năng sấy kính làm gì cho tốn điện
+- sheet: defrost
+  say: Đừng có bật sấy kiếng nha cha
+- sheet: defrost
+  say: Đừng bật sấy kính lái nghen
+- sheet: defrost
+  say: Đừng sấy kính hậu đi chớ
+- sheet: mirror
+  say: Cấm gập gương chiếu hậu lúc này nha.
+- sheet: Sunroof
+  say: Không cần thao tác cửa sổ trời
+- sheet: Sunroof
+  say: Khoan đóng cửa sổ trời vội
+- sheet: Sunroof
+  say: Đừng chỉnh cửa sổ trời lên 45%
+- sheet: Sunroof
+  say: Không cần chỉnh cửa sổ trời lên 45% đâu
+- sheet: Sunroof
+  say: Thôi khỏi chỉnh cửa sổ trời lên 45%
+- sheet: Sunroof
+  say: Tôi không muốn chỉnh cửa sổ trời lên 45% lúc này
+- sheet: Sunroof
+  say: Khoan chỉnh cửa sổ trời lên 45% vội
+- sheet: Sunroof
+  say: Đừng đưa cửa sổ trời về min
+- sheet: Sunroof
+  say: Đừng đưa cửa sổ trời về mức tối thiểu
+- sheet: Sunroof
+  say: Không cần đưa cửa sổ trời về mức tối thiểu đâu
+- sheet: Sunroof
+  say: Thôi khỏi đưa cửa sổ trời về mức tối thiểu
+- sheet: Sunroof
+  say: Tôi không muốn đưa cửa sổ trời về mức tối thiểu lúc này
+- sheet: Sunroof
+  say: Khoan đưa cửa sổ trời về mức tối thiểu vội
+- sheet: Sunroof
+  say: Đừng đưa cửa sổ trời lên max
+- sheet: Sunroof
+  say: Đừng đưa cửa sổ trời lên mức tối đa
+- sheet: Sunroof
+  say: Không cần đưa cửa sổ trời lên mức tối đa đâu
+- sheet: Sunroof
+  say: Thôi khỏi đưa cửa sổ trời lên mức tối đa
+- sheet: Sunroof
+  say: Tôi không muốn đưa cửa sổ trời lên mức tối đa lúc này
+- sheet: Sunroof
+  say: Khoan đưa cửa sổ trời lên mức tối đa vội
+- sheet: Sunroof
+  say: Đừng tăng độ mở cửa sổ trời
+- sheet: Sunroof
+  say: Không cần tăng độ mở cửa sổ trời đâu
+- sheet: Sunroof
+  say: Thôi khỏi tăng độ mở cửa sổ trời
+- sheet: Sunroof
+  say: Tôi không muốn tăng độ mở cửa sổ trời lúc này
+- sheet: Sunroof
+  say: Khoan tăng độ mở cửa sổ trời vội
+- sheet: Sunroof
+  say: Đừng giảm độ mở cửa sổ trời
+- sheet: Sunroof
+  say: Không cần giảm độ mở cửa sổ trời đâu
+- sheet: Sunroof
+  say: Thôi khỏi giảm độ mở cửa sổ trời
+- sheet: Sunroof
+  say: Tôi không muốn giảm độ mở cửa sổ trời lúc này
+- sheet: Sunroof
+  say: Khoan giảm độ mở cửa sổ trời vội
+- sheet: Sunroof
+  say: Tôi không muốn hỏi trạng thái cửa sổ trời lúc này
+- sheet: Sunroof
+  say: Khoan đóng rèm cửa sổ trời vội
+- sheet: Sunroof
+  say: Đừng chỉnh rèm cửa sổ trời lên 45%
+- sheet: Sunroof
+  say: Không cần chỉnh rèm cửa sổ trời lên 45% đâu
+- sheet: Sunroof
+  say: Thôi khỏi chỉnh rèm cửa sổ trời lên 45%
+- sheet: Sunroof
+  say: Tôi không muốn chỉnh rèm cửa sổ trời lên 45% lúc này
+- sheet: Sunroof
+  say: Khoan chỉnh rèm cửa sổ trời lên 45% vội
+- sheet: Sunroof
+  say: Đừng đưa rèm cửa sổ trời về mức tối thiểu
+- sheet: Sunroof
+  say: Không cần đưa rèm cửa sổ trời về mức tối thiểu đâu
+- sheet: Sunroof
+  say: Thôi khỏi đưa rèm cửa sổ trời về mức tối thiểu
+- sheet: Sunroof
+  say: Tôi không muốn đưa rèm cửa sổ trời về mức tối thiểu lúc này
+- sheet: Sunroof
+  say: Khoan đưa rèm cửa sổ trời về mức tối thiểu vội
+- sheet: Sunroof
+  say: Đừng đưa rèm cửa sổ trời lên mức tối đa
+- sheet: Sunroof
+  say: Không cần đưa rèm cửa sổ trời lên mức tối đa đâu
+- sheet: Sunroof
+  say: Thôi khỏi đưa rèm cửa sổ trời lên mức tối đa
+- sheet: Sunroof
+  say: Tôi không muốn đưa rèm cửa sổ trời lên mức tối đa lúc này
+- sheet: Sunroof
+  say: Khoan đưa rèm cửa sổ trời lên mức tối đa vội
+- sheet: Sunroof
+  say: Đừng tăng độ mở rèm cửa sổ trời
+- sheet: Sunroof
+  say: Không cần tăng độ mở rèm cửa sổ trời đâu
+- sheet: Sunroof
+  say: Thôi khỏi tăng độ mở rèm cửa sổ trời
+- sheet: Sunroof
+  say: Tôi không muốn tăng độ mở rèm cửa sổ trời lúc này
+- sheet: Sunroof
+  say: Khoan tăng độ mở rèm cửa sổ trời vội
+- sheet: Sunroof
+  say: Đừng giảm độ mở rèm cửa sổ trời
+- sheet: Sunroof
+  say: Không cần giảm độ mở rèm cửa sổ trời đâu
+- sheet: Sunroof
+  say: Thôi khỏi giảm độ mở rèm cửa sổ trời
+- sheet: Sunroof
+  say: Tôi không muốn giảm độ mở rèm cửa sổ trời lúc này
+- sheet: Sunroof
+  say: Khoan giảm độ mở rèm cửa sổ trời vội
+- sheet: foglight
+  say: Tôi không muốn tắt đèn sương mù.
+- sheet: foglight
+  say: Không cần tắt đèn sương mù đâu.
+- sheet: app_control
+  say: Đừng mở ứng dụng nhạc
+- sheet: app_control
+  say: Không cần mở app nhạc đâu
+- sheet: app_control
+  say: Thôi khỏi vào ứng dụng nhạc
+- sheet: app_control
+  say: Đừng chuyển sang app nhạc nha
+- sheet: app_control
+  say: Không cần mở radio đâu
+- sheet: app_control
+  say: Thôi khỏi bật ứng dụng radio
+- sheet: app_control
+  say: Đừng vào app radio nữa
+- sheet: app_control
+  say: Không cần chuyển qua radio đâu
+- sheet: app_control
+  say: Đừng mở ứng dụng nhạc USB
+- sheet: app_control
+  say: Thôi khỏi hiện app nhạc USB
+- sheet: app_control
+  say: Chưa cần mở USB Music đâu
+- sheet: app_control
+  say: Đừng chuyển sang nhạc USB nha
+- sheet: app_control
+  say: Không cần mở nhạc Bluetooth đâu
+- sheet: app_control
+  say: Thôi khỏi vào app nhạc Bluetooth
+- sheet: app_control
+  say: Chưa cần hiện Bluetooth Music
+- sheet: app_control
+  say: Đừng mở giao diện nhạc Bluetooth
+- sheet: app_control
+  say: Không cần chuyển qua nhạc Bluetooth
+- sheet: app_control
+  say: Đừng mở Here Map
+- sheet: app_control
+  say: Không cần mở ứng dụng bản đồ
+- sheet: app_control
+  say: Thôi khỏi vào bản đồ nha
+- sheet: app_control
+  say: Chưa cần hiện Here Map đâu
+- sheet: app_control
+  say: Đừng chuyển sang app bản đồ
+- sheet: app_control
+  say: Không cần mở ứng dụng điện thoại
+- sheet: app_control
+  say: Đừng vào app gọi điện
+- sheet: app_control
+  say: Chưa cần mở phone đâu
+- sheet: app_control
+  say: Không cần chuyển qua app gọi điện
+- sheet: app_control
+  say: Đừng mở Podcast
+- sheet: app_control
+  say: Thôi khỏi hiện ứng dụng Podcast
+- sheet: app_control
+  say: Chưa cần mở Podcast lúc này
+- sheet: app_control
+  say: Không cần mở ứng dụng Pin
+- sheet: app_control
+  say: Thôi khỏi vào màn hình Pin
+- sheet: app_control
+  say: Chưa cần mở quản lý pin đâu
+- sheet: app_control
+  say: Không cần chuyển qua app Pin
+- sheet: app_control
+  say: Đừng mở ứng dụng dịch vụ xe
+- sheet: app_control
+  say: Không cần vào tiện ích xe
+- sheet: app_control
+  say: Thôi khỏi hiện dịch vụ xe
+- sheet: app_control
+  say: Chưa cần mở app dịch vụ xe
+- sheet: app_control
+  say: Đừng chuyển sang tiện ích xe
+- sheet: app_control
+  say: Không cần mở ứng dụng hỗ trợ lái
+- sheet: app_control
+  say: Đừng vào ADAS
+- sheet: app_control
+  say: Chưa cần mở hỗ trợ lái đâu
+- sheet: app_control
+  say: Không cần chuyển sang app ADAS
+- sheet: app_control
+  say: Đừng mở hướng dẫn sử dụng
+- sheet: app_control
+  say: Không cần vào sổ tay hướng dẫn
+- sheet: app_control
+  say: Chưa cần mở hướng dẫn sử dụng đâu
+- sheet: app_control
+  say: Đừng chuyển sang app hướng dẫn
+- sheet: app_control
+  say: Không cần mở ứng dụng lịch
+- sheet: app_control
+  say: Chưa cần mở Calendar đâu
+- sheet: app_control
+  say: Không cần chuyển sang ứng dụng lịch
+- sheet: app_control
+  say: Đừng mở FPT Play
+- sheet: app_control
+  say: Không cần vào FPT Play đâu
+- sheet: app_control
+  say: Chưa cần mở app FPT Play
+- sheet: app_control
+  say: Không cần mở VietMap
+- sheet: app_control
+  say: Đừng vào ứng dụng VietMap
+- sheet: app_control
+  say: Chưa cần mở VietMap đâu
+- sheet: app_control
+  say: Đừng chuyển sang app VietMap
+- sheet: app_control
+  say: Không cần mở danh sách ứng dụng
+- sheet: app_control
+  say: Đừng hiện App Drawer
+- sheet: app_control
+  say: Thôi khỏi mở App Drawer
+- sheet: app_control
+  say: Chưa cần vào danh sách ứng dụng
+- sheet: app_control
+  say: Đừng đóng ứng dụng nhạc
+- sheet: app_control
+  say: Không cần thoát app nhạc đâu
+- sheet: app_control
+  say: Thôi khỏi tắt giao diện nhạc
+- sheet: app_control
+  say: Chưa cần đóng trình phát nhạc
+- sheet: app_control
+  say: Đừng thoát khỏi ứng dụng nhạc nha
+- sheet: app_control
+  say: Không cần đóng radio đâu
+- sheet: app_control
+  say: Đừng thoát app radio
+- sheet: app_control
+  say: Thôi khỏi tắt giao diện radio
+- sheet: app_control
+  say: Chưa cần đóng ứng dụng đài
+- sheet: app_control
+  say: Đừng đóng ứng dụng nhạc USB
+- sheet: app_control
+  say: Không cần thoát nhạc USB đâu
+- sheet: app_control
+  say: Chưa cần đóng app nhạc USB
+- sheet: app_control
+  say: Đừng đóng ứng dụng nhạc Bluetooth
+- sheet: app_control
+  say: Không cần thoát nhạc Bluetooth đâu
+- sheet: app_control
+  say: Thôi khỏi tắt Bluetooth Music
+- sheet: app_control
+  say: Chưa cần đóng app nhạc Bluetooth
+- sheet: app_control
+  say: Đừng đóng ứng dụng bản đồ
+- sheet: app_control
+  say: Không cần thoát Here Map đâu
+- sheet: app_control
+  say: Thôi khỏi tắt bản đồ nha
+- sheet: app_control
+  say: Chưa cần đóng ứng dụng dẫn đường
+- sheet: app_control
+  say: Đừng đóng ứng dụng điện thoại
+- sheet: app_control
+  say: Không cần thoát app gọi điện đâu
+- sheet: app_control
+  say: Thôi khỏi tắt giao diện điện thoại
+- sheet: app_control
+  say: Chưa cần đóng app phone
+- sheet: app_control
+  say: Đừng đóng Podcast
+- sheet: app_control
+  say: Không cần thoát Podcast đâu
+- sheet: app_control
+  say: Thôi khỏi tắt ứng dụng Podcast
+- sheet: app_control
+  say: Chưa cần đóng Podcast nha
+- sheet: app_control
+  say: Đừng đóng ứng dụng Pin
+- sheet: app_control
+  say: Không cần thoát màn hình Pin đâu
+- sheet: app_control
+  say: Thôi khỏi tắt quản lý pin
+- sheet: app_control
+  say: Chưa cần đóng app Pin nha
+- sheet: app_control
+  say: Đừng đóng ứng dụng dịch vụ xe
+- sheet: app_control
+  say: Không cần thoát tiện ích xe đâu
+- sheet: app_control
+  say: Thôi khỏi tắt dịch vụ xe
+- sheet: app_control
+  say: Chưa cần đóng app dịch vụ xe
+- sheet: app_control
+  say: Đừng đóng ứng dụng hỗ trợ lái
+- sheet: app_control
+  say: Không cần thoát ADAS đâu
+- sheet: app_control
+  say: Thôi khỏi tắt hỗ trợ lái
+- sheet: app_control
+  say: Chưa cần đóng ứng dụng ADAS
+- sheet: app_control
+  say: Đừng đóng hướng dẫn sử dụng
+- sheet: app_control
+  say: Không cần thoát sổ tay hướng dẫn đâu
+- sheet: app_control
+  say: Thôi khỏi tắt Owner Manual
+- sheet: app_control
+  say: Chưa cần đóng hướng dẫn sử dụng
+- sheet: app_control
+  say: Đừng đóng ứng dụng lịch
+- sheet: app_control
+  say: Không cần thoát Calendar đâu
+- sheet: app_control
+  say: Thôi khỏi tắt giao diện lịch
+- sheet: app_control
+  say: Chưa cần đóng app lịch
+- sheet: app_control
+  say: Đừng đóng FPT Play
+- sheet: app_control
+  say: Không cần thoát FPT Play đâu
+- sheet: app_control
+  say: Thôi khỏi tắt FPT Play nha
+- sheet: app_control
+  say: Chưa cần đóng ứng dụng FPT Play
+- sheet: app_control
+  say: Đừng đóng VietMap
+- sheet: app_control
+  say: Không cần thoát VietMap đâu
+- sheet: app_control
+  say: Thôi khỏi tắt bản đồ VietMap
+- sheet: app_control
+  say: Chưa cần đóng ứng dụng VietMap
+- sheet: app_control
+  say: Đừng đóng App Drawer
+- sheet: app_control
+  say: Không cần thoát danh sách ứng dụng đâu
+- sheet: app_control
+  say: Thôi khỏi tắt App Drawer
+- sheet: app_control
+  say: Chưa cần đóng danh sách ứng dụng
+- sheet: app_control
+  say: Tôi bảo đừng đóng app nhạc mà
+- sheet: app_control
+  say: Nhạc thì thôi đừng thoát ra
+- sheet: app_control
+  say: Bản đồ vẫn còn dùng đừng tắt
+- sheet: app_control
+  say: Chưa tới nơi nên đừng đóng Here Map
+- sheet: app_control
+  say: Không cần đóng ứng dụng nào hết
+- sheet: app_control
+  say: Đừng thoát app nào cả
+- sheet: app_control
+  say: Thôi khỏi đóng làm gì
+- sheet: app_control
+  say: Không muốn tắt ứng dụng đó
+- sheet: app_control
+  say: Không cần quay ra đâu
+- sheet: app_control
+  say: Khỏi cần kiểm tra app nhạc đâu
+- sheet: app_control
+  say: Đừng hỏi tôi có đang ở nhạc không
+- sheet: app_control
+  say: Không cần xem ứng dụng nhạc đâu nha
+- sheet: app_control
+  say: Thôi khỏi kiểm tra màn hình nhạc
+- sheet: app_control
+  say: Khỏi cần kiểm tra radio đâu
+- sheet: app_control
+  say: Đừng hỏi tôi đang ở radio hả
+- sheet: app_control
+  say: Không cần xem radio đang mở không
+- sheet: app_control
+  say: Thôi khỏi kiểm tra ứng dụng radio
+- sheet: app_control
+  say: Đừng xem tôi có ở nhạc USB không
+- sheet: app_control
+  say: Không cần biết USB Music đang mở
+- sheet: app_control
+  say: Đừng xem đang ở Bluetooth Music không
+- sheet: app_control
+  say: Không cần biết app Bluetooth mở chưa
+- sheet: app_control
+  say: Thôi khỏi hỏi ứng dụng nhạc Bluetooth
+- sheet: app_control
+  say: Đừng hỏi tôi có đang ở Here Map không
+- sheet: app_control
+  say: Không cần xem bản đồ đang hiện không
+- sheet: app_control
+  say: Thôi khỏi xác nhận Here Map nha
+- sheet: app_control
+  say: Đừng hỏi app gọi điện đang mở không
+- sheet: app_control
+  say: Không cần xác nhận ứng dụng điện thoại
+- sheet: app_control
+  say: Thôi khỏi xem màn hình gọi điện
+- sheet: app_control
+  say: Đừng hỏi Podcast có đang mở không
+- sheet: app_control
+  say: Không cần xem Podcast đang hiện không
+- sheet: app_control
+  say: Thôi khỏi xác nhận ứng dụng Podcast
+- sheet: app_control
+  say: Đừng hỏi màn hình Pin đang mở không
+- sheet: app_control
+  say: Không cần xác nhận ứng dụng Pin
+- sheet: app_control
+  say: Thôi khỏi xem giao diện Pin
+- sheet: app_control
+  say: Đừng hỏi tiện ích xe đang mở không
+- sheet: app_control
+  say: Không cần xác nhận dịch vụ xe đâu
+- sheet: app_control
+  say: Thôi khỏi xem app dịch vụ xe
+- sheet: app_control
+  say: Đừng hỏi tôi có ở ADAS không
+- sheet: app_control
+  say: Không cần xác nhận app hỗ trợ lái
+- sheet: app_control
+  say: Thôi khỏi xem màn hình ADAS
+- sheet: app_control
+  say: Đừng hỏi Owner Manual đang mở không
+- sheet: app_control
+  say: Không cần xác nhận sổ tay hướng dẫn
+- sheet: app_control
+  say: Thôi khỏi xem hướng dẫn sử dụng
+- sheet: app_control
+  say: Đừng hỏi Calendar đang mở không
+- sheet: app_control
+  say: Không cần xác nhận ứng dụng lịch
+- sheet: app_control
+  say: Thôi khỏi xem Calendar đi
+- sheet: app_control
+  say: Đừng hỏi FPT Play đang mở không
+- sheet: app_control
+  say: Không cần xác nhận giao diện FPT Play
+- sheet: app_control
+  say: Thôi khỏi xem app FPT Play
+- sheet: app_control
+  say: Đừng hỏi VietMap đang mở không
+- sheet: app_control
+  say: Không cần xác nhận bản đồ VietMap
+- sheet: app_control
+  say: Thôi khỏi xem ứng dụng VietMap
+- sheet: app_control
+  say: Đừng hỏi danh sách ứng dụng đang mở không
+- sheet: app_control
+  say: Không cần xác nhận App Drawer đâu
+- sheet: app_control
+  say: Thôi khỏi xem danh sách ứng dụng
+- sheet: app_control
+  say: Đừng có xác nhận bản đồ cho tôi
+- sheet: app_control
+  say: Tôi không cần biết VietMap đang hiện không
+- sheet: app_control
+  say: Không cần xem tôi đang ở đâu trên màn hình
+- sheet: app_control
+  say: Đừng kiểm tra trạng thái ứng dụng nữa
+- sheet: app_control
+  say: Không muốn kiểm tra app hiện tại
+- sheet: app_control
+  say: Cứ để nguyên đừng kiểm tra gì cả
+- sheet: app_control
+  say: Không cần xác nhận màn hình đang mở
+- sheet: app_control
+  say: Đừng hỏi lại tôi đang ở ứng dụng nào
+- sheet: connection_control
+  say: đừng bật wifi
+- sheet: connection_control
+  say: không cần mở wifi đâu
+- sheet: connection_control
+  say: thôi khỏi kích hoạt wifi
+- sheet: connection_control
+  say: không muốn bật mạng
+- sheet: connection_control
+  say: đừng kết nối mạng không dây
+- sheet: connection_control
+  say: chưa cần mở internet
+- sheet: connection_control
+  say: không cần kết nối internet đâu
+- sheet: connection_control
+  say: đừng tắt wifi
+- sheet: connection_control
+  say: không cần đóng wifi đâu
+- sheet: connection_control
+  say: thôi khỏi vô hiệu wifi
+- sheet: connection_control
+  say: đừng cho wifi dừng hoạt động
+- sheet: connection_control
+  say: không muốn ngắt mạng không dây
+- sheet: connection_control
+  say: không cần khóa wifi đâu
+- sheet: connection_control
+  say: thôi khỏi kiểm tra kết nối
+- sheet: connection_control
+  say: không cần kiểm tra internet đâu
+- sheet: connection_control
+  say: thôi không cần tra cứu wifi
+- sheet: connection_control
+  say: không cần xem kết nối internet
+- sheet: connection_control
+  say: đừng kết nối vào mạng
+- sheet: connection_control
+  say: không cần tham gia mạng đâu
+- sheet: connection_control
+  say: thôi khỏi lên mạng
+- sheet: connection_control
+  say: đừng cho thiết bị truy cập mạng
+- sheet: connection_control
+  say: không muốn vào internet
+- sheet: connection_control
+  say: chưa cần dùng mạng không dây
+- sheet: connection_control
+  say: thôi khỏi tham gia wireless
+- sheet: connection_control
+  say: đừng truy cập internet
+- sheet: connection_control
+  say: không cần kết nối lại mạng
+- sheet: connection_control
+  say: đừng rời mạng hiện tại
+- sheet: connection_control
+  say: không cần ngắt khỏi mạng đâu
+- sheet: connection_control
+  say: đừng hủy kết nối mạng
+- sheet: connection_control
+  say: không muốn thoát khỏi mạng
+- sheet: connection_control
+  say: chưa cần rời mạng đâu
+- sheet: connection_control
+  say: thôi không cần ngắt mạng hiện tại
+- sheet: connection_control
+  say: không cần dùng bluetooth đâu
+- sheet: connection_control
+  say: thôi khỏi kích hoạt bluetooth
+- sheet: connection_control
+  say: đừng mở chức năng bluetooth
+- sheet: connection_control
+  say: không cần cho phép bluetooth
+- sheet: connection_control
+  say: đừng kích hoạt bộ điều hợp bluetooth
+- sheet: connection_control
+  say: không muốn sử dụng bluetooth lúc này
+- sheet: connection_control
+  say: thôi khỏi bật tính năng bluetooth
+- sheet: connection_control
+  say: đừng khóa bluetooth
+- sheet: connection_control
+  say: không cần ngừng bluetooth đâu
+- sheet: connection_control
+  say: đừng hủy kích hoạt bluetooth
+- sheet: connection_control
+  say: không muốn tắt chức năng bluetooth
+- sheet: connection_control
+  say: chưa cần vô hiệu bluetooth
+- sheet: connection_control
+  say: đừng khóa bộ điều hợp bluetooth
+- sheet: connection_control
+  say: không cần ngắt chức năng bluetooth
+- sheet: connection_control
+  say: không cần xem bluetooth đâu
+- sheet: connection_control
+  say: thôi không cần xem kết nối bluetooth
+- sheet: connection_control
+  say: không cần biết bluetooth thế nào
+- sheet: connection_control
+  say: đừng kiểm tra thiết bị bluetooth
+- sheet: connection_control
+  say: đừng ghép bluetooth
+- sheet: connection_control
+  say: không cần kết đôi bluetooth
+- sheet: connection_control
+  say: thôi khỏi liên kết bluetooth
+- sheet: connection_control
+  say: đừng bắt cặp thiết bị bluetooth
+- sheet: connection_control
+  say: không muốn ghép đôi thiết bị
+- sheet: connection_control
+  say: chưa cần liên kết bluetooth
+- sheet: connection_control
+  say: thôi khỏi tạo kết nối bluetooth
+- sheet: connection_control
+  say: đừng bỏ ghép nối bluetooth
+- sheet: connection_control
+  say: không cần ngắt cặp bluetooth
+- sheet: connection_control
+  say: đừng hủy liên kết bluetooth
+- sheet: connection_control
+  say: thôi khỏi tách khỏi thiết bị bluetooth
+- sheet: connection_control
+  say: đừng loại bỏ liên kết bluetooth hiện tại
+- sheet: connection_control
+  say: không cần phát wifi đâu
+- sheet: connection_control
+  say: không cần dừng phát mạng đâu
+- sheet: connection_control
+  say: đừng kiểm tra hotspot
+- sheet: connection_control
+  say: thôi khỏi kiểm tra hotspot
+- sheet: connection_control
+  say: chưa cần truy cập mạng được chia sẻ
+- sheet: connection_control
+  say: đừng vào mạng đó
+- sheet: connection_control
+  say: không cần thoát điểm truy cập đâu
+- sheet: connection_control
+  say: chưa cần bỏ điểm truy cập
+- sheet: fan
+  say: Thôi khỏi tắt quạt gió nữa.
+- sheet: fan
+  say: Không cần nâng quạt làm mát đâu.
+- sheet: fan
+  say: Đừng bớt quạt thông gió xuống nữa.
+- sheet: fan
+  say: Khỏi cần kích hoạt quạt làm gì.
+- sheet: HVAC
+  say: Thôi khỏi chỉnh nhiệt độ điều hòa lên 16  độ
+- sheet: HVAC
+  say: Tôi không muốn chỉnh nhiệt độ điều hòa lên 17 độ lúc này
+- sheet: HVAC
+  say: Khoan chỉnh nhiệt độ điều hòa lên 18 độ vội
+- sheet: HVAC
+  say: Đừng giảm nhiệt độ điều hòa
+- sheet: HVAC
+  say: Không cần giảm nhiệt độ điều hòa đâu
+- sheet: regen_brake
+  say: Không cần chỉnh phanh tái sinh đâu.
+- sheet: regen_brake
+  say: Chưa cần đặt về mặc định vội.
+- sheet: screen_brightness_control
+  say: Thôi không cần đổi mức sáng màn hình nữa
+- sheet: screen_brightness_control
+  say: Đừng đưa màn hình về 50% sáng
+- sheet: screen_brightness_control
+  say: Không cần thay đổi độ sáng hiện tại
+- sheet: screen_brightness_control
+  say: Thôi không cần hạ sáng đâu
+- sheet: screen_brightness_control
+  say: Đừng làm màn hình tối đi
+- sheet: screen_brightness_control
+  say: Đừng chuyển độ sáng màn hình sang mức thấp nhất
+- sheet: screen_brightness_control
+  say: Giữ nguyên màn hình đi, đừng hạ sáng
+- sheet: screen_brightness_control
+  say: Để display như hiện tại, không cần giảm thêm
+- sheet: screen_brightness_control
+  say: Đừng chỉnh màn hình sáng nhất
+- sheet: screen_brightness_control
+  say: Thôi không cần đưa độ sáng màn hình lên tối đa
+- sheet: screen_brightness_control
+  say: Không muốn display sáng hết cỡ
+- sheet: screen_brightness_control
+  say: Thôi khỏi đặt màn hình ở mức sáng tối đa
+- sheet: screen_brightness_control
+  say: Đừng chuyển độ sáng màn hình sang mức cao nhất
+- sheet: screen_brightness_control
+  say: Không cần tăng brightness thêm nữa
+- sheet: screen_brightness_control
+  say: Để monitor như bây giờ, đừng chỉnh sáng
+- sheet: screen_brightness_control
+  say: Đừng kiểm tra độ sáng màn hình
+- sheet: screen_brightness_control
+  say: Thôi không cần xem brightness nữa
+- sheet: screen_brightness_control
+  say: Không muốn biết display đang sáng bao nhiêu
+- sheet: screen_brightness_control
+  say: Đừng cho tôi biết độ sáng màn hình hiện tại
+- sheet: screen_brightness_control
+  say: Thôi khỏi xem màn hình đang sáng mức nào
+- sheet: screen_brightness_control
+  say: Không cần tra cứu brightness hiện giờ
+- sheet: screen_brightness_control
+  say: Đừng kiểm tra độ sáng của display
+- sheet: screen_brightness_control
+  say: Giữ nguyên đi, không cần xem độ sáng
+- sheet: screen_open
+  say: Đừng mở cài đặt độ sáng
+- sheet: screen_open
+  say: Thôi khỏi đóng cài đặt độ sáng
+- sheet: screen_open
+  say: Đừng mở cài đặt đèn
+- sheet: screen_open
+  say: Thôi khỏi đóng điều khiển đèn
+- sheet: screen_open
+  say: Không cần kiểm tra màn hình đèn đâu
+- sheet: screen_open
+  say: Đừng mở cài đặt gương
+- sheet: screen_open
+  say: Thôi khỏi đóng màn hình gương
+- sheet: screen_open
+  say: Đừng mở cài đặt ngôn ngữ
+- sheet: screen_open
+  say: Thôi khỏi đóng phần ngôn ngữ
+- sheet: screen_open
+  say: Không cần kiểm tra màn hình ngôn ngữ
+- sheet: screen_open
+  say: Đừng mở cài đặt thời gian
+- sheet: screen_open
+  say: Thôi khỏi đóng phần thời gian
+- sheet: screen_open
+  say: Đừng mở trợ lý ảo
+- sheet: screen_open
+  say: Thôi khỏi đóng trợ lý giọng nói
+- sheet: screen_open
+  say: Không cần kiểm tra trợ lý ảo đâu
+- sheet: screen_open
+  say: Đừng về màn hình chính
+- sheet: screen_open
+  say: Thôi khỏi đóng màn hình chính
+- sheet: screen_open
+  say: Không cần biết đang ở màn hình chính không
+- sheet: screen_open
+  say: Đừng mở wifi
+- sheet: screen_open
+  say: Thôi khỏi đóng wifi
+- sheet: screen_open
+  say: Đừng mở bluetooth
+- sheet: screen_open
+  say: Thôi khỏi tắt màn hình bluetooth
+- sheet: screen_open
+  say: Không cần xem bluetooth có đang mở không
+- sheet: screen_open
+  say: Đừng mở wifi hotspot
+- sheet: screen_open
+  say: Thôi khỏi đóng điểm phát sóng
+- sheet: screen_open
+  say: Đừng mở cài đặt âm lượng
+- sheet: screen_open
+  say: Thôi khỏi đóng phần âm lượng
+- sheet: screen_open
+  say: Không cần biết màn hình âm lượng đang mở không
+- sheet: screen_open
+  say: Đừng mở thông tin xe
+- sheet: screen_open
+  say: Thôi khỏi đóng thông tin xe
+- sheet: screen_open
+  say: Không cần kiểm tra màn hình thông tin xe
+- sheet: screen_open
+  say: Đừng mở profile
+- sheet: screen_open
+  say: Thôi khỏi đóng profile
+- sheet: screen_open
+  say: Đừng mở cài đặt
+- sheet: screen_open
+  say: Thôi khỏi đóng màn hình cài đặt
+- sheet: screen_open
+  say: Không cần kiểm tra phần cài đặt đâu
+- sheet: screen_open
+  say: Đừng mở bộ chỉnh âm
+- sheet: screen_open
+  say: Thôi khỏi đóng equalizer
+- sheet: screen_open
+  say: Đừng mở điều hòa
+- sheet: screen_open
+  say: Thôi khỏi đóng HVAC

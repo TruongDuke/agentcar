@@ -1,0 +1,60 @@
+{
+  "LA_GI": "MỐC XUẤT PHÁT, cố ý KHÔNG cập nhật. Đây là ảnh chụp trước khi gắn model on-edge — giữ nguyên để còn cái mà đối chiếu. Số HIỆN TẠI nằm ở tests/baseline_qc_nlu.json, số để báo cáo nằm ở tests/bao_cao.md.",
+  "GHI_CHU_KHOA": "nhan_dung_thiet_bi CHỈ đếm trường device đúng hay sai, KHÔNG phải 'câu về thiết bị này đúng bao nhiêu phần trăm'. auto_highbeam/hud = 0 là ĐÚNG: VF9 không có.",
+  "khi": "2026-09-28T16:36:29",
+  "bo_cau": "tests/golden_qc.vi.yaml",
+  "so_cau": 24244,
+  "do_phu": 0.4621,
+  "dung_ca_cau": 0.2154,
+  "truong": {
+    "device": 0.4338,
+    "action": 0.329,
+    "zone": 0.355,
+    "value": 0.1517,
+    "item": 0.2835,
+    "mode": 0.3722
+  },
+  "truong_khi_ra_lenh": {
+    "device": 0.9408,
+    "action": 0.7136,
+    "zone": 0.696,
+    "value": 0.2903,
+    "item": 0.8172,
+    "mode": 0.8145
+  },
+  "im_lang": {
+    "bo_cau": "tests/golden_qc_negative.vi.yaml",
+    "so_cau": 530,
+    "ra_lenh_oan": 244,
+    "ty_le_oan": 0.4604
+  },
+  "nhan_dung_thiet_bi": {
+    "ambient_light": 0.3286,
+    "app_control": 0.347,
+    "auto_highbeam": 0.0,
+    "bluetooth": 0.4031,
+    "charge_port": 0.4445,
+    "defrost": 0.4011,
+    "dome_light": 0.394,
+    "fan": 0.621,
+    "fog_light": 0.1941,
+    "foot_kick": 0.3516,
+    "hud": 0.0,
+    "hvac": 0.7981,
+    "mirror": 0.3025,
+    "regen_brake": 0.5055,
+    "scene_mode": 0.401,
+    "screen_brightness": 0.1202,
+    "screen_control": 0.2804,
+    "seat_cooling": 0.3821,
+    "seat_heating": 0.406,
+    "seat_massage": 0.6259,
+    "steering_wheel": 0.8164,
+    "sunroof": 0.542,
+    "trunk": 0.495,
+    "volume": 0.5633,
+    "wifi": 0.3273,
+    "wifi_hotspot": 0.0628,
+    "window": 0.4669
+  }
+}

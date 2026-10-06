@@ -1,0 +1,33 @@
+{
+  "ghi_chu": [
+    "Lịch sử đo tầng cloud. Trước đây số này chỉ nằm trong commit message,",
+    "muốn dựng lại bảng tiến triển phải đi dò git — và dò thì dễ nối nhầm",
+    "hai lượt đo KHÁC CỠ MẪU rồi tính ra mức tăng không có thật.",
+    "",
+    "CHỈ SO HAI Ô CÙNG CỘT. Cùng một prompt fab6ecd đo trên mẫu 500 ra 71,8%",
+    "còn trên mẫu 3.600 ra 73,7% — chênh 1,9 điểm hoàn toàn do cỡ mẫu."
+  ],
+  "cot": {
+    "mau_500":  "500 câu QC cần mạng, seed 7, n~137, biên ±7,5",
+    "mau_3600": "3.600 câu QC cần mạng, seed 7, n~960, biên ±2,8",
+    "tap_sach": "3.000 câu seed 7 BỎ 3.600 câu đầu — chưa dùng để chỉnh prompt, n=738, biên ±3,0"
+  },
+  "lan_do": [
+    {"commit": "4013309", "prompt_sha": "9e9de987d6f6", "viec": "mốc xuất phát của đợt cloud",
+     "mau_500": 0.671, "mau_3600": null, "tap_sach": null},
+    {"commit": "5d42391", "prompt_sha": "fab6ecd722e8", "viec": "ghế lạnh là sưởi; vô/exit khỏi X là lệnh",
+     "mau_500": 0.718, "mau_3600": 0.737, "tap_sach": null,
+     "ghi_chu": "mau_3600 đo ở commit 4f943f9, cùng prompt"},
+    {"commit": "a802230", "prompt_sha": "5e4c1af81351", "viec": "digest dùng từ người nói; phủ định lấy vế sau",
+     "mau_500": null, "mau_3600": 0.777, "tap_sach": 0.772,
+     "ghi_chu": "mau_3600 đo bằng --compare, KHÔNG ghi file — chỉ còn trong commit message"}
+  ],
+  "muc_tang_that": {
+    "tren_mau_500":  {"tu": 0.671, "den": 0.718, "tang": 0.047, "so_sanh_duoc": true},
+    "tren_mau_3600": {"tu": 0.737, "den": 0.777, "tang": 0.040, "so_sanh_duoc": true},
+    "canh_bao": "Đừng cộng 4,7 + 4,0. Hai mức tăng đo trên hai mẫu khác nhau, không cộng được."
+  },
+  "so_chot": {"gia_tri": 0.772, "bien": 0.030, "n": 738,
+              "file": "tests/baseline_cloud_sach.json",
+              "vi_sao": "tập chưa dùng để chỉnh prompt — số duy nhất không bị nhiễm"}
+}

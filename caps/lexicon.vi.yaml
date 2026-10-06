@@ -1,0 +1,435 @@
+# Từ điển tiếng Việt: chữ người nói → id trong caps.
+#
+# Chỉ chứa DANH TỪ/ĐỘNG TỪ, không chứa cấu trúc câu — ghép câu là việc của matcher.
+# Alias được so khớp sau khi chuẩn hoá (bỏ dấu, thường hoá, gộp khoảng trắng), nên
+# KHÔNG cần liệt kê biến thể dấu: "điều hoà" và "điều hòa" là một.
+#
+# Quy tắc khớp: LONGEST MATCH THẮNG. "độ sáng màn hình" phải thắng "màn hình";
+# "màn hình áp suất lốp" phải thắng "áp suất lốp". Linter sẽ liệt kê các cặp lồng nhau.
+#
+# devices: caps đã có names.vi cho 6 device (trunk, foot_kick, screen_brightness,
+# wifi_hotspot, app_control, screen_control) — ở đây bổ sung 24 device còn lại;
+# hai nguồn được HỢP NHẤT, không ghi đè.
+
+version: 1
+locale: vi
+
+devices:
+  # caps đã có names.vi cho trunk nhưng thiếu dạng rút gọn hay dùng nhất
+  trunk:           ["cốp"]
+
+  # ---- climate
+  hvac:            ["điều hòa", "máy lạnh", "điều hòa nhiệt độ", "nhiệt độ trong xe",
+                    "nhiệt độ", "ac"]
+  fan:             ["quạt gió", "quạt", "tốc độ quạt", "luồng gió", "gió"]
+  # "sấy cửa kính" phải dài hơn "cửa kính" (tên window), không thì đọc ra window
+  # rồi rụng lệnh vì window không sấy được.
+  defrost:         ["sấy kính", "sưởi kính", "khử sương", "sấy kính chắn gió", "làm tan sương",
+                    "sấy cửa kính", "sưởi cửa kính", "sấy kiếng", "sấy cửa kiếng", "sấy khô kính",
+                    "sấy", "làm sạch sương", "làm sạch sương kính", "defrost"]
+
+  # ---- cửa / kính / cốp
+  window:          ["cửa kính", "kính xe", "cửa sổ", "kính cửa", "kính"]
+  sunroof:         ["cửa sổ trời", "cửa nóc", "nóc kính", "kính trời"]
+  frunk:           ["cốp trước", "khoang trước", "cốp mũi xe"]
+  charge_port:     ["nắp sạc", "cổng sạc", "cửa sạc", "nắp cổng sạc",
+                    "charging port", "charge port", "cổng sạc điện", "nắp bình sạc"]
+
+  # ---- gương / đèn
+  mirror:          ["gương", "gương chiếu hậu", "gương hậu", "kính chiếu hậu"]
+  fog_light:       ["đèn sương mù", "đèn gầm", "đèn mù"]
+  auto_highbeam:   ["đèn pha tự động", "pha tự động", "đèn chiếu xa tự động", "tự động chuyển pha cốt"]
+  ambient_light:   ["đèn viền", "đèn nội thất", "đèn ambient", "đèn trang trí", "đèn led nội thất",
+                    "ambient light", "cabin ambient light", "interior light", "đèn dải", "dải đèn"]
+  dome_light:      ["đèn trần", "đèn nóc", "đèn khoang lái", "đèn trong xe",
+                    "dome light", "cabin lamp", "đèn cabin", "đèn khoang xe"]
+
+  # ---- ghế
+  seat_heating:    ["sưởi ghế", "ghế sưởi", "làm ấm ghế", "sưởi ấm ghế"]
+  # "quạt ghế" KHÔNG ở đây: cả BA (sheet 3.2 #14) lẫn QC (316/316 câu) đều coi
+  # "quạt ... ghế" là QUẠT GIÓ, không phải thông gió ghế. Ba alias còn lại đủ
+  # phủ thông gió ghế, và "quạt" đứng trước nên khớp fan trước theo quét trái.
+  seat_cooling:    ["làm mát ghế", "ghế mát", "thông gió ghế"]
+  seat_massage:    ["massage ghế", "ghế massage", "mát xa ghế", "ghế mát xa",
+                    "massage", "mát xa", "mát-xa", "mát-xa ghế", "đấm bóp",
+                    "đấm lưng", "lực đấm bóp", "cường độ mát xa",
+                    "cường độ mát-xa", "lực mát xa"]
+
+  # ---- scene / misc
+  scene_mode:      ["chế độ xe", "chế độ"]   # alias đầu là tên hiển thị
+  regen_brake:     ["phanh tái sinh", "phanh tái tạo", "hãm tái sinh", "phanh tái sinh năng lượng"]
+  steering_wheel:  ["vô lăng", "tay lái"]
+
+  # ---- infotainment / kết nối
+  volume:          ["âm lượng", "tiếng", "volume", "mức âm lượng", "âm thanh",
+                    "mức âm thanh", "độ to", "tiếng loa"]
+  hud:             ["hud", "màn hình kính lái", "hiển thị trên kính lái", "head up display"]
+  wifi:            ["wifi", "mạng wifi"]
+  bluetooth:       ["bluetooth", "kết nối bluetooth"]
+
+  # ---- query-only
+  tire_pressure:   ["áp suất lốp", "áp suất bánh xe", "hơi lốp"]
+
+  # ---- cloud
+  # nav: KHÔNG khai alias. cloud_only nghĩa là không có grammar edge — câu dẫn đường
+  # không khớp gì ở offline thì escalate, đúng như comment trong caps/vf9.yaml.
+
+# ---------------------------------------------------------------- ZONES
+zones:
+  # dùng chung cho device có zone theo vị trí (hvac, fan, window, seat_*, mirror,
+  # defrost, fog_light, trunk)
+  shared:
+    all:         ["tất cả", "toàn bộ", "cả xe", "toàn xe", "trước và sau",
+                  "trước với sau", "trước lẫn sau", "cả trước và sau", "cả trước lẫn sau"]
+    # "lái" và "phụ" đứng một mình là cần thiết: alias thiết bị đã nuốt chữ "ghế"
+    # trong "sưởi ghế lái", phần còn lại chỉ là "lái".
+    driver:      ["ghế lái", "bên lái", "tài xế", "người lái", "bên ghế lái", "lái",
+                  "ghế tài", "bên tài", "tài"]
+    passenger:   ["ghế phụ", "bên phụ", "phụ lái", "ghế bên cạnh", "hành khách trước", "phụ",
+                  "ghế lái phụ", "lái phụ", "ghế phó lái", "phó lái", "khách trước",
+                  "khu khách trước"]
+    rear_left:   ["sau trái", "ghế sau bên trái", "phía sau bên trái", "sau bên trái",
+                  "hàng 2 bên trái", "hàng 2 trái", "bên trái hàng 2", "trái hàng 2",
+                  "hàng ghế 2 bên trái", "hàng ghế 2 trái", "hàng ghế thứ hai bên trái"]
+    rear_right:  ["sau phải", "ghế sau bên phải", "phía sau bên phải", "sau bên phải",
+                  "hàng 2 bên phải", "hàng 2 phải", "bên phải hàng 2", "phải hàng 2",
+                  "hàng ghế 2 bên phải", "hàng ghế 2 phải", "hàng ghế thứ hai bên phải"]
+    # Alias đầu tiên là TÊN HIỂN THỊ nên phải trung tính: cùng zone "rear" dùng cho
+    # cả ghế sau lẫn kính sau, đọc "hàng ghế sau" sẽ sai với defrost/fog_light.
+    rear:        ["phía sau", "hàng ghế sau", "ghế sau", "đằng sau", "sau",
+                  "hàng 2", "hàng ghế 2", "hàng ghế thứ hai"]
+    front:       ["phía trước", "hàng ghế trước", "đằng trước", "trước",
+                  "hàng 1", "hàng ghế 1", "hàng ghế đầu", "hàng ghế thứ nhất"]
+
+  # Vùng người dùng HAY NÓI mà xe không điều khiển tới. Phải nhận ra thì mới từ
+  # chối được. Không khai thì "bật sưởi ghế hàng 3" bị nuốt mất chữ "hàng 3", còn
+  # số 3 rơi xuống thành MỨC 3 — xe sưởi thật, sai hẳn ý người nói.
+  # BA sheet 3.2 #26/#27/#30/#33/#34 yêu cầu SUGGEST cho đúng nhóm này.
+  unsupported:
+    row_3:       ["hàng 3", "hàng ba", "hàng ghế 3", "hàng ghế thứ ba"]
+    middle_rear: ["ghế giữa", "ghế ở giữa", "ghế giữa hàng 2", "giữa hàng 2"]
+
+  # Vùng chỉ KHÔNG hợp lệ với MỘT SỐ thiết bị — cột P bảng M3:Q14 sheet 3.2 của BA.
+  # Không khai toàn cục được: ghế và cửa kính CÓ hỗ trợ trái/phải (ô O10, O11), còn
+  # điều hòa thì tuỳ hành động (bật/tắt không, chỉnh nhiệt độ có — ô P4 vs O5).
+  # Cụm ghép như "sau bên trái" vẫn khớp rear_left trước vì quét từ trái sang.
+  # Vùng NHẬP NHẰNG — nghe ra nhiều vị trí, không được tự chọn (BA sheet 3.2 #47).
+  # "ghế khách" có thể là ghế phụ hàng 1 hoặc ghế hàng sau. Khai thành một target
+  # riêng để resolve nhận ra rồi hỏi lại, thay vì im lặng lấy `all`.
+  ambiguous_per_device:
+    __mo_ho__:
+      devices: [seat_heating, seat_cooling, seat_massage]
+      aliases: ["ghế khách", "khách"]
+
+  unsupported_per_device:
+    left:
+      devices: [hvac, fan, defrost, trunk, frunk, sunroof]
+      aliases: ["bên trái", "phía trái", "bên tay trái", "phía bên trái"]
+    right:
+      devices: [hvac, fan, defrost, trunk, frunk, sunroof]
+      aliases: ["bên phải", "phía phải", "bên tay phải", "phía bên phải"]
+
+  # zone riêng của từng device
+  per_device:
+    # Gương không có hàng ghế, chỉ có hai bên — nên trái/phải ở đây KHÔNG nhập
+    # nhằng như với điều hòa hay ghế, quy thẳng về lái/phụ. "trái" trần cũng an
+    # toàn vì alias có gắn device: câu không nói tới gương thì không dùng tới.
+    mirror:
+      driver:    ["trái", "bên trái", "phía trái", "bên tay trái", "phía bên trái",
+                  "gương trái", "gương bên trái"]
+      passenger: ["phải", "bên phải", "phía phải", "bên tay phải", "phía bên phải",
+                  "gương phải", "gương bên phải"]
+    # "sấy kính" đã nuốt chữ "kính", phần còn lại chỉ là "hậu". Kính lái là kính
+    # CHẮN GIÓ phía trước, không phải ghế lái — nên phải khai riêng cho defrost,
+    # không để "lái" dùng chung rơi vào driver.
+    defrost:
+      rear:      ["hậu", "kính hậu", "kiếng hậu", "kính phía sau", "kiếng sau"]
+      front:     ["kính lái", "kính chắn gió", "kiếng trước", "kiếng lái", "lái"]
+    sunroof:
+      glass:     ["kính", "tấm kính", "cửa kính trời"]
+      curtain:   ["rèm", "màn che", "rèm che nắng", "rèm trời"]
+    volume:
+      # Trợ lý ĐỌC tin tức và truyện cười, nên chỉnh "tiếng tin tức" là chỉnh
+      # tiếng trợ lý. "trợ lí" viết i ngắn cũng phải nhận.
+      va:        ["trợ lý ảo", "giọng trợ lý", "trợ lý", "trợ lí", "trợ lí ảo",
+                  "trợ lý giọng nói", "trợ lí giọng nói", "giọng nói",
+                  "tin tức", "truyện cười", "đọc tin"]
+      call:      ["cuộc gọi", "đàm thoại", "gọi điện", "âm gọi", "loa thoại",
+                  "thoại", "cuộc gọi đến", "incall", "trong cuộc gọi",
+                  "nghe gọi", "loa đàm thoại"]
+      # "chuông gọi" là chuông ĐIỆN THOẠI, khác "chuông cảnh báo" của xe —
+      # ba vùng đều có chữ "chuông" nên phải khai cụm đủ dài, đừng để dính nhau.
+      ring:      ["chuông", "nhạc chuông", "tiếng chuông", "ringer",
+                  "chuông gọi đến", "chuông cuộc gọi", "chuông gọi tới",
+                  "chuông điện thoại", "chuông gọi"]
+      media:     ["nhạc", "media", "giải trí", "âm thanh giải trí", "podcast",
+                  "phương tiện", "nghe nhạc", "truyền thông", "đa phương tiện"]
+      navigation: ["dẫn đường", "chỉ đường", "điều hướng", "bản đồ", "map",
+                  "navigation", "giọng chỉ đường", "giọng dẫn đường",
+                  "hướng dẫn đường"]
+      chime:     ["chuông cảnh báo", "tiếng báo", "tiếng cảnh báo", "âm báo",
+                  "âm thanh cảnh báo", "âm cảnh báo", "chime", "chuông báo",
+                  "âm báo động"]
+
+# ------------------------------------------------------------- CỰC TRỊ
+# Giá trị nói bằng lời: "mở hết cỡ" = mở 100%, "âm lượng nhỏ nhất" = mức 0.
+# Quy thành biên của đơn vị lúc ghép lệnh, vì mỗi thiết bị một biên khác nhau.
+#
+# Cố ý TRÙNG vài chữ với mode của hvac ("tối đa", "mạnh nhất", "max"): span khớp
+# cả hai, rồi lúc ghép lệnh mode được xét TRƯỚC. "Điều hòa tối đa" vẫn ra mode
+# max như cũ, còn "âm lượng tối đa" — volume không có mode đó — mới rơi xuống
+# đây. Trùng là đúng, không phải sót.
+cuc_tri:
+  max: ["tối đa", "cao nhất", "lớn nhất", "to nhất", "mạnh nhất", "max", "maximum",
+        "kịch trần", "kịch kim", "hết cỡ", "hết mức", "hết nấc", "mức cao nhất",
+        "mức tối đa", "lên hết", "mở hết"]
+  min: ["tối thiểu", "thấp nhất", "nhỏ nhất", "bé nhất", "nhẹ nhất", "min", "minimum",
+        "mức thấp nhất", "mức tối thiểu", "kịch sàn"]
+
+# ---------------------------------------------------------------- MODES
+# Key là mode id trong caps. Id hiện duy nhất trên toàn file nên để phẳng;
+# loader vẫn kiểm tra trùng và matcher vẫn phân giải theo device đang nói tới.
+modes:
+  # hvac
+  auto:            ["tự động", "chế độ tự động", "tự bật", "auto"]
+  max:             ["tối đa", "mạnh nhất", "max"]
+  sync:            ["đồng bộ", "đồng bộ nhiệt độ"]
+  ionizer:         ["lọc không khí", "ion", "khử mùi", "máy lọc khí"]
+
+  # fan — hướng gió
+  blow_face:            ["thổi mặt", "hướng mặt", "gió lên mặt"]
+  blow_feet:            ["thổi chân", "hướng chân", "gió xuống chân"]
+  blow_face_feet:       ["thổi mặt và chân", "mặt và chân"]
+  blow_windshield:      ["thổi kính lái", "hướng kính lái", "gió lên kính",
+                         "hướng kính trước", "thổi kính trước"]
+  blow_feet_windshield: ["thổi chân và kính", "chân và kính lái", "chân và kính trước",
+                         "hướng chân và kính", "hướng chân và kính trước",
+                         "hướng chân và kính lái"]
+  # fan — nguồn khí (nhóm độc lập với hướng gió, xem Q1)
+  recirc:          ["lấy gió trong", "gió trong", "tuần hoàn", "nội tuần hoàn"]
+  fresh:           ["lấy gió ngoài", "gió ngoài", "khí tươi"]
+  intake_auto:     ["lấy gió tự động", "gió tự động"]
+
+  # ambient_light — màu
+  amb_white:        ["trắng"]
+  amb_dark_red:     ["đỏ đậm", "đỏ sẫm"]
+  amb_red:          ["đỏ"]
+  amb_orange_red:   ["đỏ cam", "cam đỏ"]
+  amb_dark_yellow:  ["vàng đậm", "vàng sẫm"]
+  amb_yellow:       ["vàng"]
+  amb_light_yellow: ["vàng nhạt"]
+  amb_dark_green:   ["xanh lá đậm", "xanh lục đậm"]
+  amb_green:        ["xanh lá", "xanh lục"]
+  amb_light_green:  ["xanh lá nhạt", "xanh lục nhạt"]
+  amb_dark_blue:    ["xanh dương đậm", "xanh biển đậm"]
+  amb_blue:         ["xanh dương", "xanh biển", "xanh da trời"]
+  amb_light_blue:   ["xanh dương nhạt", "xanh nhạt"]
+  amb_dark_pink:    ["hồng đậm"]
+  amb_pink:         ["hồng"]
+  amb_light_pink:   ["hồng nhạt"]
+  amb_dark_orange:  ["cam đậm"]
+  amb_orange:       ["cam"]
+  amb_light_orange: ["cam nhạt"]
+  amb_dark_purple:  ["tím đậm"]
+  amb_purple:       ["tím"]
+  amb_light_purple: ["tím nhạt"]
+  amb_brown:        ["nâu"]
+  # ambient_light — hiệu ứng (VF9 exclude fx_none, xem Q2)
+  fx_none:          ["tắt hiệu ứng", "không hiệu ứng", "không dùng hiệu ứng",
+                     "sáng tĩnh", "bỏ hiệu ứng", "không cần hiệu ứng"]
+  fx_blinking:      ["nhấp nháy", "chớp tắt"]
+  fx_wave:          ["gợn sóng", "hiệu ứng sóng", "chạy sóng", "kiểu chạy sóng"]
+  fx_morse:         ["morse", "tín hiệu morse"]
+
+  # seat_massage
+  msg_cat_paw:     ["vuốt", "vuốt ve", "chân mèo", "mèo cào", "cat paw", "cat pow"]
+  msg_wave:        ["làn sóng", "kiểu sóng", "sóng", "wave"]
+  msg_relieve:     ["thư giãn", "giảm mỏi", "xoa dịu", "relieve"]
+  msg_jump:        ["đấm bóp", "đấm vỗ", "nhảy", "bật nhảy", "jump", "vỗ"]
+  msg_cross:       ["nắn bóp", "chéo", "đan chéo", "nắn", "cross"]
+
+  # scene_mode
+  camp:            ["cắm trại", "dã ngoại", "camping", "camp"]
+  pet:             ["thú cưng", "chó mèo", "pet"]
+  wash:            ["rửa xe", "đi rửa xe", "wash"]
+  reduce_chime:    ["giảm tiếng bíp", "bớt tiếng cảnh báo", "giảm chuông cảnh báo",
+                    "giảm âm báo", "joe"]
+
+  # regen_brake
+  regen_low:       ["mức thấp", "nhẹ"]
+  regen_medium:    ["mức trung bình", "mức vừa"]
+  regen_high:      ["mức cao", "mạnh"]
+
+  # steering_wheel
+  heating:         ["sưởi", "làm ấm"]
+
+# ---------------------------------------------------------------- UNITS
+units:
+  celsius:     ["độ", "độ c"]
+  fahrenheit:  ["độ f"]
+  percent:     ["phần trăm", "%"]
+  level:       ["mức", "cấp", "nấc"]
+
+# ---------------------------------------------------------------- ACTIONS
+# Động từ → action canonical. Một động từ có thể ra nhiều action ("mở" = open cho
+# cửa kính, = turn_on cho wifi): matcher phân giải bằng catalog[type] của device
+# đã nhận diện, không đoán mò.
+actions:
+  turn_on:     ["bật", "mở", "khởi động", "cho chạy", "kích hoạt", "thực hiện",
+                "tiến hành", "turn on", "bật lên", "cho hoạt động", "vận hành",
+                # "cho BLUETOOTH hoạt động": chữ thiết bị chen vào giữa nên cụm
+                # "cho hoạt động" không khớp. Nhận cả dạng trần.
+                "hoạt động", "on"]
+  turn_off:    ["tắt", "ngắt", "dừng", "đóng", "hủy", "turn off", "ngừng",
+                "ngưng", "thôi không", "off", "tắt đi"]
+  # "chuyển sang" nằm ở CẢ HAI nhóm: với thiết bị có chế độ thì là đổi chế độ
+  # ("chuyển sang chế độ cắm trại"), với app/màn hình thì là MỞ ("chuyển sang
+  # ứng dụng nhạc"). Bộ lọc theo actions của từng thiết bị tự chọn đúng nhánh.
+  open:        ["mở", "hạ", "kéo xuống", "mở ra", "open",
+                "chuyển sang", "chuyển qua", "vào", "đưa tới"]
+  close:       ["đóng", "khép", "kéo lên", "đóng lại", "thoát khỏi", "thoát",
+                "thoát ra", "ẩn", "rời khỏi", "close", "chuyển khỏi", "đóng vào"]
+  # "gặp gương": nhận giọng hay nghe "gập" thành "gặp" (dấu nặng cùng chỗ,
+  # khác mỗi nguyên âm). Chỉ nhận CỤM HAI CHỮ, không nhận "gặp" trần —
+  # "gặp" là từ thường ngày, có mặt trong 4 câu golden phải ra lệnh khác.
+  fold:        ["gập", "xếp", "cụp", "gặp gương", "gặp kính chiếu hậu"]
+  unfold:      ["mở gương", "bung", "nhả gương"]
+  set_level:   ["đặt", "chỉnh", "để", "về mức", "set", "cho về"]
+  increase:    ["tăng", "lên", "to lên", "cao hơn", "mạnh hơn", "thêm", "nóng hơn", "sáng hơn",
+                "bơm", "cộng", "nâng", "đẩy lên", "tăng lên"]
+  decrease:    ["giảm", "xuống", "nhỏ lại", "thấp hơn", "bớt", "mát hơn", "tối hơn", "lạnh hơn",
+                # KHÔNG nhận "thối" (QC có dùng): bỏ dấu thì nó trùng "thôi" —
+                # chữ đánh dấu sửa ý. "mở cửa kính à thôi đóng lại" thành mở.
+                # Cùng bẫy với "chớ"/"cho" ở tập phủ định.
+                "trừ", "hạ xuống", "giảm xuống"]
+  set_mode:    ["chuyển sang", "đổi sang", "chế độ", "đổi", "chuyển"]
+  clear_mode:  ["bỏ chế độ", "tắt chế độ"]
+  mute:        ["tắt tiếng", "im lặng", "câm"]
+  unmute:      ["bật tiếng", "mở tiếng lại"]
+  # Dạng hỏi phải DÀI HƠN dạng ra lệnh cùng gốc thì mới thắng: "đang hiển thị X
+  # à" là câu hỏi, "hiển thị X" là lệnh mở. Cùng lý do với "đang mở" vs "mở".
+  # Không nhận "xem"/"coi"/"check" trần: "xem phim", "coi chừng".
+  query:       ["đang thế nào", "bao nhiêu", "kiểm tra", "còn bật không", "có đang",
+                "thế nào rồi", "đang bật", "nào đang bật", "đang mở",
+                "trạng thái", "tình trạng", "xem trạng thái", "báo trạng thái",
+                "coi trạng thái", "kiểm tra trạng thái", "báo cáo trạng thái",
+                "đang chạy", "đang hiển thị", "đang hoạt động", "đang ở",
+                "hiện giờ đang ở", "đã bật chưa", "đã mở chưa", "đã tắt chưa",
+                "có bật không", "có mở không", "có tắt không", "còn mở không",
+                "đang bật hay tắt", "đang tắt hay bật", "đang mở hay đóng",
+                "status", "xem status", "check xem", "coi xem", "xem xem",
+                "kiểm tra xem", "xem thử", "coi thử"]
+
+# ---------------------------------------------------------------- XÁC NHẬN
+# Câu trả lời cho lệnh bị hỏi lại (verdict CONFIRM). So khớp TRỌN câu sau khi
+# chuẩn hoá, không so khớp một phần — "không" đứng một mình là từ chối, còn
+# "điều hoà đang bật không" là câu hỏi.
+confirmations:
+  yes: ["ừ", "ừa", "uh", "ok", "okay", "có", "vâng", "dạ", "đúng rồi", "đúng",
+        "đồng ý", "làm đi", "cứ làm đi", "xác nhận", "được", "được rồi", "mở đi",
+        "tiếp đi", "chắc chắn"]
+  no:  ["không", "thôi", "thôi khỏi", "khỏi", "hủy", "huỷ", "bỏ đi", "đừng",
+        "không cần", "thôi không cần", "dừng lại", "bỏ qua"]
+
+# ---------------------------------------------------------------- CÂU TRẢ LỜI
+# Câu cho DENY/CONFIRM đã có sẵn trong caps (trường `reason`) nên KHÔNG lặp ở đây.
+# Phần dưới chỉ bù chỗ caps thiếu: câu xác nhận khi lệnh chạy được, và câu cho lỗi.
+# Ô trống được điền thẳng từ command nên số liệu không bao giờ lệch với plan.
+responses:
+  actions:
+    turn_on:    "Đã bật {device}{zone}{value} ạ."
+    turn_off:   "Đã tắt {device}{zone} ạ."
+    open:       "Đã mở {target}{zone} ạ."
+    close:      "Đã đóng {device}{zone} ạ."
+    fold:       "Đã gập {device}{zone} ạ."
+    unfold:     "Đã mở {device}{zone} ạ."
+    set_level:  "Đã chỉnh {device}{zone}{value} ạ."
+    increase:   "Đã tăng {device}{zone}{value} ạ."
+    decrease:   "Đã giảm {device}{zone}{value} ạ."
+    set_mode:   "Đã chuyển {device}{zone} sang {mode} ạ."
+    clear_mode: "Đã tắt chế độ {mode} của {device} ạ."
+    scene_on:   "Đã bật chế độ {mode} ạ."       # thiết bị kiểu mode_as_action
+    scene_off:  "Đã tắt chế độ {mode} ạ."
+
+  # Đơn vị đọc khác nhau giữa giá trị tuyệt đối và mức thay đổi:
+  # "chỉnh sưởi ghế MỨC 2" nhưng "tăng sưởi ghế 2 MỨC".
+  units:
+    absolute:
+      celsius:    "{value} độ"
+      fahrenheit: "{value} độ F"
+      percent:    "{value} phần trăm"
+      level:      "mức {value}"
+    delta:
+      celsius:    "{value} độ"
+      fahrenheit: "{value} độ F"
+      percent:    "{value} phần trăm"
+      level:      "{value} mức"
+
+  errors:
+    VA_NOT_SUPPORT:    "Xe mình không có {device} ạ."
+    VA_MODE_EXCLUDED:  "Xe mình không hỗ trợ chế độ {mode} ạ."
+    VA_ITEM_REQUIRED:  "Anh/chị muốn mở cái gì ạ?"
+    VA_MODE_REQUIRED:  "Anh/chị muốn chọn chế độ nào ạ?"
+    VA_VALUE_REQUIRED: "Anh/chị muốn đặt mức bao nhiêu ạ?"
+    VA_INVALID_ZONE:   "Em chưa rõ anh/chị muốn chỉnh chỗ nào ạ."
+    # BA sheet 3.1 #1: không gửi lệnh, báo range đúng rồi hỏi lại.
+    VA_OUT_OF_RANGE:   "{device} chỉ hỗ trợ từ {range} thôi ạ, anh/chị muốn đặt mức nào?"
+    # BA sheet 3.1 #12: mức 0 trên thiết bị có 0 = tắt thì hỏi lại, đừng tự tắt.
+    VA_NEED_CONFIRM:   "Anh/chị muốn tắt {device} phải không ạ?"
+    # BA sheet 3.2 #47 ô G50. Hiện chỉ có một vùng nhập nhằng ("ghế khách")
+    # nên câu hỏi nêu thẳng hai lựa chọn; thêm vùng khác thì phải tách mẫu.
+    VA_ZONE_AMBIGUOUS: "Anh/chị muốn {device} cho ghế phụ hay ghế hàng sau ạ?"
+    VA_INVALID_MODE:   "Em chưa rõ chế độ anh/chị muốn ạ."
+    VA_NOT_READABLE:   "Em chưa đọc được trạng thái {device} ạ."
+    VA_NO_PREVIOUS_VALUE: "Em chưa rõ mức trước đó, anh/chị muốn để mức bao nhiêu ạ?"
+    # Mất mạng thì PHẢI nói ra. Im lặng là tệ nhất: người dùng không biết xe có
+    # nghe thấy hay không, và sẽ nói lại nhiều lần.
+    VA_LLM_UNAVAILABLE: "Xe đang mất kết nối mạng nên em chưa hiểu được câu này ạ."
+    VA_TOO_SHORT:       "Em chưa nghe rõ, anh/chị nói lại giúp em ạ."
+    VA_LLM_TIMEOUT:     "Em xử lý hơi lâu, anh/chị nói lại giúp em ạ."
+    VA_NOT_SCHEDULABLE: "Xe chưa hẹn giờ được, anh/chị cần thì bảo em làm ngay ạ."
+    VA_NO_ANSWER:       "Em chưa trả lời được câu này ạ."
+    # Xe nhận lệnh nhưng không làm được — khác hẳn "caps không cho phép".
+    VA_EXEC_FAILED:     "Em chưa thực hiện được trên {device} ạ."
+    VA_DEVICE_REQUIRED: "Anh/chị muốn {verb} cái gì ạ?"
+    # {choices} sinh từ chính caps: "mở hay đóng", "gập hay mở"...
+    VA_NO_DEFAULT_ACTION: "Anh/chị muốn {choices} {device} ạ?"
+    default:           "Em chưa rõ ý anh/chị ạ."
+
+  # Lệnh mức mà không vùng nào đang bật (BA sheet 3.2 #46). Không gửi lệnh, hỏi lại.
+  hoi_vung: "{device} đang tắt, anh/chị muốn bật cho vùng nào ạ?"
+
+  # Lệnh tương đối khi thiết bị đã ở biên (BA sheet 3.1 #4/#7). Không gửi lệnh.
+  # {value} đã kèm đơn vị ("mức 6", "32 độ") nên câu phải đọc xuôi với cả hai —
+  # "đang ở mức tối đa mức 6" là câu hỏng.
+  bien:
+    max: "{device} đang ở {value}, cao nhất rồi ạ, không tăng thêm được."
+    min: "{device} đang ở {value}, thấp nhất rồi ạ, không giảm thêm được."
+
+  # Câu trả lời cho CÂU HỎI trạng thái. Chọn mẫu theo loại thiết bị, suy từ
+  # catalog action chứ không khai tay cho từng thiết bị.
+  query:
+    unknown:         "Em chưa biết trạng thái {device} ạ."
+    switch_on:       "{device} đang bật ạ."
+    switch_off:      "{device} đang tắt ạ."
+    level:           "{device} đang ở {value} ạ."
+    level_off:       "{device} đang tắt ạ."
+    level_with_mode: "{device} đang ở {value}, {mode} ạ."
+    mode:            "{device} đang ở {mode} ạ."
+    aperture_open:   "{device} đang mở{value} ạ."
+    aperture_closed: "{device} đang đóng ạ."
+    fold_folded:     "{device} đang gập ạ."
+    fold_open:       "{device} đang mở ạ."
+    scene_on:        "Đang bật chế độ {mode} ạ."
+    scene_off:       "Không có chế độ nào đang bật ạ."
+    item_open:       "Đang mở {item} ạ."
+
+  # Thiết bị mà VÙNG mới là thứ người ta gọi tên: "đóng rèm", không phải
+  # "đóng cửa sổ trời rèm". Với volume thì ngược lại nên không liệt kê ở đây
+  # ("tăng âm lượng nhạc" đúng, "tăng nhạc" thì mất nghĩa).
+  zone_as_subject: [sunroof]
+
+  # volume.lo = 0 nên đặt mức 0 chính là tắt tiếng (xem D4)
+  set_level_zero: "Đã tắt tiếng ạ."
+
+  cancelled: "Vâng, em không làm nữa ạ."

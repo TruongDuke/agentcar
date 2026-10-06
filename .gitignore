@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+logs/
+data/
+.DS_Store
+nlu/runs/
+nlu/data/
+nlu/colab_bundle.zip
+# Trọng số model là sản phẩm sinh ra, không phải mã nguồn — ở BẤT KỲ thư mục nào.
+*.pt
+*.safetensors
+# File khoá tạm của Excel khi đang mở file trong test_docs/.
+~$*

@@ -1,0 +1,371 @@
+version: 3
+model: VF9
+locales: [vi]
+
+devices:
+
+  # ---------------------------------- CLIMATE
+  hvac:
+    type: hvac
+    # BA sheet 3.2 ô O5: với lệnh MỨC nhiệt độ, "bên trái" = khu lái, "bên phải" =
+    # khu khách. Với bật/tắt và HVAC tự động (ô P4, P6) thì trái/phải KHÔNG hợp lệ,
+    # nên chỉ khai cho nhóm level — nhóm khác vẫn rơi vào VA_INVALID_ZONE.
+    zone_alias:
+      level: { left: driver, right: passenger }
+    zones: [all, driver, passenger, rear]
+    default_zone: all
+    value: { default_unit: celsius, units: { celsius: { lo: 16, hi: 32, resolution: 0.5, nudge: 2, comfort_default: 22 }, fahrenheit: { lo: 61, hi: 90, resolution: 1, nudge: 4, comfort_default: 72 } } }
+    modes: [auto, max, sync, ionizer]
+    default_action: turn_on
+    readable: true
+
+  fan:
+    type: fan
+    zones: [all, front, rear]
+    default_zone: all
+    value: { default_unit: level, units: { level: { lo: 1, hi: 6, nudge: 1, comfort_default: 3, zero_is_off: true } } }
+    modes: [blow_face, blow_feet, blow_face_feet, blow_windshield, blow_feet_windshield, recirc, fresh, intake_auto]
+    default_action: turn_on
+    readable: true
+
+  defrost:
+    type: defrost
+    zones: [all, front, rear]
+    default_zone: all
+    default_action: turn_on
+    readable: true
+
+  # ---------------------------------- CỬA / KÍNH / CỐP
+  window:
+    type: window
+    zones: [all, driver, passenger, rear_left, rear_right]
+    default_zone: all
+    value: { default_unit: percent, units: { percent: { lo: 1, hi: 100, resolution: 20, nudge: 20, comfort_default: 50 } } }
+    readable: true
+    safety_gated: true
+
+  sunroof:
+    type: sunroof
+    zones: [glass, curtain]
+    default_zone: glass
+    value: { default_unit: percent, units: { percent: { lo: 1, hi: 100, nudge: 20, comfort_default: 50 } } }
+    readable: true
+    safety_gated: true
+
+  trunk:
+    type: trunk
+    names: { vi: ["cốp xe", "thùng xe", "nắp cốp", "khóa cốp", "cốp sau"] }
+    zones: [all, rear]
+    default_zone: all
+    readable: true
+    safety_gated: true
+
+  frunk:
+    type: frunk
+    default_action: open
+    # BA chốt 28/09: VF9 CÓ cốp trước (Capability sheet 3.2, ô M14 — cốp hỗ trợ
+    # vùng Trước và Sau). Trước đó khai support:false nên "mở cốp trước" bị trả
+    # VA_NOT_SUPPORT. "Mở cốp" trống vùng vẫn về trunk (cốp sau), đúng mặc định BA.
+    # Luật an toàn khai ở mục `safety` bên dưới, y như trunk.
+
+  charge_port:
+    type: charge_port
+    default_action: open
+    readable: true
+    safety_gated: true
+
+  # ---------------------------------- GƯƠNG / ĐÈN
+  mirror:
+    type: mirror
+    actions: { exclude: [adjust] }
+    zones: [all, driver, passenger]
+    default_zone: all
+    readable: true
+    safety_gated: true
+
+  fog_light:
+    type: fog_light
+    zones: [all, front, rear]
+    default_zone: all
+    default_action: turn_on
+    readable: true
+    safety_gated: true
+
+  auto_highbeam:
+    type: auto_highbeam
+    default_action: turn_on
+    support: false
+
+  ambient_light:
+    type: ambient_light
+    actions: { exclude: [fx_none] }
+    value: { default_unit: percent, units: { percent: { lo: 1, hi: 100, nudge: 20, comfort_default: 60 } } }
+    modes: [amb_white, amb_dark_red, amb_red, amb_orange_red, amb_dark_yellow, amb_yellow, amb_light_yellow, amb_dark_green, amb_green, amb_light_green, amb_dark_blue, amb_blue, amb_light_blue, amb_dark_pink, amb_pink, amb_light_pink, amb_dark_orange, amb_orange, amb_light_orange, amb_dark_purple, amb_purple, amb_light_purple, amb_brown, fx_none, fx_blinking, fx_wave, fx_morse]
+    default_action: turn_on
+    readable: true
+
+  # ---------------------------------- GHẾ
+  seat_heating:
+    type: seat_heating
+    zones: [all, driver, passenger, rear_left, rear_right, rear]
+    default_zone: all
+    value: { default_unit: level, units: { level: { lo: 1, hi: 3, nudge: 1, comfort_default: 2, zero_is_off: true } } }
+    default_action: turn_on
+    readable: true
+
+  seat_cooling:
+    type: seat_cooling
+    zones: [all, driver, passenger, rear_left, rear_right, rear]
+    default_zone: all
+    value: { default_unit: level, units: { level: { lo: 1, hi: 3, nudge: 1, comfort_default: 2, zero_is_off: true } } }
+    default_action: turn_on
+    readable: true
+
+  seat_massage:
+    type: seat_massage
+    zones: [all, driver, passenger, rear_left, rear_right, rear]
+    default_zone: all
+    value: { default_unit: level, units: { level: { lo: 1, hi: 3, nudge: 1, comfort_default: 2, zero_is_off: true } } }
+    modes: [msg_cat_paw, msg_wave, msg_relieve, msg_jump, msg_cross]
+    default_action: turn_on
+    readable: true
+
+  # ---------------------------------- SCENE MODE
+  scene_mode:
+    type: scene_mode
+    modes: [camp, pet, wash, reduce_chime]
+    readable: true
+
+  # ---------------------------------- MISC
+  foot_kick:
+    type: foot_kick
+    names: { vi: ["đá cốp", "cảm biến đá cốp", "mở cốp rảnh tay bằng chân"] }
+    default_action: turn_on
+    readable: true
+
+  regen_brake:
+    type: regen_brake
+    modes: [regen_low, regen_medium, regen_high]
+    readable: true
+    safety_gated: true
+
+  # ---------------------------------- INFOTAINMENT / KẾT NỐI
+  volume:
+    type: volume
+    zones: [all, va, call, ring, media, navigation, chime]
+    default_zone: all
+    value: { default_unit: level, units: { level: { lo: 0, hi: 40, nudge: 2, comfort_default: 12 } } }
+    readable: true
+
+  screen_brightness:
+    type: screen_brightness
+    names: { vi: ["độ sáng màn hình", "độ sáng màn hình trung tâm", "độ sáng màn hình giải trí"] }
+    value: { default_unit: percent, units: { percent: { lo: 1, hi: 100, nudge: 20, comfort_default: 60 } } }
+    readable: true
+
+  hud:
+    type: hud
+    value: { default_unit: percent, units: { percent: { lo: 0, hi: 100 } } }
+    default_action: turn_on
+    support: false
+
+  wifi:
+    type: wifi
+    default_action: turn_on
+    readable: true
+
+  wifi_hotspot:
+    type: wifi_hotspot
+    names: { vi: ["điểm phát wifi", "phát wifi", "wifi hotspot"] }
+    default_action: turn_on
+    readable: true
+
+  bluetooth:
+    type: bluetooth
+    default_action: turn_on
+    readable: true
+
+  # ---------------------------------- QUERY-ONLY
+  tire_pressure:
+    type: tire_pressure
+    support: false
+    query_only: true
+
+  # ---------------------------------- APP / MÀN HÌNH (list_selector)
+  app_control:
+    type: app_control
+    names: { vi: ["ứng dụng", "app"] }
+    value: { kind: item }
+    items:
+      music: { vi: ["âm nhạc", "nhạc", "music", "nhạc usb", "ứng dụng nhạc"] }
+      radio: { vi: ["đài", "radio", "phát thanh"] }
+      phone: { vi: ["điện thoại", "phone", "gọi điện", "ứng dụng gọi điện"] }
+      # KHÔNG để "vietmap" ở đây: VietMap là item RIÊNG bên dưới. Thêm vào đây
+      # là map cướp mất, vì nó đứng trước.
+      map: { vi: ["bản đồ", "here map", "map", "ứng dụng bản đồ"] }
+      battery_charging: { vi: ["pin và sạc", "pin", "sạc", "battery", "battery charging",
+                               "quản lý pin", "quản lý pin và sạc", "màn hình pin", "giao diện pin"] }
+      vehicle_utilities: { vi: ["tiện ích xe", "dịch vụ xe", "màn hình áp suất lốp", "dịch vụ", "vehicle utilities"] }
+      driving_assistance: { vi: ["hỗ trợ lái", "adas", "driving assistance"] }
+      owner_manual: { vi: ["hướng dẫn sử dụng", "owner manual", "sổ tay hướng dẫn", "sổ tay chủ xe", "sổ tay xe"] }
+      calendar: { vi: ["lịch", "calendar"] }
+      podcast: { vi: ["podcast"] }
+      app_drawer: { vi: ["app drawer", "kho ứng dụng", "danh sách ứng dụng", "danh sách app",
+                         "giao diện ứng dụng", "màn hình ứng dụng", "danh sách các ứng dụng"] }
+      spotify: { vi: ["spotify"] }
+      vincast: { vi: ["vincast"] }
+      vinpearl: { vi: ["vinpearl"] }
+      vinmec: { vi: ["vinmec"] }
+      fpt_play: { vi: ["fpt play"] }
+      fpt_smh: { vi: ["fpt smart home"] }
+      audio_book: { vi: ["sách nói"] }
+      karaoke: { vi: ["karaoke"] }
+      android_auto: { vi: ["android auto"] }
+      apple_carplay: { vi: ["apple carplay"] }
+      grab: { vi: ["grab"] }
+      youtube: { vi: ["youtube"] }
+      camera: { vi: ["camera"] }
+      vietmap: { vi: ["vietmap"] }
+    default_action: open
+    readable: true
+
+  screen_control:
+    type: screen_control
+    names: { vi: ["màn hình", "màn hình cài đặt", "trang cài đặt"] }
+    value: { kind: item }
+    items:
+      display_settings: { vi: ["cài đặt chế độ sáng", "cài đặt hiển thị", "thiết lập chế độ sáng", "thiết lập hiển thị", "cài đặt độ sáng", "độ sáng màn hình", "display settings"] }
+      light_settings: { vi: ["cài đặt đèn", "thiết lập đèn", "điều khiển đèn", "light settings"] }
+      firmware: { vi: ["cài đặt phần mềm", "thiết lập phần mềm", "cập nhật phần mềm", "firmware update", "firmware"] }
+      profile_settings: { vi: ["thiết lập tài khoản", "profile", "profile screen", "hồ sơ người dùng", "trang cá nhân"] }
+      trip_statistics: { vi: ["thông số hành trình", "thống kê hành trình"] }
+      valet_settings: { vi: ["cài đặt valet", "valet mode", "thiết lập valet"] }
+      emergency: { vi: ["cứu hộ khẩn cấp"] }
+      quick_control: { vi: ["điều khiển nhanh"] }
+      hvac: { vi: ["màn hình điều hòa", "điều khiển điều hòa", "màn hình điều khiển điều hòa"] }
+      seat_heating: { vi: ["màn hình sưởi ghế", "màn hình làm mát ghế"] }
+      seat_massage: { vi: ["màn hình massage ghế"] }
+      vehicle_settings: { vi: ["cài đặt xe", "điều khiển xe", "thiết lập xe", "vehicle settings"] }
+      mirror_settings: { vi: ["cài đặt gương", "thiết lập gương", "màn hình gương"] }
+      general_settings: { vi: ["cài đặt chung", "cài đặt", "thiết lập chung"] }
+      date_time: { vi: ["cài đặt thời gian", "thiết lập thời gian", "ngày giờ", "cài đặt ngày giờ", "date time"] }
+      language_settings: { vi: ["cài đặt ngôn ngữ", "thiết lập ngôn ngữ", "language settings"] }
+      unit_settings: { vi: ["cài đặt đơn vị đo", "thiết lập đơn vị đo", "đơn vị đo", "unit settings"] }
+      va_settings: { vi: ["cài đặt trợ lý ảo", "thiết lập trợ lý ảo", "cài đặt trợ lý giọng nói", "cài đặt giọng nói", "trợ lý giọng nói", "virtual assistant settings"] }
+      wifi: { vi: ["màn hình wifi", "kết nối wifi", "màn hình kết nối wifi", "cài đặt wifi"] }
+      bluetooth: { vi: ["màn hình bluetooth", "cài đặt thiết bị kết nối", "thiết lập thiết bị kết nối"] }
+      wifi_hotspot: { vi: ["wifi hotspot", "màn hình wifi hotspot", "màn hình phát wifi"] }
+      volume_settings: { vi: ["cài đặt âm lượng", "thiết lập âm lượng"] }
+      equalizer: { vi: ["bộ chỉnh âm", "equalizer", "eq settings"] }
+      audio_focus: { vi: ["vị trí âm thanh"] }
+      sunroof: { vi: ["màn hình cửa sổ trời"] }
+      journey: { vi: ["lịch sử tìm đường"] }
+      about_settings: { vi: ["thông tin xe"] }
+      contact: { vi: ["danh bạ"] }
+      recent_call: { vi: ["cuộc gọi gần đây"] }
+      keyboard: { vi: ["bàn phím"] }
+      vehicle_alert: { vi: ["cảnh báo lỗi"] }
+      home_screen: { vi: ["màn hình chính", "home screen", "màn hình home", "trang chủ"] }
+      geofencing: { vi: ["cài đặt giới hạn địa lý", "thiết lập giới hạn địa lý"] }
+      timefencing: { vi: ["cài đặt giới hạn thời gian", "thiết lập giới hạn thời gian"] }
+      trip_settings: { vi: ["cài đặt hành trình", "thiết lập hành trình", "trip settings"] }
+      keyfob: { vi: ["keyfob", "chìa khóa"] }
+      esim: { vi: ["esim"] }
+      camera_settings: { vi: ["cài đặt camera", "thiết lập camera"] }
+      wallpaper: { vi: ["cài đặt hình nền", "thiết lập hình nền", "hình nền", "wallpaper"] }
+      book_service: { vi: ["đặt lịch dịch vụ"] }
+      book_charging: { vi: ["đặt lịch sạc"] }
+      hud_control: { vi: ["màn hình hud"] }
+      hud_settings: { vi: ["cài đặt hud", "thiết lập hud"] }
+    default_action: open
+    readable: true
+
+  dome_light:
+    type: dome_light
+    modes: [auto]
+    default_action: turn_on
+    readable: true
+
+  steering_wheel:
+    type: steering_wheel
+    modes: [heating]
+    default_action: turn_on
+    readable: true
+
+  # ---------------------------------- NAV (cloud-only, như VF5/VF8): NavAgent cloud sở hữu; KHÔNG
+  # grammar edge (câu offline không match → escalate). Vẫn nằm trong caps (cloud_only) để #2-defense
+  # PlanRunner NHẬN nav/route hợp lệ (không coi là cloud bịa) → is_nav route sang host, bỏ gate CAN.
+  nav:
+    type: nav
+    cloud_only: true
+
+# ---- POLICY per-xe ----
+safety:
+  - { device: window, action: open, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn mở cửa kính chứ ạ?" }
+  - { device: window, action: set_level, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn chỉnh cửa kính chứ ạ?" }
+  - { device: sunroof, action: open, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn mở cửa sổ trời chứ ạ?" }
+  - { device: sunroof, action: set_level, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn chỉnh cửa sổ trời chứ ạ?" }
+  - { device: mirror, action: fold, verdict: DENY, when: "speed_kmh >= 16", reason: "Xe đang chạy trên 16 km/h, chưa gập gương được ạ." }
+  - { device: fog_light, action: turn_on, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn bật đèn sương mù chứ ạ?" }
+  - { device: fog_light, action: turn_off, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn tắt đèn sương mù chứ ạ?" }
+  - { device: trunk, action: open, verdict: DENY, when: "dang_chay == true", reason: "Xe đang di chuyển, chưa mở cốp được ạ." }
+  - { device: frunk, action: open, verdict: DENY, when: "dang_chay == true", reason: "Xe đang di chuyển, chưa mở cốp trước được ạ." }
+  - { device: charge_port, action: "*", verdict: DENY, when: "speed_kmh > 0", reason: "Xe đang di chuyển, chưa mở nắp sạc được ạ." }
+  - { device: regen_brake, action: turn_on, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn bật phanh tái sinh chứ ạ?" }
+  - { device: regen_brake, action: turn_off, verdict: CONFIRM, when: "dang_chay == true", reason: "Xe đang di chuyển, anh/chị chắc muốn tắt phanh tái sinh chứ ạ?" }
+  - { device: scene_mode, action: camp, verdict: DENY, when: "dang_chay == true", reason: "Xe cần về số P mới bật được chế độ cắm trại ạ." }
+  - { device: scene_mode, action: camp, verdict: DENY, when: "battery_pct <= 25", reason: "Pin dưới 25%, chưa bật được chế độ cắm trại ạ." }
+  - { device: scene_mode, action: camp, verdict: DENY, when: "parking_brake != engaged", reason: "Cần kéo phanh tay mới bật được chế độ cắm trại ạ." }
+  - { device: scene_mode, action: pet, verdict: DENY, when: "dang_chay == true", reason: "Xe cần về số P mới bật được chế độ thú cưng ạ." }
+  - { device: scene_mode, action: pet, verdict: DENY, when: "battery_pct <= 25", reason: "Pin dưới 25%, chưa bật được chế độ thú cưng ạ." }
+  - { device: scene_mode, action: pet, verdict: DENY, when: "parking_brake != engaged", reason: "Cần kéo phanh tay mới bật được chế độ thú cưng ạ." }
+  - { device: scene_mode, action: wash, verdict: DENY, when: "dang_chay == true", reason: "Xe cần về số P mới bật được chế độ rửa xe ạ." }
+  - { device: scene_mode, action: wash, verdict: DENY, when: "charging == true", reason: "Xe đang cắm sạc, chưa bật được chế độ rửa xe ạ." }
+
+# ---------------------------------------------------------------- CHUẨN NGHIỆM THU
+# Hai tài liệu nghiệm thu MÂU THUẪN nhau ở ba điểm. Chốt 29/09: theo QC.
+#
+#   test report của QC  (VITA-GRAMMAR-API-TESTREPORT-2509.xlsx)
+#   UC của BA           ([WIP][S6] 22092026_Capability.xlsx, sheet 3.1/3.2)
+#
+# Đổi giá trị ở đây là đổi bên nào thắng — KHÔNG sửa rải rác trong code.
+# `tools/check_uc.py` chấm theo BA, nên khi để "qc" thì nó sẽ báo trượt ở đúng
+# mấy luật này; đó là bình thường, không phải hồi quy.
+policy:
+  # "Mở cửa sổ trời 200%" (dải 1..100)
+  #   qc → gửi lệnh với value=200 y như người dùng nói  (QC Sunroof E197)
+  #   ba → không gửi lệnh, báo dải hợp lệ               (BA 3.1 #1, ô D4)
+  gia_tri_ngoai_dai: qc
+
+  # "Đừng bật sấy kính"
+  #   qc → đảo thành TẮT sấy kính                       (QC defrost E268, 684 câu)
+  #   ba → không làm gì                                  (368 câu QC khác lại mong thế này)
+  phu_dinh: qc
+
+  # "giảm quạt 0 mức" / "giảm điều hòa -2 độ"
+  #   qc → gửi lệnh với bước đúng như đã nói             (QC volume E166)
+  #   ba → hỏi lại hoặc báo dải                          (BA 3.1 #12-#14)
+  buoc_khong_duong: qc
+
+# Tầng [1b] — model NLU trên xe (joint-nlu-trained). Chỉ chạy khi tầng luật bó tay.
+nlu:
+  # Model luôn gán một nhãn gì đó, không có lớp "đây không phải lệnh" — nên câu
+  # tán gẫu ("cái quạt ở nhà hỏng rồi") cũng ra lệnh.
+  #
+  # 0.8 (30/09) quét trên 96 câu phải-im + 216 golden — bộ curated quá nhỏ và quá
+  # sạch, không có tiếng lóng hay trộn Anh-Việt, đúng chỗ model chấm thấp mà vẫn
+  # đúng. Áp lên 24.851 câu thật thì 54,9% số câu edge bỏ sót là do CHÍNH NGƯỠNG
+  # NÀY chặn, không phải do model dốt.
+  #
+  # Quét lại trên 5.000 câu thật, so 0.8 với 0.65: mọi trường +0,8..+1,9 điểm,
+  # đổi lấy đúng 2 câu ra lệnh oan thêm (16 -> 18 trên 137). Đường cong TRƠN,
+  # không có điểm gãy — nên đây là chọn đánh đổi, không phải tìm giá trị đúng.
+  #
+  # Con số này chưa chốt được cho tới khi biết TỶ LỆ THẬT của câu-không-phải-lệnh
+  # khi lái xe. Bộ đo đang giả định ~5% (137/2.637) nhưng đó là tỷ lệ QC soạn ra.
+  nguong: 0.8
+
+gate:
+  enabled: false
+  min_tokens: 2
+  deadline_ms: 1200
