@@ -14,3 +14,4 @@ nlu/colab_bundle.zip
 *.safetensors
 # File khoá tạm của Excel khi đang mở file trong test_docs/.
 ~$*
+.pytest_cache/
